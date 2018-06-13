@@ -9,15 +9,26 @@
 
   </head>
   <body>
+
+
+
+      <%= require('html-loader!./assets/html/navbar.html') %>
+
+
+    <div class="row">
+      <div class="col s4">Home</div>
+      <div class="col s4">Transfer</div>
+      <div class="col s4">History</div>
+    </div>
+
+
+
     <h1>Lava Wallet</h1>
     <!-- All of the Node.js APIs are available in this renderer process. -->
     We are using Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
 
-    <script>
-      // You can also require other files to run in this process
-      require('assets/renderer.js')
-    </script>
+     
   </body>
 </html>

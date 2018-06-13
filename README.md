@@ -1,5 +1,8 @@
 # LavaWallet (Desktop)
 
+![image](https://user-images.githubusercontent.com/38132633/41366866-6a89a7fa-6f0b-11e8-9684-4c901ba4e250.png)
+
+
 ## To Use
 
 ```bash

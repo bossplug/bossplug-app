@@ -15,6 +15,8 @@ npm start
 
 # Developer TODO
 1. Integrate standard JSON ethereum accounts, importing/exporting
+https://github.com/ethereumjs/keythereum/blob/master/dist/keythereum.js
+
 2. Integrate simple web3 transaction manager like metamask/trustwallet
 
 

@@ -24,6 +24,17 @@ export default class Nav {
 
              this.activeTab = tabType;
 
+             switch(tabType) {
+                case 'accounts':
+                    window.location.href = '/accounts.html'
+                    break;
+                case 'transfer':
+                    window.location.href = '/transfer.html'
+                    break;
+                default:
+                    window.location.href = '/'
+            }
+ 
              // `event` is the native DOM event
              /*if (event) {
                alert(event.target.tagName)

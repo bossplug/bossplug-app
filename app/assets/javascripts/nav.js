@@ -1,5 +1,5 @@
 import Vue from 'vue';
- 
+
 
 export default class Nav {
   constructor( ){
@@ -9,10 +9,25 @@ export default class Nav {
   init(){
 
 
+    var initActiveTab = null;
+
+    if(document.getElementById("home")){
+      initActiveTab = 'home';
+    }
+
+    if(document.getElementById("accounts")){
+      initActiveTab = 'accounts';
+    }
+
+    if(document.getElementById("transfer")){
+      initActiveTab = 'transfer';
+    }
+
+
      new Vue({
         el: '#nav-primary',
         data: {
-          activeTab: 'home'
+          activeTab: initActiveTab
         },
         methods: {
            clickTab: function (tabType) {

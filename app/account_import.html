@@ -9,8 +9,38 @@
 
     <%= require('html-loader!./assets/html/navbar.html') %>
 
+      <div class="container" id="import-account">
+        <h3>Import Account</h3>
 
-    <h1>Import Account</h1>
+        <div class="whitespace-sm"> </div>
+
+
+        <div class="row">
+
+          <div class = "col s5">
+
+
+              <a class="waves-effect waves-light btn" v-on:click="importType('pkey')"> Import Private Key</a>
+
+              <div class="whitespace-sm"> </div>
+
+              <a class="waves-effect waves-light btn" v-on:click="importType('keystore')"> Import Keystore (JSON)</a>
+
+
+          </div>
+
+          <div class = "col s1">
+
+          </div>
+
+          <div class = "col s6">
+          </div>
+
+        </div>
+
+    </div>
+
+
 
 
   </body>

@@ -17,9 +17,13 @@
       <div class="row">
        <div class="col s4">
 
-         <nav class="nav-group accounts-grou0">
+         <nav class="nav-group accounts-group" id="accounts-menu">
 
            <span class="nav-group-item">
+              list of accts pub keys here from asking websockets..
+           </span>
+
+           <span class="nav-group-item" v-on:click="clickButton('addaccount')">
              <span class="icon icon-plus-circled"></span>
              Add Account
            </span>

@@ -6,6 +6,9 @@ var nav = new Nav();
 import Home from './home';
 var home = new Home();
 
+import Accounts from './accounts';
+var accounts = new Accounts();
+
 import AccountAdd from './account_add';
 var accountAdd = new AccountAdd();
 
@@ -25,12 +28,17 @@ function init()
     home.init();
   }
 
+
+  if(document.getElementById("accounts")){
+    accounts.init();
+  }
+
   if(document.getElementById("add-account")){
     accountAdd.init();
   }
 
   if(document.getElementById("new-account")){
-    accountNew.init(socketClient); 
+    accountNew.init(socketClient);
   }
 
 

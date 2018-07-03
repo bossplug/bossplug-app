@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-  
+
     <%= require('html-loader!./assets/html/head.html') %>
   </head>
   <body>
@@ -11,15 +11,37 @@
 
     <%= require('html-loader!./assets/html/navbar.html') %>
 
+    <div class="content">
 
 
+     <div class="whitespace-md"></div>
 
-    <h1>Lava Wallet</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
 
+    <nav class="nav-group">
+
+       
+      <span class="nav-group-item">
+        <span class="icon icon-plus-circled"></span>
+        Create a new Ethereum Account
+      </span>
+
+      <span class="nav-group-item">
+        <span class="icon icon-down-circled"></span>
+        Import an Ethereum Account
+      </span>
+      <span class="nav-group-item">
+        <span class="icon icon-eye"></span>
+        View the Address Book
+      </span>
+      <span class="nav-group-item">
+        <span class="icon icon-layout"></span>
+        Settings
+      </span>
+
+    </nav>
+
+
+    </div>
 
   </body>
 </html>

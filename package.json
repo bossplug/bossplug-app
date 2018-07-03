@@ -6,8 +6,8 @@
   "scripts": {
     "webpack": "webpack",
     "app": "electron .",
-    "dev":"webpack-dev-server",
-    "electron-dev":"electron ./electron-dev"
+    "dev": "webpack-dev-server",
+    "electron-dev": "electron ./electron-dev"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -27,9 +27,10 @@
     "babel-preset-es2016": "^6.24.1",
     "browserify": "^15.2.0",
     "bulma": "^0.6.2",
+    "electron-json-storage": "^4.1.0",
     "eth-sig-util": "^1.4.2",
     "ethereumjs-util": "^5.1.5",
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-loader": "^0.5.5",
     "jquery": "^3.3.1",

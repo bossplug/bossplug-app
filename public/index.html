@@ -2,46 +2,65 @@
 <html>
   <head>
     <meta charset="UTF-8">
+
     <title>Lava Wallet</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ 
 
   <link href="assets/main.css" rel="stylesheet"></head>
   <body>
 
 
 
-      <div class="tab-group" id="nav-primary">
-  <div class="tab-item">
-    <span class="icon icon-cancel icon-close-tab"></span>
-    Tab
+    <div class="tab-group" id="nav-primary">
+  <div class="tab-item" v-bind:class="{  active: (activeTab=='home') }"   v-on:click="clickTab('home')">
+    <span class="icon icon-home"></span>
+    Home
   </div>
-  <div class="tab-item active">
-    <span class="icon icon-cancel icon-close-tab"></span>
-    Tab active
+  <div class="tab-item" v-bind:class="{  active: (activeTab=='accounts') }"  v-on:click="clickTab('accounts')">
+    <span class="icon icon-menu"></span>
+    Accounts
   </div>
-  <div class="tab-item">
-    <span class="icon icon-cancel icon-close-tab"></span>
-    Tab
+  <div class="tab-item" v-bind:class="{  active: (activeTab=='transfer') }"  v-on:click="clickTab('transfer')">
+    <span class="icon icon-shuffle"></span>
+    Transfer
   </div>
-  <div class="tab-item tab-item-fixed">
-    <span class="icon icon-plus"></span>
-  </div>
+
 </div>
 
 
+    <div class="container">
 
 
+     <div class="whitespace-md"></div>
 
 
+    <nav class="nav-group">
 
-    <h1>Lava Wallet</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
 
+      <span class="nav-group-item">
+        <span class="icon icon-plus-circled"></span>
+        Create a new Ethereum Account
+      </span>
+
+      <span class="nav-group-item">
+        <span class="icon icon-down-circled"></span>
+        Import an Ethereum Account
+      </span>
+      <span class="nav-group-item">
+        <span class="icon icon-eye"></span>
+        View the Address Book
+      </span>
+      <span class="nav-group-item">
+        <span class="icon icon-layout"></span>
+        Settings
+      </span>
+
+    </nav>
+
+
+    </div>
 
   <script type="text/javascript" src="bundle.js"></script></body>
 </html>

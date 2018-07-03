@@ -46,6 +46,7 @@
   "devDependencies": {
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.9",
+    "electron": "2.0.3",
     "file-loader": "^1.1.6",
     "html-webpack-include-assets-plugin": "^1.0.2",
     "html-webpack-plugin": "^2.30.1",

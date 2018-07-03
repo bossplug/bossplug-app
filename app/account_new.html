@@ -9,9 +9,15 @@
 
     <%= require('html-loader!./assets/html/navbar.html') %>
 
+    <div class="container" id="new-account">
 
-    <h1>New Account</h1>
+      <h1>New Account</h1>
 
+
+      <a class="waves-effect waves-light btn" v-on:click="newAccount()"> Generate</a>
+
+
+    </div>
 
   </body>
 </html>

@@ -30,29 +30,24 @@
 </div>
 
 
-    <div class="container">
+    <div class="container" id="home">
 
 
      <div class="whitespace-md"></div>
 
 
-    <nav class="nav-group">
+    <nav class="nav-group" id="home-menu">
 
 
-      <span class="nav-group-item">
+      <span class="nav-group-item" v-on:click="clickButton('addaccount')">
         <span class="icon icon-plus-circled"></span>
-        Create a new Ethereum Account
+        Add an Ethereum Account
       </span>
-
-      <span class="nav-group-item">
-        <span class="icon icon-down-circled"></span>
-        Import an Ethereum Account
-      </span>
-      <span class="nav-group-item">
+      <span class="nav-group-item" v-on:click="clickButton('addressbook')">
         <span class="icon icon-eye"></span>
         View the Address Book
       </span>
-      <span class="nav-group-item">
+      <span class="nav-group-item" v-on:click="clickButton('settings')">
         <span class="icon icon-layout"></span>
         Settings
       </span>

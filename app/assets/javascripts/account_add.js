@@ -1,5 +1,5 @@
 import Vue from 'vue';
- 
+
 
 export default class Nav {
   constructor( ){
@@ -10,26 +10,25 @@ export default class Nav {
 
 
      new Vue({
-        el: '#nav-primary',
+        el: '#add-account-menu',
         data: {
-          activeTab: 'home'
+
         },
         methods: {
-           clickTab: function (tabType) {
+           clickButton: function (buttonName) {
              // `this` inside methods points to the Vue instance
-             console.log('clicked ' + tabType + '!')
+             console.log('clicked ' + buttonName + '!')
 
-             this.activeTab = tabType;
+             switch(buttonName) {
+                case 'newaccount':
+                    window.location.href = '/account_new.html'
+                    break;
+                case 'importaccount':
+                    window.location.href = '/account_import.html'
+                    break;
 
-             switch(tabType) {
-                case 'accounts':
-                    window.location.href = '/accounts.html'
-                    break;
-                case 'transfer':
-                    window.location.href = '/transfer.html'
-                    break;
                 default:
-                    window.location.href = '/'
+                    break;
             }
 
              // `event` is the native DOM event

@@ -21,7 +21,8 @@ export default class Nav {
           password: '',
           dk: null,
           accountRendering: false,
-          backingUp: false
+          backingUp: false,
+          backedUp: false
         },
         methods: {
            newAccount: function () {
@@ -38,7 +39,11 @@ export default class Nav {
              })
            },
            saveAccount: function () {
-             var accountData = {};
+             var accountData = {
+               address:accountComponent.address,
+               dk:accountComponent.dk,
+               password:accountComponent.password
+             }
 
              self.socketClient.socketEmit('saveAccount',accountData,function(data){
 
@@ -51,6 +56,10 @@ export default class Nav {
            },
            startBackup: function () {
               Vue.set(accountComponent, 'backingUp', true )
+
+
+
+
            },
            downloadBackup: function (el) {
 
@@ -58,8 +67,7 @@ export default class Nav {
              var dk = accountComponent.dk;
 
 
-
-             if(password.length<4)
+             if(password.length<6)
              {
                 console.log(password)
 
@@ -72,7 +80,7 @@ export default class Nav {
              var keyObject = keythereum.dump(password, new Buffer(dk.privateKey), new Buffer(dk.salt), new Buffer(dk.iv), {options});
 
 
-             var btn = document.getElementById('downloadBackupButton')
+              var btn = document.getElementById('downloadBackupButton')
 
               var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(keyObject));
 
@@ -80,7 +88,7 @@ export default class Nav {
               btn.setAttribute("download", "data.json");
 
               Vue.set(accountComponent, 'backingUp', false )
-
+              Vue.set(accountComponent, 'backedUp', true )
            }
          }
       })

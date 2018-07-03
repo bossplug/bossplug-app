@@ -35,8 +35,12 @@
 
         <div class = "col s8">
 
+          <div class="address-container" v-if="address">
 
             Address: {{  address  }}
+
+          </div>
+
 
             <div class="whitespace-sm"> </div>
 
@@ -51,7 +55,7 @@
             </div>
 
 
-            <a class="waves-effect waves-light btn" id="downloadBackupButton" v-on:click="downloadBackup()"  v-if='backingUp'   > Download Backup</a>
+            <a class="waves-effect waves-light btn" v-bind:class="{'disabled':  password.length < 6  }" id="downloadBackupButton" v-on:click="downloadBackup()"  v-if='backingUp'   > Download Backup</a>
 
 
         </div>
@@ -64,7 +68,7 @@
        </div>
 
        <div class = "col s4">
-           <a class="waves-effect waves-light btn" v-on:click="saveAccount()">Save & Continue</a>
+           <a class="waves-effect waves-light btn" v-if="(backedUp && password.length>6)" v-on:click="saveAccount()">Save & Continue</a>
        </div>
     </div>
 

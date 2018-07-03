@@ -31,16 +31,7 @@ export default class SocketClient {
     });
 
 
-
-    this.socket.on('news', function (data) {
-      console.log('got news')
-
-          self.socket.emit('createAccount',null,function(data){
-            console.log('crea')
-            console.log(data)
-          })
-
-    });
+ 
 
 
 

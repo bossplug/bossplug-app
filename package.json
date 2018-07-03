@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "webpack": "webpack",
-    "start": "electron ."
+    "app": "electron .",
+    "dev":"webpack-dev-server"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [

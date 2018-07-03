@@ -11,10 +11,51 @@
 
     <div class="container" id="new-account">
 
-      <h1>New Account</h1>
+      <h3>New Account</h3>
 
 
-      <a class="waves-effect waves-light btn" v-on:click="newAccount()"> Generate</a>
+
+
+      <div class = "row">
+        <div class = "col s3">
+
+            <div class="whitespace-sm"> </div>
+
+            <a class="waves-effect waves-light btn" v-on:click="newAccount()"> Generate</a>
+
+            <div class="whitespace-sm"> </div>
+
+            <div id="blockie"></div>
+
+        </div>
+
+        <div class = "col s1">
+
+        </div>
+
+        <div class = "col s8">
+
+
+            Address: {{  address  }}
+
+            <div class="whitespace-sm"> </div>
+
+            <a class="waves-effect waves-light btn" id="downloadBackupButton" v-on:click="downloadBackup()"  v-if='accountRendering'   > Download Backup</a>
+
+
+        </div>
+     </div>
+
+
+     <div class = "row">
+       <div class = "col s8">
+
+       </div>
+
+       <div class = "col s4">
+           <a class="waves-effect waves-light btn" v-on:click="saveAccount()">Save & Continue</a>
+       </div>
+    </div>
 
 
     </div>

@@ -1,7 +1,8 @@
 # LavaWallet (Desktop)
 
-![image](https://user-images.githubusercontent.com/38132633/41366866-6a89a7fa-6f0b-11e8-9684-4c901ba4e250.png)
 
+![image](https://user-images.githubusercontent.com/38132633/42248915-2f98be9c-7ef6-11e8-9a46-68c2c0f4ea35.png)
+![image](https://user-images.githubusercontent.com/38132633/42248914-2d7dc512-7ef6-11e8-87dc-ab63b626f468.png)
 
 ## To Use
 

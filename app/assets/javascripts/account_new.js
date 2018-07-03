@@ -1,6 +1,8 @@
 import Vue from 'vue';
 
 var blockies = require('./util/blockies')
+ require('./util/keythereum')
+
 var accountComponent;
 
 export default class Nav {
@@ -16,14 +18,22 @@ export default class Nav {
         el: '#new-account',
         data: {
           address: '',
-          privateKey: '',
+          password: '',
+          dk: null,
           accountRendering: false
         },
         methods: {
            newAccount: function () {
              self.socketClient.socketEmit('createAccount',null,function(data){
 
-               self.renderAccount( data )
+               console.log('got ', data)
+               var address = data.address;
+
+               Vue.set(accountComponent, 'dk',  data.derivation )
+               Vue.set(accountComponent, 'address',  address )
+               Vue.set(accountComponent, 'accountRendering',  true )
+
+               self.renderAccount( address )
              })
            },
            saveAccount: function () {
@@ -40,14 +50,24 @@ export default class Nav {
            },
            downloadBackup: function (el) {
 
+             var password = accountComponent.password;
+             var dk = accountComponent.dk;
+
+             if(password.length<4)
+             {
+               console.log('Please use a longer password')
+               return;
+             }
+
+             var options = {};
+
+             var keyObject = keythereum.dump(password, new Buffer(dk.privateKey), new Buffer(dk.salt), new Buffer(dk.iv), {options});
+
+
              var btn = document.getElementById('downloadBackupButton')
 
-              var obj = {
-                  privateKey: accountComponent.privateKey
-              };
+              var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(keyObject));
 
-              var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
-            
               btn.setAttribute("href", "data:"+data);
               btn.setAttribute("download", "data.json");
 
@@ -59,19 +79,17 @@ export default class Nav {
   }
 
 
-  renderAccount(acct)
+  renderAccount(address)
   {
-    console.log('render account ', acct);
+    console.log('render account ', address);
 
 
-    Vue.set(accountComponent, 'address',  acct.address )
-    Vue.set(accountComponent, 'privateKey',  acct.privateKey )
-    Vue.set(accountComponent, 'accountRendering',  true )
+
 
 
     //make a blocky
     var icon = blockies.create({ // All options are optional
-      seed: acct.address, // seed used to generate icon data, default: random
+      seed: address, // seed used to generate icon data, default: random
 
       size: 20, // width/height of the icon in blocks, default: 8
       scale: 6, // width/height of each block in pixels, default: 4

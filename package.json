@@ -35,6 +35,7 @@
     "html-loader": "^0.5.5",
     "jquery": "^3.3.1",
     "js-sha3": "^0.7.0",
+    "keythereum": "^1.0.4",
     "sha3": "^1.2.0",
     "socket.io": "^2.1.1",
     "typed.js": "^2.0.6",

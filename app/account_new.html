@@ -40,7 +40,18 @@
 
             <div class="whitespace-sm"> </div>
 
-            <a class="waves-effect waves-light btn" id="downloadBackupButton" v-on:click="downloadBackup()"  v-if='accountRendering'   > Download Backup</a>
+            <a class="waves-effect waves-light btn"  v-on:click="startBackup()"  v-if='accountRendering && !backingUp'   > Backup Wallet </a>
+
+
+            <div class="input-field" v-if='backingUp'>
+              <div class="label">Password</div>
+
+              <input placeholder="password" id="password" type="text" class="validate" v-model='password' minlength=4>
+
+            </div>
+
+
+            <a class="waves-effect waves-light btn" id="downloadBackupButton" v-on:click="downloadBackup()"  v-if='backingUp'   > Download Backup</a>
 
 
         </div>

@@ -20,7 +20,8 @@ export default class Nav {
           address: '',
           password: '',
           dk: null,
-          accountRendering: false
+          accountRendering: false,
+          backingUp: false
         },
         methods: {
            newAccount: function () {
@@ -48,13 +49,20 @@ export default class Nav {
 
              })
            },
+           startBackup: function () {
+              Vue.set(accountComponent, 'backingUp', true )
+           },
            downloadBackup: function (el) {
 
              var password = accountComponent.password;
              var dk = accountComponent.dk;
 
+
+
              if(password.length<4)
              {
+                console.log(password)
+
                console.log('Please use a longer password')
                return;
              }
@@ -70,6 +78,8 @@ export default class Nav {
 
               btn.setAttribute("href", "data:"+data);
               btn.setAttribute("download", "data.json");
+
+              Vue.set(accountComponent, 'backingUp', false )
 
            }
          }

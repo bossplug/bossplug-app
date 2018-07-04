@@ -17,10 +17,9 @@ npm run app
 ```  
 
 # Developer TODO
-1. Integrate standard JSON ethereum accounts, importing/exporting
-https://github.com/ethereumjs/keythereum/blob/master/dist/keythereum.js
+1. Finish the transfer tab
 
-2. Integrate simple web3 transaction manager like metamask/trustwallet
+2. Integrate lava balance and lava transfers 
 
 
 

@@ -13,7 +13,26 @@
       <h3>Transfer</h3>
 
 
-      Under construction... Check back soon
+      <div class="missingAccount" v-if="selectedAddress == null" v-cloak>
+
+        <div class="error-container card red darken-1" v-if="errorMessage" v-cloak>
+          <div class="card-content white-text">
+           No account selected.  Please select an account first.
+         </div>
+        </div>
+
+      </div>
+
+
+
+      <div class="tranfer-container">
+        {{selectedAddress}}
+      </div>
+
+
+      <p> Under construction... </p>
+
+
     </div>
 
   </body>

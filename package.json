@@ -2,6 +2,8 @@
   "name": "lavawallet-desktop",
   "version": "0.2.0",
   "description": "A desktop client for storing and sending ERC20 tokens.",
+  "email": "admin@0xbitcoin.org",
+  "author": "0xBitcoin <admin@0xbitcoin.org>",
   "main": "main.js",
   "scripts": {
     "webpack": "webpack",
@@ -61,7 +63,8 @@
     "webpack-dev-server": "^2.11.1"
   },
   "build": {
-    "appId": "yourappid", 
+    "appId": "yourappid",
+
     "dmg": {
       "contents": [
         {

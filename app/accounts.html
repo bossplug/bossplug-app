@@ -37,10 +37,10 @@
        </div>
        <div class="col s8">
 
-             <div class="loading-container"  v-if="!tokenLoaded && selectedAddress" v-cloak>
+             <div class="loading-container"  v-if="(!tokenLoaded && selectedAddress)" v-cloak>
                Loading..
              </div>
-             
+
             <div class="selected-account-address" v-if="selectedAddress" v-cloak>
                 {{selectedAddress}}
             </div>

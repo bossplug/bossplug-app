@@ -13,6 +13,8 @@ export default class Accounts {
 
     var self = this;
 
+    var existingActiveAddress = window.sessionStorage.getItem("activeAddress");
+
 
 
 
@@ -21,7 +23,7 @@ export default class Accounts {
         data: {
           accounts: [],
           selectedAccount: null,
-          selectedAddress: null,
+          selectedAddress: existingActiveAddress,
 
           tokenLoaded:false,
           tokenBalance: null
@@ -58,10 +60,13 @@ export default class Accounts {
             console.log(address)
 
             this.selectedAddress = address;
+            this.tokenBalance = null;
 
             self.renderAccountData(address)
 
-
+            window.sessionStorage.setItem("activeAddress",address)
+            var addr = window.sessionStorage.getItem("activeAddress");
+              console.log('adddr',addr);
           }
          }
       })
@@ -93,10 +98,13 @@ export default class Accounts {
       console.log('account info',accountInfo)
 
 
-      Vue.set(accountsComponent, 'tokenLoaded', true )
 
-      Vue.set(accountsComponent, 'tokenBalance', accountInfo.tokenBalance )
+      if(address == accountInfo.userAddress)
+      {
+        Vue.set(accountsComponent, 'tokenLoaded', true )
 
+        Vue.set(accountsComponent, 'tokenBalance', accountInfo.tokenBalance )
+      }
   }
 
 

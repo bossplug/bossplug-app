@@ -21,7 +21,9 @@ export default class Accounts {
         data: {
           accounts: [],
           selectedAccount: null,
-          selectedAddress: null
+          selectedAddress: null,
+
+          tokenBalance: null
         },
         created: async function () {
             var accountsList = await self.getAccountsList();
@@ -66,10 +68,26 @@ export default class Accounts {
 
   }
 
-  //get balances and QR codes 
+  //get balances and QR codes
   async renderAccountData(address)
   {
+    var self=this;
+    var accountInfo = await new Promise(async (resolve, reject) => {
+         self.socketClient.socketEmit('getAccountInfo',address,function(data){
 
+           if(data.success)
+           {
+              resolve(data.accountInfo)
+           }else{
+             reject(data.success)
+           }
+
+         })
+      })
+
+      console.log('account info',accountInfo)
+ 
+        Vue.set(accountsComponent, 'tokenBalance', accountInfo.tokenBalance )
   }
 
 

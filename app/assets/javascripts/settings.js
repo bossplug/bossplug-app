@@ -17,13 +17,17 @@ export default class Nav {
         el: '#settings',
         data: {
           storagePath: null,
-          version:null
+          version:null,
+          tokenAddress:null,
+          web3Provider:null
         },
         created: async function () {
           self.socketClient.socketEmit('getWalletInfo',null,function(data){
               console.log('got data', data)
               settingsComponent.storagePath = data.storagePath;
               settingsComponent.version = data.version;
+              settingsComponent.tokenAddress = data.tokenAddress;
+              settingsComponent.web3Provider = data.web3Provider;
 
           });
 

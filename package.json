@@ -40,7 +40,7 @@
     "socket.io": "^2.1.1",
     "typed.js": "^2.0.6",
     "vue": "^2.5.13",
-    "web3": "^0.14.1",
+    "web3": "^1.0.0-beta.34",
     "web3-eth-accounts": "^1.0.0-beta.34",
     "web3-utils": "^1.0.0-beta.34",
     "webpack": "^3.10.0",

@@ -37,13 +37,13 @@
        </div>
        <div class="col s8">
 
-            <div class="selected-account-address">
+            <div class="selected-account-address" v-if="selectedAddress" v-cloak>
                 {{selectedAddress}}
             </div>
 
 
-            <div class="selected-account-balance">
-                
+            <div class="selected-account-balance" v-if="tokenBalance" v-cloak>
+                Token Balance: {{tokenBalance}}
             </div>
 
        </div>

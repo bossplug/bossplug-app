@@ -10,8 +10,10 @@
 
 # Install dependencies
 npm install
+# Compile
+npm run webpack
 # Run the app
-npm start
+npm run app
 ```  
 
 # Developer TODO
@@ -48,7 +50,7 @@ https://github.com/ethereumjs/keythereum/blob/master/dist/keythereum.js
 ## TODO
 1. A little storage file that stores settings:
   - token address to use
-  - web3 interface path 
+  - web3 interface path
 
 
 

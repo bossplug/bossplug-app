@@ -37,14 +37,22 @@
        </div>
        <div class="col s8">
 
+             <div class="loading-container"  v-if="!tokenLoaded && selectedAddress" v-cloak>
+               Loading..
+             </div>
+             
             <div class="selected-account-address" v-if="selectedAddress" v-cloak>
                 {{selectedAddress}}
             </div>
 
 
-            <div class="selected-account-balance" v-if="tokenBalance" v-cloak>
+            <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
                 Token Balance: {{tokenBalance}}
             </div>
+
+
+
+
 
        </div>
      </div>

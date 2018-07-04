@@ -7,7 +7,8 @@
     "webpack": "webpack",
     "app": "electron .",
     "dev": "webpack-dev-server",
-    "electron-dev": "electron ./electron-dev"
+    "electron-dev": "electron ./electron-dev",
+    "dist": "build"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -58,5 +59,32 @@
     "static-site-generator-webpack-plugin": "^3.4.1",
     "style-loader": "^0.20.1",
     "webpack-dev-server": "^2.11.1"
+  },
+  "build": {
+    "appId": "yourappid", 
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "squirrel",
+      "icon": "build/icon.ico"
+    }
   }
 }

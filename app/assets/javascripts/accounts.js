@@ -23,6 +23,7 @@ export default class Accounts {
           selectedAccount: null,
           selectedAddress: null,
 
+          tokenLoaded:false,
           tokenBalance: null
         },
         created: async function () {
@@ -71,6 +72,10 @@ export default class Accounts {
   //get balances and QR codes
   async renderAccountData(address)
   {
+
+    Vue.set(accountsComponent, 'tokenLoaded', false )
+
+
     var self=this;
     var accountInfo = await new Promise(async (resolve, reject) => {
          self.socketClient.socketEmit('getAccountInfo',address,function(data){
@@ -86,8 +91,12 @@ export default class Accounts {
       })
 
       console.log('account info',accountInfo)
- 
-        Vue.set(accountsComponent, 'tokenBalance', accountInfo.tokenBalance )
+
+
+      Vue.set(accountsComponent, 'tokenLoaded', true )
+
+      Vue.set(accountsComponent, 'tokenBalance', accountInfo.tokenBalance )
+
   }
 
 

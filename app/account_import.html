@@ -31,6 +31,14 @@
 
               <div id="blockie"></div>
 
+                <div class="whitespace-sm"> </div>
+
+              <div class="error-container card red darken-1" v-if="errorMessage">
+                <div class="card-content white-text">
+                 {{  errorMessage  }}
+               </div>
+              </div>
+
           </div>
 
           <div class = "col s1">
@@ -42,13 +50,19 @@
 
             <div class="import-pkey" v-if="importType=='pkey'">
 
-              <div class="input-field"  >
+              <div class="input-field" v-if="(!addingPrivateKey)" >
                 <div class="label">Raw Private Key</div>
 
                 <input placeholder="privateKey" id="privateKey" type="text" class="validate" v-model='privateKeyRaw' minlength=32>
 
               </div>
 
+              <div class="input-field" v-if="( addingPrivateKey)">
+                <div class="label">Add a Password for the new Keystore</div>
+
+                <input placeholder="password" id="password" type="text" class="validate" v-model='password' minlength=4>
+
+              </div>
 
                <a class="waves-effect waves-light btn" v-on:click="importRawPrivateKey()"> Continue </a>
 
@@ -67,12 +81,12 @@
                     <span>Select File</span>
                     <input type="file" id="keystoreFile" ref="keystoreFile" @change="importKeystoreFile">
                   </div>
-                  <div class="file-path-wrapper">
+                  <div class="file-path-wrapper" style="hidden:true">
                     <input class="file-path validate" type="text">
                   </div>
                 </div>
               </form>
-              
+
               <div class="address-container" v-if="address">
 
                 Address: {{  address  }}
@@ -83,6 +97,9 @@
 
             </div>
 
+              <div class="whitespace-md"> </div>
+
+            <a class="waves-effect waves-light btn" v-if="(importedAccount)" v-on:click="saveAccount()">Save & Continue</a>
 
 
           </div>
@@ -91,15 +108,7 @@
 
 
 
-        <div class = "row">
-          <div class = "col s8">
 
-          </div>
-
-          <div class = "col s4">
-              <a class="waves-effect waves-light btn" v-if="(importedAccount)" v-on:click="saveAccount()">Save & Continue</a>
-          </div>
-       </div>
 
     </div>
 

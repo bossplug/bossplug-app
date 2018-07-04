@@ -17,12 +17,14 @@ export default class AccountNew {
     accountComponent = new Vue({
         el: '#new-account',
         data: {
-          address: '',
+          address: null,
           password: '',
           dk: null,
           accountRendering: false,
           backingUp: false,
-          backedUp: false
+          backedUp: false,
+
+          errorMessage: null
         },
         methods: {
            newAccount: function () {
@@ -31,9 +33,9 @@ export default class AccountNew {
                console.log('got ', data)
                var address = data.address;
 
-               this.dk = data.derivation;
-               this.address = address;
-               this.accountRendering = true;
+               accountComponent.dk = data.derivation;
+               accountComponent.address = address;
+               accountComponent.accountRendering = true;
 
                self.renderAccount( address )
              })
@@ -66,14 +68,12 @@ export default class AccountNew {
              var password = accountComponent.password;
              var dk = accountComponent.dk;
 
-
-             if(password.length<6)
+             if(password.length < 6)
              {
-                console.log(password)
-
-               console.log('Please use a longer password')
-               return;
+               this.errorMessage = 'Minimum password length: 6'
+              return
              }
+
 
              var options = {};
 
@@ -100,9 +100,6 @@ export default class AccountNew {
   renderAccount(address)
   {
     console.log('render account ', address);
-
-
-
 
 
     //make a blocky

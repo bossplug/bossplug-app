@@ -18,37 +18,93 @@ export default class AccountImport {
         el: '#import-account',
         data: {
           importType: null,
+
           privateKeyRaw: null,
-          importedAccount: false,
+          addingPrivateKey: false,
+          password: null,
+
+          importedAccount: null,
           keystoreFile: null,
-          address: null
+          address: null,
+          errorMessage: null
 
         },
         methods: {
            setImportType: function (type) {
+             this.errorMessage = null;
               console.log('import type',type)
               this.importType = type;
+
+              this.importedAccount = false;
+              this.keystoreFile = null;
+              this.privateKeyRaw = null;
+              this.address = null;
+              this.addingPrivateKey=false;
+              this.password=null;
+
+              self.renderAccount(this.address);
            },
            importRawPrivateKey: function ( ) {
-              console.log('import raw key' )
+             this.errorMessage = null;
+            //  console.log('import raw key', this.privateKeyRaw );
+
+              if(!this.addingPrivateKey)
+              {
+                if( this.privateKeyRaw.length != 64  )
+                {
+                  console.log('invalid length')
+                  this.errorMessage = 'Invalid key length.'
+                  return;
+                }
+
+                console.log('valid')
+                this.addingPrivateKey = true;
+                return;
+              }
+
+              if(this.password.length < 6)
+              {
+                this.errorMessage = 'Minimum password length: 6'
+                return
+              }
+
+              var options = {};
+
+              console.log(this.privateKeyRaw)
+
+              var dk = keythereum.create( );
+
+              var keyObject = keythereum.dump(this.password, this.privateKeyRaw, new Buffer(dk.salt), new Buffer(dk.iv), {options});
+
+              self.renderAccount(keyObject.address);
+
+               console.log('created key object', keyObject )
+
+               this.importedAccount = keyObject;
+
 
            },
 
 
            importKeystoreFile: async function ( ) {
+             this.errorMessage = null;
               this.keystoreFile = this.$refs.keystoreFile.files[0]
 
 
               var fileContents = await self.readInputFile(this.keystoreFile)
-              console.log(fileContents)
+
 
               this.address = fileContents.address;
 
               self.renderAccount(this.address);
 
-              this.importedAccount = true;
+              this.importedAccount = fileContents;
+
+
+              //var privateKey = keythereum.recover(password, keyObject);
             },
             saveAccount: function ( ) {
+              this.errorMessage = null;
                console.log('save' )
 
             },
@@ -78,7 +134,11 @@ export default class AccountImport {
     while (blockieContainer.firstChild) {
       blockieContainer.removeChild(blockieContainer.firstChild);
     }
-    blockieContainer.appendChild(icon); // icon is a canvas element
+
+    if(address)
+    {
+      blockieContainer.appendChild(icon); // icon is a canvas element
+    }
 
 
   }

@@ -15,15 +15,17 @@
       <h1>Accounts</h1>
 
       <div class="row">
-       <div class="col s4">
+       <div class="col s3">
 
          <nav class="nav-group accounts-group" id="accounts-menu">
 
-           <span class="nav-group-item">
-              list of accts pub keys here from asking websockets..
+
+           <span class="nav-group-item" v-for="(item, index) in accounts" v-on:click="selectAccount($event)" v-bind:data-address="item.address">
+             <span class="icon " v-bind:class="{'icon-star': (item.address == selectedAddress),'icon-star-empty': (item.address != selectedAddress)}"></span>
+             {{ item.address }}
            </span>
 
-           <span class="nav-group-item" v-on:click="clickButton('addaccount')">
+           <span class="nav-group-item" v-on:click="clickButton('addaccount')" v-if="accounts.length == 0">
              <span class="icon icon-plus-circled"></span>
              Add Account
            </span>
@@ -31,9 +33,18 @@
          </nav>
 
        </div>
+       <div class="col s1">
+       </div>
        <div class="col s8">
 
-            -- Selected Account Info --
+            <div class="selected-account-address">
+                {{selectedAddress}}
+            </div>
+
+
+            <div class="selected-account-balance">
+                 
+            </div>
 
        </div>
      </div>

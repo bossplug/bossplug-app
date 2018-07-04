@@ -13,13 +13,22 @@ export default class Accounts {
 
     var self = this;
 
-     accountsComponent = new Vue({
-        el: '#accounts-menu',
-        data: {
 
+
+
+     accountsComponent = new Vue({
+        el: '#accounts',
+        data: {
+          accounts: [],
+          selectedAccount: null,
+          selectedAddress: null
         },
-        created: function () {
-            self.getAccountsList();
+        created: async function () {
+            var accountsList = await self.getAccountsList();
+            console.log(accountsList)
+
+            self.renderAccountsList(accountsList)
+
         },
         methods: {
            clickButton: function (buttonName) {
@@ -35,34 +44,74 @@ export default class Accounts {
                     break;
             }
 
-             // `event` is the native DOM event
-             /*if (event) {
-               alert(event.target.tagName)
-             }*/
-           }
+          },
+          selectAccount: function (e) {
+            // `this` inside methods points to the Vue instance
+            console.log('clicked ' +    '!', e.target)
+
+            var target = e.target;
+            var address = target.getAttribute('data-address');
+
+            console.log(address)
+
+            this.selectedAddress = address;
+
+            self.renderAccountData(address)
+
+
+          }
          }
       })
 
 
+  }
 
+  //get balances and QR codes 
+  async renderAccountData(address)
+  {
 
   }
 
 
-  getAccountsList()
+  async getAccountsList()
   {
     var self = this;
 
     console.log('get acct list', self.socketClient)
-     self.socketClient.socketEmit('listStoredAccounts',null,function(data){
 
-       if(data.success)
-       {
-         window.location.href = '/accounts.html'
-       }
+    var list = await new Promise(async (resolve, reject) => {
+         self.socketClient.socketEmit('listStoredAccounts',null,function(data){
 
-     })
+           if(data.success)
+           {
+              resolve(data.list)
+           }else{
+             reject(data.success)
+           }
 
+         })
+      })
+
+      return list;
+  }
+
+
+
+  async renderAccountsList(list)
+  {
+      var accounts = [];
+
+      for(var address of list)
+      {
+        var acct = {
+          address: address
+        }
+
+        accounts.push(acct)
+      }
+
+
+      Vue.set(accountsComponent, 'accounts', accounts )
   }
 
 

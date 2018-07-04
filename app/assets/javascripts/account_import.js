@@ -106,7 +106,7 @@ export default class AccountImport {
             saveAccount: function ( ) {
               this.errorMessage = null;
                console.log('save' )
- 
+
 
                var keyObject = importComponent.importedAccount ;
 
@@ -166,7 +166,7 @@ export default class AccountImport {
   {
     var self = this ;
 
-    var response = new Promise(async (resolve, reject) => {
+    var response = await new Promise(async (resolve, reject) => {
         if (file.name.endsWith('.json')) {
 
             var reader = new FileReader();

@@ -30,10 +30,16 @@ export default class AccountNew {
            newAccount: function () {
              self.socketClient.socketEmit('createAccount',null,function(data){
 
-               console.log('got ', data)
-               var address = data.address;
+               var acct = JSON.parse(data);
 
-               accountComponent.dk = data.derivation;
+               console.log('got ',  acct)
+               var address = acct.address;
+
+               accountComponent.dk = acct.derivation;
+               accountComponent.dk.privateKey = Buffer.from(accountComponent.dk.privateKey)
+               accountComponent.dk.salt = Buffer.from(accountComponent.dk.salt)
+               accountComponent.dk.iv = Buffer.from(accountComponent.dk.iv)
+
                accountComponent.address = address;
                accountComponent.accountRendering = true;
 
@@ -42,14 +48,21 @@ export default class AccountNew {
            },
            saveAccount: function () {
 
+             //address is changing !!??
 
              var password = accountComponent.password;
              var dk = accountComponent.dk;
              var options = {};
 
-             var keyObject = keythereum.dump(password, new Buffer(dk.privateKey), new Buffer(dk.salt), new Buffer(dk.iv), {options});
+             var keyObject = keythereum.dump(password, (dk.privateKey), (dk.salt), (dk.iv), {options});
+ 
+             if( !accountComponent.address.endsWith(keyObject.address))
+             {
+               console.log(keyObject.address)
 
-
+               accountComponent.errorMessage = "Address doesn't match?"
+               return;
+             }
 
              self.socketClient.socketEmit('saveAccount',keyObject,function(data){
 
@@ -62,8 +75,6 @@ export default class AccountNew {
            },
            startBackup: function () {
               Vue.set(accountComponent, 'backingUp', true )
-
-
 
 
            },
@@ -81,9 +92,17 @@ export default class AccountNew {
 
              var options = {};
 
-             var keyObject = keythereum.dump(password, new Buffer(dk.privateKey), new Buffer(dk.salt), new Buffer(dk.iv), {options});
+             var keyObject = keythereum.dump(password, (dk.privateKey), (dk.salt), (dk.iv), {options});
 
 
+
+             if( !accountComponent.address.endsWith(keyObject.address))
+             {
+               console.log('does not match', keyObject.address, accountComponent.address)
+
+               accountComponent.errorMessage = "Address doesn't match?"
+               return;
+             }
 
               var btn = document.getElementById('downloadBackupButton')
 

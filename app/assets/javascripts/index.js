@@ -33,7 +33,7 @@ function init()
 
 
   if(document.getElementById("accounts")){
-    accounts.init();
+    accounts.init(socketClient);
   }
 
   if(document.getElementById("add-account")){

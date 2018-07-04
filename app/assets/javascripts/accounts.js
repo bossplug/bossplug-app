@@ -1,18 +1,25 @@
 import Vue from 'vue';
 
+var accountsComponent;
 
 export default class Accounts {
   constructor( ){
 
   }
 
-  init(){
+  init(socketClient){
+    var self = this;
+    self.socketClient = socketClient;
 
+    var self = this;
 
-     new Vue({
+     accountsComponent = new Vue({
         el: '#accounts-menu',
         data: {
 
+        },
+        created: function () {
+            self.getAccountsList();
         },
         methods: {
            clickButton: function (buttonName) {
@@ -36,6 +43,25 @@ export default class Accounts {
          }
       })
 
+
+
+
+  }
+
+
+  getAccountsList()
+  {
+    var self = this;
+
+    console.log('get acct list', self.socketClient)
+     self.socketClient.socketEmit('listStoredAccounts',null,function(data){
+
+       if(data.success)
+       {
+         window.location.href = '/accounts.html'
+       }
+
+     })
 
   }
 

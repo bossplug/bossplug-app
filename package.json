@@ -3,14 +3,14 @@
   "version": "0.2.0",
   "description": "A desktop client for storing and sending ERC20 tokens.",
   "email": "admin@0xbitcoin.org",
-  "author": "0xBitcoin <admin@0xbitcoin.org>",
+  "author": "Infernal Toast <admin@0xbitcoin.org>",
   "main": "main.js",
   "scripts": {
     "webpack": "webpack",
     "app": "electron .",
     "dev": "webpack-dev-server",
     "electron-dev": "electron ./electron-dev",
-    "dist": "build"
+    "dist": "npm run webpack && build"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -83,7 +83,8 @@
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "maintainer":"Infernal Toast <admin@0xbitcoin.org>"
     },
     "win": {
       "target": "squirrel",

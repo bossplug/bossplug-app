@@ -12,6 +12,9 @@ var accounts = new Accounts();
 import AccountAdd from './account_add';
 var accountAdd = new AccountAdd();
 
+import AccountImport from './account_import';
+var accountImport = new AccountImport();
+
 import SocketClient from './socketclient';
 var socketClient = new SocketClient();
 
@@ -36,6 +39,11 @@ function init()
   if(document.getElementById("add-account")){
     accountAdd.init();
   }
+
+  if(document.getElementById("import-account")){
+    accountImport.init();
+  }
+
 
   if(document.getElementById("new-account")){
     accountNew.init(socketClient);

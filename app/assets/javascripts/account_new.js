@@ -5,7 +5,7 @@ var blockies = require('./util/blockies')
 
 var accountComponent;
 
-export default class Nav {
+export default class AccountNew {
   constructor( ){
 
   }
@@ -31,9 +31,9 @@ export default class Nav {
                console.log('got ', data)
                var address = data.address;
 
-               Vue.set(accountComponent, 'dk',  data.derivation )
-               Vue.set(accountComponent, 'address',  address )
-               Vue.set(accountComponent, 'accountRendering',  true )
+               this.dk = data.derivation;
+               this.address = address;
+               this.accountRendering = true;
 
                self.renderAccount( address )
              })

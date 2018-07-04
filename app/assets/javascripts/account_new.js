@@ -41,13 +41,17 @@ export default class AccountNew {
              })
            },
            saveAccount: function () {
-             var accountData = {
-               address:accountComponent.address,
-               dk:accountComponent.dk,
-               password:accountComponent.password
-             }
 
-             self.socketClient.socketEmit('saveAccount',accountData,function(data){
+
+             var password = accountComponent.password;
+             var dk = accountComponent.dk;
+             var options = {};
+
+             var keyObject = keythereum.dump(password, new Buffer(dk.privateKey), new Buffer(dk.salt), new Buffer(dk.iv), {options});
+
+
+
+             self.socketClient.socketEmit('saveAccount',keyObject,function(data){
 
                if(data.success)
                {
@@ -78,6 +82,7 @@ export default class AccountNew {
              var options = {};
 
              var keyObject = keythereum.dump(password, new Buffer(dk.privateKey), new Buffer(dk.salt), new Buffer(dk.iv), {options});
+
 
 
               var btn = document.getElementById('downloadBackupButton')

@@ -33,7 +33,7 @@
 
                 <div class="whitespace-sm"> </div>
 
-              <div class="error-container card red darken-1" v-if="errorMessage">
+              <div class="error-container card red darken-1" v-if="errorMessage" v-cloak>
                 <div class="card-content white-text">
                  {{  errorMessage  }}
                </div>
@@ -48,7 +48,7 @@
           <div class = "col s6">
 
 
-            <div class="import-pkey" v-if="importType=='pkey'">
+            <div class="import-pkey" v-if="importType=='pkey'" v-cloak>
 
               <div class="input-field" v-if="(!addingPrivateKey)" >
                 <div class="label">Raw Private Key</div>
@@ -69,7 +69,7 @@
 
             </div>
 
-            <div class="import-keystore"  v-if="importType=='keystore'">
+            <div class="import-keystore"  v-if="importType=='keystore'" v-cloak>
 
 
               <form action="#">
@@ -99,7 +99,7 @@
 
               <div class="whitespace-md"> </div>
 
-            <a class="waves-effect waves-light btn" v-if="(importedAccount)" v-on:click="saveAccount()">Save & Continue</a>
+            <a class="waves-effect waves-light btn" v-if="(importedAccount)" v-on:click="saveAccount()" v-cloak>Save & Continue</a>
 
 
           </div>

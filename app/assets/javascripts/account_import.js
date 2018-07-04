@@ -106,6 +106,24 @@ export default class AccountImport {
             saveAccount: function ( ) {
               this.errorMessage = null;
                console.log('save' )
+ 
+
+               var keyObject = importComponent.importedAccount ;
+
+
+                 //address:importComponent.address,
+                // dk:importComponent.dk,
+                // password:importComponent.password
+
+
+               self.socketClient.socketEmit('saveAccount',keyObject,function(data){
+
+                 if(data.success)
+                 {
+                   window.location.href = '/accounts.html'
+                 }
+
+               })
 
             },
 

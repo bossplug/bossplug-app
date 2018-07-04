@@ -41,7 +41,7 @@ function init()
   }
 
   if(document.getElementById("import-account")){
-    accountImport.init();
+    accountImport.init(socketClient);
   }
 
 

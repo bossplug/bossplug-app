@@ -30,8 +30,8 @@
 
             <div class="whitespace-sm"> </div>
 
-            
-            <div class="error-container card red darken-1" v-if="errorMessage">
+
+            <div class="error-container card red darken-1" v-if="errorMessage" v-cloak>
               <div class="card-content white-text">
                {{  errorMessage  }}
              </div>
@@ -46,7 +46,7 @@
 
         <div class = "col s8">
 
-          <div class="address-container" v-if="address">
+          <div class="address-container" v-if="address" v-cloak>
 
             Address: {{  address  }}
 
@@ -55,10 +55,10 @@
 
             <div class="whitespace-sm"> </div>
 
-            <a class="waves-effect waves-light btn"  v-on:click="startBackup()"  v-if='accountRendering && !backingUp'   > Backup Wallet </a>
+            <a class="waves-effect waves-light btn"  v-on:click="startBackup()"  v-if='accountRendering && !backingUp'  v-cloak > Backup Wallet </a>
 
 
-            <div class="input-field" v-if='backingUp'>
+            <div class="input-field" v-if='backingUp' v-cloak>
               <div class="label">Password</div>
 
               <input placeholder="password" id="password" type="text" class="validate" v-model='password' minlength=4>
@@ -66,7 +66,7 @@
             </div>
 
 
-            <a class="waves-effect waves-light btn" v-bind:class="{'disabled':  password.length < 6  }" id="downloadBackupButton" v-on:click="downloadBackup()"  v-if='backingUp'   > Download Backup</a>
+            <a class="waves-effect waves-light btn" v-bind:class="{'disabled':  password.length < 6  }" id="downloadBackupButton" v-on:click="downloadBackup()"  v-if='backingUp'  v-cloak > Download Backup</a>
 
 
         </div>
@@ -79,7 +79,7 @@
        </div>
 
        <div class = "col s4">
-           <a class="waves-effect waves-light btn" v-if="(backedUp && password.length>6)" v-on:click="saveAccount()">Save & Continue</a>
+           <a class="waves-effect waves-light btn" v-if="(backedUp && password.length>6)" v-on:click="saveAccount()" v-cloak>Save & Continue</a>
        </div>
     </div>
 

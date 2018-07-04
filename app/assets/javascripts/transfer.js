@@ -20,8 +20,8 @@ export default class Transfer {
      transferComponent = new Vue({
         el: '#transfer',
         data: {
-          selectedAddress: existingActiveAddress
-
+          selectedAddress: existingActiveAddress,
+          errorMessage: null
         },
         created: async function () {
 
@@ -49,7 +49,7 @@ export default class Transfer {
 
   }
 
- 
+
 
 
 };

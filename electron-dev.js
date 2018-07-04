@@ -7,12 +7,12 @@ const WalletCore = require('./lib/walletcore')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
+async function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 450})
 
 
-  WalletCore.init();
+  await WalletCore.init();
 
   // and load the index.html of the app.
   mainWindow.loadURL('http://localhost:8080')

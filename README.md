@@ -40,14 +40,15 @@ https://github.com/ethereumjs/keythereum/blob/master/dist/keythereum.js
 -Transfer
 *
 
--Settings  (also accessible from home) 
+-Settings  (also accessible from home)
 * Lets you edit the 'active token' address - the primary token the wallet uses
 
 
 
-## Vault File Storage
-where ?
-
+## TODO
+1. A little storage file that stores settings:
+  - token address to use
+  - web3 interface path 
 
 
 

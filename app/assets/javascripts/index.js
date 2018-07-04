@@ -6,6 +6,9 @@ var nav = new Nav();
 import Home from './home';
 var home = new Home();
 
+import Settings from './settings';
+var settings = new Settings();
+
 import Accounts from './accounts';
 var accounts = new Accounts();
 
@@ -31,6 +34,9 @@ function init()
     home.init();
   }
 
+  if(document.getElementById("settings")){
+    settings.init(socketClient);
+  }
 
   if(document.getElementById("accounts")){
     accounts.init(socketClient);

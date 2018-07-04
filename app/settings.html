@@ -9,9 +9,15 @@
 
     <%= require('html-loader!./assets/html/navbar.html') %>
 
+    <div class="container" id="settings">
 
-    <h1>Settings</h1>
+    <h3>Settings</h3>
 
+    <div> Keystores folder: {{ storagePath }} </div>
+
+    <div> Wallet Version: {{ version }} </div>
+
+    </div>
 
   </body>
 </html>

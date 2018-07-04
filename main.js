@@ -1,8 +1,8 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 
-var server = require('./lib/webserver')
-var serv = new server();
+const WalletCore = require('./lib/walletcore')
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -12,7 +12,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({width: 800, height: 450})
   mainWindow.setMenu(null)
 
-  serv.init()
+  WalletCore.init()
 
   // and load the index.html of the app.
   //mainWindow.loadFile('public/index.html')

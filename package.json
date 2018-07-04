@@ -1,6 +1,6 @@
 {
   "name": "lavawallet-desktop",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "A desktop client for storing and sending ERC20 tokens.",
   "main": "main.js",
   "scripts": {

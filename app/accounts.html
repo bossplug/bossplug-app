@@ -45,6 +45,9 @@
                 {{selectedAddress}}
             </div>
 
+            <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
+                ETH Balance: {{ethBalance}}
+            </div>
 
             <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
                 Token Balance: {{tokenBalance}}

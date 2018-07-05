@@ -26,6 +26,7 @@ export default class Accounts {
           selectedAddress: existingActiveAddress,
 
           tokenLoaded:false,
+          ethBalance: null,
           tokenBalance: null
         },
         created: async function () {
@@ -33,6 +34,11 @@ export default class Accounts {
             console.log(accountsList)
 
             self.renderAccountsList(accountsList)
+
+            if(existingActiveAddress)
+            {
+              self.renderAccountData(existingActiveAddress)
+            }
 
         },
         methods: {
@@ -61,6 +67,7 @@ export default class Accounts {
 
             this.selectedAddress = address;
             this.tokenBalance = null;
+            this.ethBalance = null;
 
             self.renderAccountData(address)
 
@@ -80,6 +87,7 @@ export default class Accounts {
 
     Vue.set(accountsComponent, 'tokenLoaded', false )
 
+    console.log('grab acct data ')
 
     var self=this;
     var accountInfo = await new Promise(async (resolve, reject) => {
@@ -103,8 +111,9 @@ export default class Accounts {
       {
         Vue.set(accountsComponent, 'tokenLoaded', true )
 
+        Vue.set(accountsComponent, 'ethBalance', accountInfo.ethBalance )
         Vue.set(accountsComponent, 'tokenBalance', accountInfo.tokenBalance )
-      }
+    }
   }
 
 

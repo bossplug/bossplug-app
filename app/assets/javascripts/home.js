@@ -24,7 +24,7 @@ export default class Nav {
                     window.location.href = '/account_add.html'
                     break;
                 case 'addressbook':
-                    window.location.href = '/addressbook.html'
+                    window.location.href = '/accounts.html'
                     break;
                 case 'settings':
                     window.location.href = '/settings.html'

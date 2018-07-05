@@ -12,12 +12,15 @@
 
     <div class="container" id="accounts">
 
-      <h3>Accounts</h3>
+
 
       <div class="row">
        <div class="col s3">
 
+         <h3>Accounts</h3>
+
          <nav class="nav-group accounts-group" id="accounts-menu">
+
 
 
            <span class="nav-group-item" v-for="(item, index) in accounts" v-on:click="selectAccount($event)" v-bind:data-address="item.address">
@@ -37,6 +40,14 @@
        </div>
        <div class="col s8">
 
+         <div class="whitespace-md"></div>
+
+            <div class="row white-text quick-nav">
+               <div class="col s4 teal lighten-2 hoverable">Overview</div>
+               <div class="col s4 teal lighten-2 hoverable">Deposit</div>
+               <div class="col s4 teal lighten-2 hoverable">Withdraw</div>
+            </div>
+
              <div class="loading-container"  v-if="(!tokenLoaded && selectedAddress)" v-cloak>
                Loading..
              </div>
@@ -50,10 +61,16 @@
             </div>
 
             <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
-                Token Balance: {{tokenBalance}}
+
             </div>
 
+            <ul class="collection with-header">
+              <li class="collection-header"><h4>  </h4></li>
+              <li class="collection-item">External Balance: {{tokenBalance}}</li>
+              <li class="collection-item">Alvin</li>
+              <li class="collection-item">Lava Balance: {{tokenBalance}}</li>
 
+            </ul>
 
 
 

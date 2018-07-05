@@ -19,6 +19,8 @@ export default class Nav {
           storagePath: null,
           version:null,
           tokenAddress:null,
+          tokenName:null,
+          lavaContractAddress:null,
           web3Provider:null
         },
         created: async function () {
@@ -27,8 +29,9 @@ export default class Nav {
               settingsComponent.storagePath = data.storagePath;
               settingsComponent.version = data.version;
               settingsComponent.tokenAddress = data.tokenAddress;
+              settingsComponent.tokenName = data.tokenName;
               settingsComponent.web3Provider = data.web3Provider;
-
+              settingsComponent.lavaContractAddress = data.lavaContractAddress;
           });
 
 

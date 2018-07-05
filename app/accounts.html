@@ -42,7 +42,7 @@
 
          <div class="whitespace-md"></div>
 
-            <div class="row white-text quick-nav" v-if="tokenLoaded">
+            <div class="row white-text quick-nav" v-if="tokenLoaded" v-cloak>
                <div class="col s4 teal lighten-2 hoverable">Overview</div>
                <div class="col s4 teal lighten-2 hoverable">Deposit</div>
                <div class="col s4 teal lighten-2 hoverable">Withdraw</div>
@@ -55,7 +55,7 @@
 
 
 
-            <ul class="collection" v-if="tokenLoaded">
+            <ul class="collection" v-if="tokenLoaded" v-cloak>
              <li class="collection-item">
                <div class="selected-account-address" v-if="selectedAddress" v-cloak>
                    {{selectedAddress}}

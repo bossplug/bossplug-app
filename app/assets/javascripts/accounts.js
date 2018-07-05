@@ -70,6 +70,7 @@ export default class Accounts {
 
             this.selectedAddress = address;
             this.tokenBalance = null;
+            this.lavaBalance = null;
             this.ethBalance = null;
 
             self.renderAccountData(address)
@@ -136,6 +137,7 @@ export default class Accounts {
 
         Vue.set(accountsComponent, 'ethBalance', accountInfo.ethBalance )
         Vue.set(accountsComponent, 'tokenBalance', accountInfo.tokenBalance )
+        Vue.set(accountsComponent, 'lavaBalance', accountInfo.tokenBalance )
     }
   }
 

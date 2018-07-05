@@ -27,7 +27,10 @@ export default class Accounts {
 
           tokenLoaded:false,
           ethBalance: null,
-          tokenBalance: null
+          tokenBalance: null,
+          lavaBalance: null,
+
+          flashMessage: null
         },
         created: async function () {
             var accountsList = await self.getAccountsList();
@@ -74,6 +77,26 @@ export default class Accounts {
             window.sessionStorage.setItem("activeAddress",address)
             var addr = window.sessionStorage.getItem("activeAddress");
               console.log('adddr',addr);
+          },
+          async copySelectedAddress()
+          {
+
+            var data = await new Promise(async (resolve, reject) => {
+                 self.socketClient.socketEmit('copyToClipboard',this.selectedAddress,function(data){
+
+                   if(data)
+                   {
+                      resolve(data)
+                   }else{
+                     reject()
+                   }
+
+                 })
+              })
+
+            self.flashMessage('Copied to clipboard!')
+
+            console.log('copied to clipboard',data)
           }
          }
       })
@@ -156,6 +179,20 @@ export default class Accounts {
 
 
       Vue.set(accountsComponent, 'accounts', accounts )
+  }
+
+
+  async flashMessage(msg)
+  {
+    Vue.set(accountsComponent, 'flashMessage', 'Copied to clipboard!' )
+
+    await this.sleep(1000)
+
+    Vue.set(accountsComponent, 'flashMessage', null )
+  }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 

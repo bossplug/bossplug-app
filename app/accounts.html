@@ -42,40 +42,54 @@
 
          <div class="whitespace-md"></div>
 
-            <div class="row white-text quick-nav">
+            <div class="row white-text quick-nav" v-if="tokenLoaded">
                <div class="col s4 teal lighten-2 hoverable">Overview</div>
                <div class="col s4 teal lighten-2 hoverable">Deposit</div>
                <div class="col s4 teal lighten-2 hoverable">Withdraw</div>
             </div>
 
-             <div class="loading-container"  v-if="(!tokenLoaded && selectedAddress)" v-cloak>
-               Loading..
+             <div class="loading-container text-center"  v-if="(!tokenLoaded && selectedAddress)" v-cloak>
+               <%= require('html-loader!./assets/html/preloader.html') %>
              </div>
 
-            <div class="selected-account-address" v-if="selectedAddress" v-cloak>
-                {{selectedAddress}}
-            </div>
 
-            <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
-                ETH Balance: {{ethBalance}}
-            </div>
 
-            <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
 
-            </div>
+            <ul class="collection" v-if="tokenLoaded">
+             <li class="collection-item">
+               <div class="selected-account-address" v-if="selectedAddress" v-cloak>
+                   {{selectedAddress}}
 
-            <ul class="collection with-header">
-              <li class="collection-header"><h4>  </h4></li>
-              <li class="collection-item">External Balance: {{tokenBalance}}</li>
-              <li class="collection-item">Alvin</li>
-              <li class="collection-item">Lava Balance: {{tokenBalance}}</li>
+                   <span class="copy-content icon icon-docs" v-on:click="copySelectedAddress()"> </span>
+               </div>
+             </li>
+             <li class="collection-item">
+               <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
+                   ETH Balance: {{ethBalance}}
+               </div>
+             </li>
+             <li class="collection-item">
+               <div class="selected-account-balance" v-if="tokenBalance != null" v-cloak>
+                 Token Balance: {{tokenBalance}}
+               </div>
+             </li>
 
-            </ul>
+             <li class="collection-item">
+               <div class="selected-account-balance" v-if="lavaBalance != null" v-cloak>
+                 Lava Balance: {{lavaBalance}}
+               </div>
+             </li>
+           </ul>
 
 
 
        </div>
      </div>
+
+     <div class='flash-message absolute-bottom white-text teal text-center' v-if="flashMessage">
+       {{flashMessage}}
+     </div>
+
    </div>
 
   </body>

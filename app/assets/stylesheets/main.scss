@@ -27,6 +27,14 @@ overflow-y: auto;
   text-align:center;
 }
 
+.absolute-bottom
+{
+  position:absolute;
+  bottom:10px;
+  left:50px;
+  padding:5px 15px;
+}
+
 .hoverable:hover
 {
    opacity: 0.9;

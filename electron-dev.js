@@ -10,7 +10,7 @@ let mainWindow
 
 async function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 450})
+  mainWindow = new BrowserWindow({width: 1600, height: 900})
 
 
   await BossPlug.init();

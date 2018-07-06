@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+
+    <%= require('html-loader!./assets/html/head.html') %>
+  </head>
+  <body>
+
+    <%= require('html-loader!./assets/html/navbar.html') %>
+
+    <div class="container" id="settings">
+
+    <h3>Settings</h3>
+
+    <div> Keystores folder: {{ storagePath }} </div>
+
+    <div> Token Name: {{ tokenName }} </div>
+
+    <div> Token Address: {{ tokenAddress }} </div>
+
+    <div> Lava Address: {{ lavaContractAddress }} </div>
+
+    <div> Web3 Provider: {{ web3Provider }} </div>
+
+    <div> Wallet Version: {{ version }} </div>
+
+
+    <div class="whitespace-md"></div>
+
+
+
+    <div class="error-container card blue darken-1"  >
+      <div class="card-content white-text">
+       This configuration may be edited within Settings.json in the Keystores folder.
+     </div>
+    </div>
+
+    </div>
+
+  </body>
+</html>

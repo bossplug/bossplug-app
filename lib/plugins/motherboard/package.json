@@ -1,0 +1,10 @@
+{
+    "name": "motherboard",
+    "version": "0.0.1",
+    "main": "motherboard.plugin.js",
+    "private": true,
+
+    "plugin": {
+        "consumes": [ ]
+    }
+}

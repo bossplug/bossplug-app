@@ -1,7 +1,7 @@
 {
     "name": "calculator",
     "version": "0.0.1",
-    "main": "calculator.js",
+    "main": "calculator.plugin.js",
     "private": true,
 
     "plugin": {

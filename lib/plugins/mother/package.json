@@ -1,0 +1,10 @@
+{
+    "name": "mother",
+    "version": "0.0.1",
+    "main": "mother.plugin.js",
+    "private": true,
+
+    "plugin": {
+        "consumes": [ ]
+    }
+}

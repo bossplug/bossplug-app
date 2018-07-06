@@ -8,6 +8,13 @@ The studio is composed entirely of .plug plugin modules.
 
 ## To Use
 
+
+Prereqs:
+
+  sudo apt-get install libasound2-dev
+
+
+
 ```bash
 
 # Install dependencies

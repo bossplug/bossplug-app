@@ -1,8 +1,8 @@
 {
-  "name": "lavawallet-desktop",
+  "name": "bossplug-app",
   "version": "0.2.0",
-  "description": "A desktop client for storing and sending ERC20 tokens.",
-  "email": "admin@0xbitcoin.org",
+  "description": "A modular music studio for the Launchpad.",
+  "email": "bossplugofficial@gmail.com",
   "author": "GitHub",
   "main": "main.js",
   "scripts": {
@@ -12,28 +12,25 @@
     "electron-dev": "electron ./electron-dev",
     "dist": "npm run webpack && build"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/bossplug/bossplug-app",
   "keywords": [
-    "Ethereum",
-    "Token",
-    "Wallet"
+    "Launchpad",
+    "Audio",
+    "Studio"
   ],
   "license": "CC0-1.0",
   "dependencies": {
     "electron-json-storage": "^4.1.0",
-    "eth-sig-util": "^1.4.2",
-    "ethereumjs-util": "^5.1.5",
+
     "express": "^4.16.3",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-loader": "^0.5.5",
     "js-sha3": "^0.7.0",
-    "keythereum": "^1.0.4",
+
     "sha3": "^1.2.0",
     "socket.io": "^2.1.1",
-    "vue": "^2.5.13",
-    "web3": "^1.0.0-beta.34",
-    "web3-eth-accounts": "^1.0.0-beta.34",
-    "web3-utils": "^1.0.0-beta.34"
+    "vue": "^2.5.13"
+
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -79,7 +76,7 @@
         "AppImage",
         "deb"
       ],
-      "maintainer": "Infernal Toast <admin@0xbitcoin.org>"
+      "maintainer": "Infernal Toast <bossplugofficial@gmail.com>"
     },
     "win": {
       "target": "squirrel",

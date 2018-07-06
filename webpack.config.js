@@ -36,14 +36,9 @@ var webpackPlugins = [
 
 const routesData = {
   routes: [
-    {url: '/', title: 'Lava Wallet', template: 'app/index.html', filename: 'index.html'},
-    {url: '/accounts', title: 'Accounts', template: 'app/accounts.html', filename: 'accounts.html'},
-    {url: '/transfer', title: 'Transfer', template: 'app/transfer.html', filename: 'transfer.html'},
-    {url: '/account_add', title: 'Add Account', template: 'app/account_add.html', filename: 'account_add.html'},
-    {url: '/account_new', title: 'New Account', template: 'app/account_new.html', filename: 'account_new.html'},
-    {url: '/account_import', title: 'Import Account', template: 'app/account_import.html', filename: 'account_import.html'},
-    {url: '/settings', title: 'Settings', template: 'app/settings.html', filename: 'settings.html'},
-    {url: '/addressbook', title: 'Address Book', template: 'app/addressbook.html', filename: 'addressbook.html'}
+    {url: '/', title: 'Bossplug', template: 'app/index.html', filename: 'index.html'},
+
+    {url: '/settings', title: 'Settings', template: 'app/settings.html', filename: 'settings.html'}  
    ]
 }
 
@@ -78,7 +73,7 @@ module.exports = {
                 test: /\.js$/,
                 use: [
                     {
-                        loader: 'babel-loader', 
+                        loader: 'babel-loader',
                         options: {
                             presets: ['es2016']
                         }

@@ -9,24 +9,10 @@ var home = new Home();
 import Settings from './settings';
 var settings = new Settings();
 
-import Accounts from './accounts';
-var accounts = new Accounts();
-
-
-import Transfer from './transfer';
-var transfer = new Transfer();
-
-import AccountAdd from './account_add';
-var accountAdd = new AccountAdd();
-
-import AccountImport from './account_import';
-var accountImport = new AccountImport();
 
 import SocketClient from './socketclient';
 var socketClient = new SocketClient();
 
-import AccountNew from './account_new';
-var accountNew = new AccountNew();
 
 function init()
 {
@@ -41,27 +27,7 @@ function init()
   if(document.getElementById("settings")){
     settings.init(socketClient);
   }
-
-  if(document.getElementById("accounts")){
-    accounts.init(socketClient);
-  }
-
-  if(document.getElementById("transfer")){
-    transfer.init(socketClient);
-  }
-
-  if(document.getElementById("add-account")){
-    accountAdd.init();
-  }
-
-  if(document.getElementById("import-account")){
-    accountImport.init(socketClient);
-  }
-
-  if(document.getElementById("new-account")){
-    accountNew.init(socketClient);
-  }
-
+ 
 
 }
 

@@ -32,18 +32,12 @@ export default class SocketClient {
 
 
  
-
-
-
-
   }
 
 
   async socketEmit(name,value,callback)
   {
     console.log('emit ',name,value)
-
-  //  console.log(this.socket)
 
     await this.socket.emit(name,value,callback)
   }

@@ -11,6 +11,7 @@ async function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 1600, height: 900})
   mainWindow.setMenu(null)
+  mainWindow.maximize()
 
   await BossPlug.init()
 

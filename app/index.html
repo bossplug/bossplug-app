@@ -11,38 +11,32 @@
 
     <%= require('html-loader!./assets/html/navbar.html') %>
 
-    <div class="container" id="home">
+    <div class="overview build-background h12" id="build">
+
+
+    <div class="row h12">
+
+        <div class="col s2 zeropad h12">
 
 
 
-    <div class="row">
+          <div class="audio-list background-darksteel white-text h12 border-right-black">
+            <div class="titlebar text-center">
+              Audio List
+            </div>
+            <div class="thin-list">
+                right click ... add samples folder
+            </div>
+          </div>
 
-        <div class="col s6">
-
-
-               <div class="whitespace-md"></div>
-
-          <nav class="nav-group" id="home-menu">
-
-
-            <span class="nav-group-item white-text amber darken-4 hoverable" v-on:click="clickButton('addaccount')">
-              <span class="icon icon-plus-circled white-text"></span>
-              Add an Ethereum Account
-            </span>
-            <span class="nav-group-item white-text amber darken-4 hoverable" v-on:click="clickButton('addressbook')">
-              <span class="icon icon-eye white-text"></span>
-              Manage Plugins
-            </span>
-            <span class="nav-group-item white-text amber darken-4 hoverable" v-on:click="clickButton('settings')">
-              <span class="icon icon-layout white-text"></span>
-              Settings
-            </span>
-
-          </nav>
 
         </div>
-        <div class="col s6">
-          <img src="/assets/img/lavalogo.png" height="300px"></img>
+        <div class="col s10 zeropad h12">
+          <div class="background-steel h6 border-bottom-black">
+
+          </div>
+          <div class="background-steel h6">
+          </div>
         </div>
 
 

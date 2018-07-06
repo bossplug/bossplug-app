@@ -6,6 +6,7 @@ Bossplug serves as an editor for .boss configuration files.
 
 The studio is composed entirely of .plug plugin modules.  
 
+
 ## To Use
 
 
@@ -28,6 +29,8 @@ npm run app
 # Developer TODO
 1.  
 
+
+** All important code will live in the backend Nodejs, the front end is just cosmetic
 
 
 

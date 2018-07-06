@@ -1,8 +1,10 @@
-# LavaWallet (Desktop)
+# Bossplug (Desktop)
 
+Modular music studio for the Launchpad.   
 
-![image](https://user-images.githubusercontent.com/38132633/42248915-2f98be9c-7ef6-11e8-9a46-68c2c0f4ea35.png)
-![image](https://user-images.githubusercontent.com/38132633/42248914-2d7dc512-7ef6-11e8-87dc-ab63b626f468.png)
+Bossplug serves as an editor for .boss configuration files.   
+
+The studio is composed entirely of .plug plugin modules.  
 
 ## To Use
 
@@ -17,39 +19,30 @@ npm run app
 ```  
 
 # Developer TODO
-1. Finish the transfer tab
-
-2. Integrate lava balance and lava transfers 
+1.  
 
 
 
 
-### Menus
+### PLUGins
+A .zip file which contains html, css, and js conforming to the Bossplug API in order to add a module to the studio when installed.
 
--Home
-* Create New Account
-* Import Existing Eth Account From PKey
+Default plugins:
+ 1. The Mothership
+    Features play, pause, and record buttons in order to create, remix, and preview audio cases.  Shows the animated 'time disc' which can be used to beat match using the software.
+ 2. The Archive
+    A simple list of audio cases
+ 3. The Boss
+    Allows for assigning audio cases to keys on the Launchpad
 
-* Watch an Account (addressbook) -- Addressbook is a part of 'home' ?
-* Show contract address for active token
-
--Accounts
-* There is a sidebar along the left with nice icons , like photon demo
-* Right side shows the deposit address and helps you fill the acct, button for deposit to lava
-* shows vanilla balance and lava balance
-
--Transfer
-*
-
--Settings  (also accessible from home)
-* Lets you edit the 'active token' address - the primary token the wallet uses
+### Boss configuration
+  A boss configuration is a .json file which saves the key configuration set by the Boss.  At its simplest form, it assigns the SHA3 hashes of audio cases to the keys of the launchpad.
 
 
 
-## TODO
-1. A little storage file that stores settings:
-  - token address to use
-  - web3 interface path
+### Audio Cases
+An audio file (or midi ?) which has metadata including the milliseconds for the 'hit time'.  Always referred to by its SHA3 hash.
+
 
 
 

@@ -12,13 +12,17 @@ const AudioHelper= require('./audio-helper').default
 
 
 
+
+import LaunchPad from './vue/LaunchPad.vue'
 import TreeMenu from './vue/TreeMenu.vue'
 
-var buildComponent;
-var fileTree;
 var motherShip;
-var alertBox;
+var bossComponent;
+var fileTree;
 
+
+var alertBox;
+var dragBox;
  //https://vuejsdevelopers.com/2017/10/23/vue-js-tree-menu-recursive-components/
 //https://dzone.com/articles/build-a-collapsible-tree-menu-with-vuejs-recursive-1
 
@@ -69,30 +73,30 @@ export default class Build {
       })
 
 
-      fileTree.$on('drag-audio-file', label => {
+      fileTree.$on('drag-audio-file', item => {
             //console.log('start dragging ', label) // should return 'I am being fired here'
+            self.setDragMessage('red', item.label)
 
             $('.boss-container').off();
-            $('.boss-container').on('mouseup',(event) => self.handleFileDragDrop(event,label));
+            $(window).off();
 
+
+            $('.boss-container').on('mouseup',(event) => self.handleFileDragDrop(event,item));
+            $(window).on('mouseup',(event)=> self.setDragMessage('red', null)  )
+            $(window).on('mousemove',(event)=> self.updateDragBox(event)  )
       });
 
       fileTree.$on('activate-audio-file', sfx => {
-            console.log('activate audio file', sfx) // should return 'I am being fired here'
-
             motherShip.$emit('activate-sound', sfx)
-
-            //$('.boss-container').off();
-            //$('.boss-container').on('mouseup',(event) => self.handleFileDragDrop(event,label));
-
       });
 
 
 
-     buildComponent = new Vue({
+     bossComponent = new Vue({
         el: '#theboss',
         data: {
-          connected: false
+          connected: false,
+          pad: {}
         },
         methods: {
            clickButton: async function (buttonName) {
@@ -116,6 +120,10 @@ export default class Build {
 
 
            }
+         },
+          components:
+         {
+           LaunchPad
          }
       })
 
@@ -132,7 +140,7 @@ export default class Build {
 
 
        motherShip.$on('activate-sound', sfx => {
-             console.log('activate audio file', sfx) // should return 'I am being fired here'
+             console.log('activate audio file  ', sfx) // should return 'I am being fired here'
 
             AudioHelper.playSound(self.socketClient,sfx)
        });
@@ -141,7 +149,6 @@ export default class Build {
       alertBox = new Vue({
          el: '#alert-box',
          data: {
-
            alertMessage: null,
            alertClass: null
          },
@@ -150,6 +157,17 @@ export default class Build {
           }
        })
 
+      dragBox = new Vue({
+          el: '#drag-box',
+          data: {
+            dragMessage: null,
+            dragClass: null
+          },
+          methods: {
+
+           }
+        })
+
       await ContextMenuHelper.buildMenu(window,'.audio-list',(evt,target)=> self.handleMenuEvent(evt,target));
 
   }
@@ -157,8 +175,12 @@ export default class Build {
 
 
   handleFileDragDrop(event,label){
+
+        console.log('handle drop ' )
+
       if(event.target.classList.contains('drop-target'))
       {
+          $('.boss-container').off();
           var cellId = event.target.getAttribute('data-cell-id');
 
           console.log('dropped ',label,' on cell ', cellId)
@@ -190,7 +212,21 @@ export default class Build {
     }
   }
 
+  async setDragMessage(color,msg)
+  {
+      Vue.set(dragBox, 'dragClass', color )
+      Vue.set(dragBox, 'dragMessage', msg )
+  }
 
+  updateDragBox(event)
+  {
+    //must not cover mouse or else drop does not work !
+    var x = event.clientX + 2;
+    var y = event.clientY - 5;
+
+    $(".drag-box").css('top', y + "px");
+    $(".drag-box").css('left', x + "px");
+  }
 
 
   async setAlertMessage(color,msg)
@@ -201,7 +237,6 @@ export default class Build {
       await this.sleep(1000);
 
       Vue.set(alertBox, 'alertMessage', null )
-
   }
 
   sleep(ms){

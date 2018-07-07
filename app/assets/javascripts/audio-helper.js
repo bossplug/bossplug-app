@@ -18,12 +18,12 @@ export default class AudioHelper {
     console.log('got ',response)
 
 
-    var stream = new Howl({
+  /*  var stream = new Howl({
         src: [sfx.path],
         ext: ['wav'],
         autoplay: true,
         html5: true
-    });
+    });*/
 
 
   }

@@ -31,7 +31,6 @@
                     :label="tree.label"
                     :nodes="tree.nodes"
                     :path="tree.path"
-                    :key="tree.key"
                     :depth="0"
                   ></tree-menu>
 
@@ -54,6 +53,13 @@
                 <div class="pad-config-cell background-darksteel drop-target" data-cell-id="1" >
                   ---
                 </div>
+
+                <launch-pad
+                  :label="pad.label"
+                  :cells="pad.cells"
+                  :path="pad.path"
+                  :depth="0"
+                ></launch-pad>
 
               </div>
 
@@ -80,6 +86,7 @@
 
         <%= require('html-loader!./assets/html/alert-box.html') %>
 
+        <%= require('html-loader!./assets/html/drag-box.html') %>
 
 
 

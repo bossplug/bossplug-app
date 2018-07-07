@@ -29,6 +29,8 @@ npm run app
 # Developer TODO
 1. Grab the audio file on nodejs side, do processing, then stream to frontend to playback!
 
+2. Clicking on a pad button opens the config for it - on mothership
+
 ** All important code will live in the backend Nodejs, the front end is just cosmetic
 
 

@@ -91,7 +91,7 @@ export default class Build {
       });
 
 
-      var padTree = self.buildPadTree();
+      var padTree = Build.buildPadTree();
       console.log('pad tree', padTree)
 
       var initialPadConfig = await self.getInitialPadConfig()
@@ -158,6 +158,7 @@ export default class Build {
              console.log('activate audio file  ', sfx) // should return 'I am being fired here'
 
             AudioHelper.playSound(self.socketClient,sfx)
+            self.setAlertMessage('blue',sfx.label)
        });
 
 
@@ -189,7 +190,7 @@ export default class Build {
 
 
 
-  buildPadTree()
+ static buildPadTree()
   {
     var tree = {
       cells:[]
@@ -223,10 +224,10 @@ export default class Build {
 
   async loadPadConfigFile()
   {
-    
+
   }
 
-  handleFileDragDrop(event,label){
+  async handleFileDragDrop(event,item){
 
         console.log('handle drop ' )
 
@@ -235,9 +236,20 @@ export default class Build {
           $('.boss-container').off();
           var cellId = event.target.getAttribute('data-cell-id');
 
-          console.log('dropped ',label,' on cell ', cellId)
-
+          console.log('dropped ',item,' on cell ', cellId)
+          await this.assignSoundToPadConfig(item,cellId)
       }
+  }
+
+
+
+  async assignSoundToPadConfig(item,cellId)
+  {
+     var response = await this.socketClient.emit('assignSoundToPadConfig',{sfx:item,cellId:cellId});
+     if(response.success)
+     {
+       self.setAlertMessage('blue','Assigned '+item.label+' to cell '+ cellId + '.')
+     }
   }
 
   //consider stuffing this in another class

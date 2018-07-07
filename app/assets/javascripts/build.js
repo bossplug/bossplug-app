@@ -91,12 +91,14 @@ export default class Build {
       });
 
 
+      var padTree = self.buildPadTree();
+      console.log('pad tree', padTree)
 
      bossComponent = new Vue({
         el: '#theboss',
         data: {
           connected: false,
-          pad: {}
+          pad: padTree
         },
         methods: {
            clickButton: async function (buttonName) {
@@ -170,6 +172,34 @@ export default class Build {
 
       await ContextMenuHelper.buildMenu(window,'.audio-list',(evt,target)=> self.handleMenuEvent(evt,target));
 
+  }
+
+
+
+  buildPadTree()
+  {
+    var tree = {
+      cells:[]
+    };
+
+    var cellId = 0;
+    for(var x=0;x<8;x++)
+    {
+      for(var y=0;y<8;y++)
+      {
+        tree.cells.push(
+          {
+            cellId: cellId++,
+            cellX: x,
+            cellY: y,
+            path:null,
+            label:'---'
+          }
+        )
+      }
+    }
+
+    return tree;
   }
 
 

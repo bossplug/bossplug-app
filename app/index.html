@@ -42,21 +42,23 @@
 
         </div>
         <div class="col s9 zeropad h12"    >
-          <div class="background-sativa h6 border-bottom-black" id="mothership" >
+          <div class="background-sativa h4 border-bottom-black" id="mothership" >
 
           </div>
-          <div class="background-steel h6" id="theboss" >
+          <div class="background-steel h8" id="theboss" >
 
             <div class="pad-connect-container white-text h12 text-center">
 
               <div class="boss-container text-left">
+                <!--
                 <div class="pad-config-cell background-darksteel drop-target" data-cell-id="1" >
                   ---
                 </div>
+              -->
 
                 <launch-pad
-                  :label="pad.label"
                   :cells="pad.cells"
+                  :label="pad.label"
                   :path="pad.path"
                   :depth="0"
                 ></launch-pad>

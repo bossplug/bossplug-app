@@ -68,9 +68,19 @@
     height:100%;
 }
 
+.h8
+{
+    height:66%;
+}
+
 .h6
 {
     height:50%;
+}
+
+.h4
+{
+    height:33%;
 }
 
 .h3
@@ -103,7 +113,7 @@
 .absolute-drag
 {
   position:absolute;
-   
+
   padding:5px 15px;
 }
 
@@ -126,13 +136,15 @@
 .boss-container
 {
     padding: 1% 5%;
+
 }
 
 .pad-config-cell
 {
   display: inline-block;
   padding: 5px 5px;
-  width:10%;
+  margin: 2px 0px;
+  width:12.5%;
 }
 
 

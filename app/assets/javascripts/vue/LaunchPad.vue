@@ -1,21 +1,15 @@
 <template>
 <div class="launch-pad"   >
-  <div class="label-wrapper"  >
-    <div   :class="labelClasses" @click="clickedCell" @dblclick="activateCell" v-bind:data-cell-id="getCellId"  >
 
-      {{ label }}
+    <div v-for="cell in cells"
+      :label="cell.label" :path="cell.path"
+      class="pad-config-cell background-darksteel drop-target text-center"
+      @click="clickedCell" @dblclick="activateCell"
+      v-bind:data-cell-id="cell.cellId"  >
+       {{ cell.label }}
     </div>
-  </div>
-  <launch-pad
 
-    v-for="cell in cells"
 
-    :label="cell.label"
-    :path="cell.path"
-    :cellId="cell.cellId"
-    :depth="depth + 1"
-  >
-  </launch-pad>
 </div>
 </template>
 
@@ -24,7 +18,7 @@
 
 <script>
   export default {
-    props: [ 'label', 'path', 'cellId',   'depth' ],
+    props: [ 'label', 'path', 'cells', 'cellId',   'depth' ],
     data() {
       return {  }
     },

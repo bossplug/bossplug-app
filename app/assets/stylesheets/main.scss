@@ -86,15 +86,27 @@
    opacity: 0.9;
 }
 
+.clickable:hover
+{
+  cursor:pointer;
+}
+
+
 .zeropad
 {
   padding:0 !important;
 }
 
-
-.build-background
+.boss-container
 {
+    padding: 1% 5%;
+}
 
+.pad-config-cell
+{
+  display: inline-block;
+  padding: 5px 5px;
+  width:10%;
 }
 
 
@@ -130,4 +142,8 @@
 .border-bottom-black
 {
   border-bottom: 1px solid #222;
+}
+.gray-text
+{
+  color: #333;
 }

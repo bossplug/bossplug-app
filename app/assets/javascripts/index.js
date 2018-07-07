@@ -3,8 +3,8 @@
 import Nav from './nav';
 var nav = new Nav();
 
-import Home from './home';
-var home = new Home();
+import Build from './build';
+var build = new Build();
 
 import Settings from './settings';
 var settings = new Settings();
@@ -20,14 +20,14 @@ function init()
   socketClient.init();
 
 
-  if(document.getElementById("home")){
-    home.init();
+  if(document.getElementById("build")){
+    build.init(socketClient);
   }
 
   if(document.getElementById("settings")){
     settings.init(socketClient);
   }
- 
+
 
 }
 

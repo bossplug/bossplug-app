@@ -31,15 +31,25 @@ export default class SocketClient {
     });
 
 
- 
+
   }
 
 
-  async socketEmit(name,value,callback)
+  async emit(name,value)
   {
-    console.log('emit ',name,value)
+    var self=this;
+    console.log('emitting ',name,value)
 
-    await this.socket.emit(name,value,callback)
+
+    var response = await new Promise((resolve, reject) => {
+          self.socket.emit(name,value,function(res){ 
+            resolve(JSON.parse(res));
+          });
+      });
+
+
+
+    return response;
   }
 
 

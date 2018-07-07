@@ -31,21 +31,25 @@ export default class Build {
       nodes: []
     }
 
-       var existingAudioTree = await LocalStorageHelper.get("audioTree");
-
-     console.log('found tree', existingAudioTree )
-     if(existingAudioTree)
-     {
-       tree = existingAudioTree;
-     }
-
-
 
       fileTree = new Vue({
         el: '#filetree',
         data:  {
-          tree: tree
-        }  ,
+          tree: tree,
+          audioFolders: []
+        } ,
+        created: async function()
+        {
+
+          var existingAudioFolders = await LocalStorageHelper.get("audioFolders");
+
+          console.log('found folders', existingAudioFolders )
+          if(existingAudioFolders)
+          {
+           await self.buildAudioFolders(existingAudioFolders)
+          }
+
+        },
         methods: {
           dragAudioFile: function(label) {
             console.log('test',label)
@@ -73,8 +77,7 @@ export default class Build {
      buildComponent = new Vue({
         el: '#build',
         data: {
-          connected: false,
-          audioFolders: []
+          connected: false
         },
         methods: {
            clickButton: async function (buttonName) {
@@ -137,7 +140,7 @@ export default class Build {
 
       case 'removeaudiofolder':
           //var response = await this.socketClient.emit('addAudioFolder');
-          //self.addAudioFolders(response)
+          //self.addAudioFolders(response) 
           console.log('remove audio folderr', target)
           break;
       default:
@@ -149,28 +152,35 @@ export default class Build {
   {
     for(var folder of folders)
     {
-      console.log('add folder ',folder);
-      var selectedFolders = buildComponent.audioFolders;
+      var existingAudioFolders = await LocalStorageHelper.get("audioFolders");
+
+      var selectedFolders = [];
+
+      if(existingAudioFolders) selectedFolders = existingAudioFolders;
+
+      console.log('existing folders', selectedFolders)
 
       selectedFolders.push(folder);
 
-      var tree = await this.buildFileTree( selectedFolders, '.audioFileContainer' );
+      Vue.set(fileTree, 'audioFolders', selectedFolders )
+      await this.buildAudioFolders(selectedFolders);
 
-      Vue.set(buildComponent, 'audioFolders', selectedFolders )
-      Vue.set(fileTree, 'tree', tree )
-      //show children of root
+      LocalStorageHelper.set("audioFolders",selectedFolders)
 
-      LocalStorageHelper.set("audioTree",tree)
-
-
-
-      console.log('set tree',tree)
-
-      console.log('got tree',fileTree.tree)
     }
   }
 
+  async buildAudioFolders(selectedFolders)
+  {
 
+    var tree = await this.buildFileTree( selectedFolders, '.audioFileContainer' );
+
+    Vue.set(fileTree, 'tree', tree )
+    //show children of root
+    LocalStorageHelper.set("audioTree",tree)
+
+    console.log('updated tree',tree )
+  }
 
     async buildFileTree(folders,containerClass)
     {
@@ -194,9 +204,9 @@ export default class Build {
             label: foldername,
             path : folder,
             nodes: [],
-            key: elementKey
+            key: elementKey++
           };
-          elementKey++;
+
 
            for(var file of files)
            {
@@ -206,9 +216,9 @@ export default class Build {
              var filenode = {
                label:filename,
                path:file,
-               key: elementKey
+               key: elementKey++
              }
-             elementKey++;
+
             subnode.nodes.push(filenode)
            }
 

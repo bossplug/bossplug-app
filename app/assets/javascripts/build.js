@@ -4,11 +4,13 @@ var $ = require("jquery");
 
 const ContextMenuHelper = require('./context-menu-helper').default
 const LocalStorageHelper= require('./local-storage-helper').default
+const AudioTreeHelper= require('./audio-tree-helper').default
 
 import TreeMenu from './vue/TreeMenu.vue'
 
 var buildComponent;
 var fileTree;
+var motherShip;
 var alertBox;
 
  //https://vuejsdevelopers.com/2017/10/23/vue-js-tree-menu-recursive-components/
@@ -22,7 +24,7 @@ export default class Build {
 
   async init(socketClient){
     var self = this;
-    this.socketClient=socketClient;
+    self.socketClient=socketClient;
 
 
 
@@ -40,16 +42,14 @@ export default class Build {
         } ,
         created: async function()
         {
-
-
           var existingAudioFolders = await LocalStorageHelper.get("audioFolders");
 
           console.log('found folders', existingAudioFolders )
           if(existingAudioFolders)
           {
-           await self.buildAudioFolders(existingAudioFolders)
+           var tree = await AudioTreeHelper.buildAudioFolders(existingAudioFolders, self.socketClient)
+           this.tree = tree;
           }
-
         },
         methods: {
           dragAudioFile: function(label) {
@@ -64,12 +64,18 @@ export default class Build {
 
 
       fileTree.$on('drag-audio-file', label => {
-            console.log('start dragging ', label) // should return 'I am being fired here'
+            //console.log('start dragging ', label) // should return 'I am being fired here'
 
             $('.boss-container').off();
-            $('.boss-container').on('mouseup',(event) => self.handleMouseUp(event,label));
+            $('.boss-container').on('mouseup',(event) => self.handleFileDragDrop(event,label));
 
-          //  window.addEventListener('mouseup',(event) => self.handleMouseUp(event,label) )
+      });
+
+      fileTree.$on('activate-audio-file', label => {
+            console.log('activate audio file', label) // should return 'I am being fired here'
+
+            //$('.boss-container').off();
+            //$('.boss-container').on('mouseup',(event) => self.handleFileDragDrop(event,label));
 
       });
 
@@ -117,13 +123,13 @@ export default class Build {
           }
        })
 
-      await ContextMenuHelper.buildMenu(window,'.audio-list',(evt,target)=> self.handleEvent(evt,target));
+      await ContextMenuHelper.buildMenu(window,'.audio-list',(evt,target)=> self.handleMenuEvent(evt,target));
 
   }
 
 
 
-  handleMouseUp(event,label){
+  handleFileDragDrop(event,label){
       if(event.target.classList.contains('drop-target'))
       {
           var cellId = event.target.getAttribute('data-cell-id');
@@ -134,7 +140,7 @@ export default class Build {
   }
 
   //consider stuffing this in another class
-  async handleEvent(evt,target)
+  async handleMenuEvent(evt,target)
   {
     var self = this;
 
@@ -143,131 +149,21 @@ export default class Build {
     switch(role){
       case 'addaudiofolder':
           var response = await this.socketClient.emit('addAudioFolder');
-          self.addAudioFolders(response)
+          var tree = await AudioTreeHelper.addAudioFolders(response, self.socketClient)
+          Vue.set(fileTree, 'tree', tree )
           break;
 
       case 'removeaudiofolder':
-          //var response = await this.socketClient.emit('addAudioFolder');
-          //self.addAudioFolders(response)
           var nodeId = target.getAttribute('data-node-id')
-          self.removeAudioFolder(nodeId)
+          var tree =  await AudioTreeHelper.removeAudioFolder(nodeId, self.socketClient)
+          Vue.set(fileTree, 'tree', tree )
           break;
       default:
           break;
     }
   }
 
-  async addAudioFolders(folders)
-  {
 
-
-    for(var folder of folders)
-    {
-      var existingAudioFolders = await LocalStorageHelper.get("audioFolders");
-
-      var selectedFolders = [];
-
-      if(existingAudioFolders) selectedFolders = existingAudioFolders;
-
-      selectedFolders.push({ path: folder, nodeId: null });
-
-      await this.buildAudioFolders(selectedFolders);
-
-      Vue.set(fileTree, 'audioFolders', selectedFolders )
-
-      LocalStorageHelper.set("audioFolders",selectedFolders)
-
-    }
-  }
-
-  async removeAudioFolder(nodeId)
-  {
-
-    console.log('remove audio folderr', nodeId)
-
-
-    var existingAudioFolders = await LocalStorageHelper.get("audioFolders");
-
-
-    var remainingAudioFolders = existingAudioFolders.filter((item) => item.nodeId != nodeId)
-
-    await this.buildAudioFolders(remainingAudioFolders);
-
-    Vue.set(fileTree, 'audioFolders', remainingAudioFolders )
-
-    LocalStorageHelper.set("audioFolders",remainingAudioFolders)
-  }
-
-  async buildAudioFolders(selectedFolders)
-  {
-
-    var tree = await this.buildFileTree( selectedFolders, '.audioFileContainer' );
-
-    Vue.set(fileTree, 'tree', tree )
-    //show children of root
-    LocalStorageHelper.set("audioTree",tree)
-
-    console.log('updated tree',tree )
-  }
-
-    async buildFileTree(folders,containerClass)
-    {
-      console.log('folders',folders   )
-      var audioFiles = [];
-
-      var tree =  {
-        label: 'Audio List',
-        nodes: []
-      }
-
-      var elementKey = 0;
-
-      for(var folder of folders)
-      {
-        try{
-          var files = await this.socketClient.emit('findAudioInDir', folder );
-
-          var folderpath = folder.path;
-          var foldername = folderpath.substring(folderpath.lastIndexOf('/')+1);
-          var nodeId = elementKey++;
-          folder.nodeId = nodeId;  //set the folder nodeId
-
-          var subnode = {
-            label: foldername,
-            path : folderpath,
-            nodes: [],
-            nodeId: nodeId
-          };
-
-
-           for(var file of files)
-           {
-             console.log('found audio file',file, ' in folder ', folder )
-             var filename = file.substring(file.lastIndexOf('/')+1);
-
-             var filenode = {
-               label:filename,
-               path:file,
-               nodeId: elementKey++
-             }
-
-            subnode.nodes.push(filenode)
-           }
-
-            tree.nodes.push( subnode )
-        }catch(err)
-        {
-          console.error(err)
-        }
-      }
-
-
-
-
-      return tree;
-
-
-  }
 
 
   async setAlertMessage(color,msg)

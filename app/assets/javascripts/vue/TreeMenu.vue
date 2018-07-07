@@ -1,7 +1,7 @@
 <template>
 <div class="tree-menu"   >
   <div class="label-wrapper" @click="toggleChildren"  >
-    <div :style="indent" :class="labelClasses" @mousedown="emitDragEvent" v-bind:data-node-id="getNodeId"  >
+    <div :style="indent" :class="labelClasses" v-on:mousedown="emitDragEvent" v-on:dblclick="emitActionEvent" v-bind:data-node-id="getNodeId"  >
       <i v-if="nodes" class="icon" :class="iconClasses"></i>
       {{ label }}
     </div>
@@ -54,6 +54,12 @@
         if(!this.nodes)
         {
           this.$root.$emit('drag-audio-file', {label: this.label, path: this.path, nodeId: this.nodeId } )
+        }
+      },
+      emitActionEvent() {
+        if(!this.nodes)
+        {
+          this.$root.$emit('activate-audio-file', {label: this.label, path: this.path, nodeId: this.nodeId } )
         }
       }
     }

@@ -11,12 +11,12 @@
 
     <%= require('html-loader!./assets/html/navbar.html') %>
 
-    <div class="overview build-background h12" id="build">
+    <div class="overview build-background h12" >
 
 
     <div class="row h12">
 
-        <div class="col s2 zeropad h12">
+        <div class="col s2 zeropad h12" id="filetree" >
 
 
 
@@ -25,15 +25,14 @@
               Audio List
             </div>
             <div class="thin-list">
-                <div class="audioFileContainer" id="filetree">
+                <div class="audioFileContainer" >
                   <tree-menu
-                    :label="treeData.label"
-                    :nodes="treeData.nodes"
+                    :label="tree.label"
+                    :nodes="tree.nodes"
                     :depth="0"
                   ></tree-menu>
 
 
-               <div  v-on:click="greet"> clickk </div>
 
                 </div>
 
@@ -48,7 +47,7 @@
 
 
         </div>
-        <div class="col s10 zeropad h12">
+        <div class="col s10 zeropad h12"  id="build" >
           <div class="background-sativa h6 border-bottom-black">
 
           </div>

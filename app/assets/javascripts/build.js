@@ -51,55 +51,19 @@ export default class Build {
 
 
 
-  /*  var comp =   Vue.component('tree-menu', {
-       template: '#tree-menu',
-       props: [ 'nodes', 'label', 'depth' ],
-       data() {
-          return {
-            showChildren: false
-          }
-       },
-       computed: {
-         iconClasses() {
-           return {
-             'fa-plus-square-o': !this.showChildren,
-             'fa-minus-square-o': this.showChildren
-           }
-         },
-         labelClasses() {
-           return { 'has-children': this.nodes }
-         },
-         indent() {
-           return { transform: `translate(${this.depth * 50}px)` }
-         }
-       },
-       methods: {
-         toggleChildren() {
-            this.showChildren = !this.showChildren;
-         }
-       }
-     });*/
-
-     /*fileTree = new Vue({
+      fileTree = new Vue({
         el: '#filetree',
-        data: {
-           tree
-        },
+        data:  {
+          tree: tree
+        }  ,
         methods: {
-            greet: function()
-            {
-              alert('helloo')
-              console.log('test')
-            }
+
         },
          components:
         {
           TreeMenu
         }
-      })*/
-
-
-
+      })
 
 
 
@@ -108,8 +72,7 @@ export default class Build {
         el: '#build',
         data: {
           connected: false,
-          audioFolders: [],
-          treeData: tree
+          audioFolders: []
         },
         methods: {
            clickButton: async function (buttonName) {
@@ -141,10 +104,6 @@ export default class Build {
            {
              console.log('hello')
            }
-         },
-          components:
-         {
-           TreeMenu
          }
       })
 
@@ -182,9 +141,11 @@ export default class Build {
       var tree = await this.buildFileTree( selectedFolders, '.audioFileContainer' );
 
       Vue.set(buildComponent, 'audioFolders', selectedFolders )
-      Vue.set(fileTree, 'data', tree )
+      Vue.set(fileTree, 'tree', tree )
 
       console.log('set tree',tree)
+
+      console.log('got tree',fileTree.tree)
     }
   }
 
@@ -195,7 +156,7 @@ export default class Build {
 
 
       var tree =  {
-        label: 'roott',
+        label: 'reett',
         nodes: [
           {
             label: 'item1',
@@ -214,45 +175,6 @@ export default class Build {
           }
         ]
       }
-
-
-     /*Vue.component('item', {
-    template: '#item-template',
-    props: {
-      model: Object
-    },
-    data: function () {
-      return {
-        open: false
-      }
-    },
-    computed: {
-      isFolder: function () {
-        return this.model.children &&
-          this.model.children.length
-      }
-    },
-    methods: {
-      toggle: function () {
-        if (this.isFolder) {
-          this.open = !this.open
-        }
-      },
-      changeType: function () {
-        if (!this.isFolder) {
-          Vue.set(this.model, 'children', [])
-          this.addChild()
-          this.open = true
-        }
-      },
-      addChild: function () {
-        this.model.children.push({
-          name: 'new stuff'
-        })
-      }
-    }
-  })*/
-
 
 
 

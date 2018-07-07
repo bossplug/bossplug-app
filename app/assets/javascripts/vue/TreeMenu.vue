@@ -1,16 +1,25 @@
 <template>
-  <div class="tree-menu">
-    <div :style="indent" @click="toggleChildren">{{ label }}</div>
-    <tree-menu
-      v-if="showChildren"
-      v-for="node in nodes"
-      :nodes="node.nodes"
-      :label="node.label"
-      :depth="depth + 1"
-    >
-    </tree-menu>
+<div class="tree-menu">
+  <div class="label-wrapper" @click="toggleChildren">
+    <div :style="indent" :class="labelClasses">
+      <i v-if="nodes" class="icon" :class="iconClasses"></i>
+      {{ label }}
+    </div>
   </div>
+  <tree-menu
+    v-if="showChildren"
+    v-for="node in nodes"
+    :nodes="node.nodes"
+    :label="node.label"
+    :depth="depth + 1"
+  >
+  </tree-menu>
+</div>
 </template>
+
+
+
+
 <script>
   export default {
     props: [ 'label', 'nodes', 'depth' ],
@@ -19,8 +28,17 @@
     },
     name: 'tree-menu',
     computed: {
+      iconClasses() {
+        return {
+          'icon-plus-squared': !this.showChildren,
+          'icon-minus-squared': this.showChildren
+        }
+      },
+      labelClasses() {
+        return { 'has-children': this.nodes }
+      },
       indent() {
-        return { transform: `translate(${this.depth * 50}px)` }
+        return { transform: `translate(${this.depth * 10}px)` }
       }
     },
     methods: {

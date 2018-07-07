@@ -1,12 +1,13 @@
 import Vue from 'vue';
 
+const ContextMenuHelper = require('./context-menu-helper').default
 
 export default class Build {
   constructor( ){
 
   }
 
-  init(socketClient){
+  async init(socketClient){
     var self = this;
     this.socketClient=socketClient;
 
@@ -14,7 +15,7 @@ export default class Build {
      new Vue({
         el: '#build',
         data: {
-          connected: false 
+          connected: false
         },
         methods: {
            clickButton: async function (buttonName) {
@@ -45,6 +46,9 @@ export default class Build {
            }
          }
       })
+
+        console.log(ContextMenuHelper)
+      await ContextMenuHelper.buildMenu(window,'.audio-list');
 
 
   }

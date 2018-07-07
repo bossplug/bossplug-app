@@ -38,7 +38,7 @@ const routesData = {
   routes: [
     {url: '/', title: 'Bossplug', template: 'app/index.html', filename: 'index.html'},
 
-    {url: '/settings', title: 'Settings', template: 'app/settings.html', filename: 'settings.html'}  
+    {url: '/settings', title: 'Settings', template: 'app/settings.html', filename: 'settings.html'}
    ]
 }
 
@@ -58,6 +58,7 @@ routesData.routes.forEach(function(element){
 
 
 module.exports = {
+    target:"electron-renderer",
     entry: [
       './app/assets/javascripts/index',
       './app/assets/stylesheets/application.scss'

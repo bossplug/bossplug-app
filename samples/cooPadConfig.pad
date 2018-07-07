@@ -1,11 +1,10 @@
 {
-  "name":"CoolPadConfig",
-  "cellconfig": [
-      {
-        "cellId": "0",
-        "sfxName": "drum hit",
-        "sfxHash": "0x0"
-      }
-
+"name":"CoolPadConfig",
+"cells":[
+    {
+      "cellId":"0",
+      "sfxName":"SpiFir00.wav",
+      "sfxHash":"01a44c3ec60726bce9d890ec5e2747b4a4058cd2f271933424d7827c95464ff8"
+    }
   ]
 }

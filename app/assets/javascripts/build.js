@@ -123,7 +123,19 @@ export default class Build {
                     if(response.success)
                     {
                       self.setAlertMessage('green',response.message)
-                      self.setPadConfig(response.padconfig)
+                      self.updatePadConfig(response.padconfig)
+                    }else{
+                      self.setAlertMessage('red',response.message)
+                    }
+
+                    break;
+                case 'saveConfig':
+                    var response = await self.socketClient.emit('savePadConfig')
+
+                    if(response.success)
+                    {
+                      self.setAlertMessage('green',response.message)
+                      self.updatePadConfig(response.padconfig)
                     }else{
                       self.setAlertMessage('red',response.message)
                     }
@@ -147,9 +159,7 @@ export default class Build {
          data: {
          },
          methods: {
-           activateSound: async function (sfx) {
-             console.log('sound', sfx)
-           }
+
           }
        })
 
@@ -222,9 +232,10 @@ export default class Build {
     return null;
   }
 
-  async setPadConfig()
+  async updatePadConfig(padConfig)
   {
-
+    Vue.set(bossComponent, 'padConfig', padConfig )
+    console.log('update pad config ', config)
   }
 
   async handleFileDragDrop(event,item){
@@ -238,6 +249,8 @@ export default class Build {
 
           console.log('dropped ',item,' on cell ', cellId)
           await this.assignSoundToPadConfig(item,cellId)
+
+
       }
   }
 
@@ -248,7 +261,9 @@ export default class Build {
      var response = await this.socketClient.emit('assignSoundToPadConfig',{sfx:item,cellId:cellId});
      if(response.success)
      {
-       self.setAlertMessage('blue','Assigned '+item.label+' to cell '+ cellId + '.')
+       this.setAlertMessage('blue','Assigned '+item.label+' to cell '+ cellId + '.')
+       var config = response.padConfig
+       this.updatePadConfig(config)
      }
   }
 

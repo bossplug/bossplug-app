@@ -1,7 +1,7 @@
 <template>
 <div class="tree-menu"   >
   <div class="label-wrapper" @click="toggleChildren"  >
-    <div :style="indent" :class="labelClasses" @mousedown="emitDragEvent"  >
+    <div :style="indent" :class="labelClasses" @mousedown="emitDragEvent" v-bind:data-node-id="getNodeId"  >
       <i v-if="nodes" class="icon" :class="iconClasses"></i>
       {{ label }}
     </div>
@@ -12,7 +12,7 @@
     :nodes="node.nodes"
     :label="node.label"
     :path="node.path"
-    :key="node.key"
+    :nodeId="node.nodeId"
     :depth="depth + 1"
   >
   </tree-menu>
@@ -24,7 +24,7 @@
 
 <script>
   export default {
-    props: [ 'label', 'path', 'key', 'nodes', 'depth' ],
+    props: [ 'label', 'path', 'nodeId', 'nodes', 'depth' ],
     data() {
       return { showChildren: this.depth == 0 }
     },
@@ -41,6 +41,9 @@
       },
       indent() {
         return { transform: `translate(${this.depth * 10}px)` }
+      },
+      getNodeId() {
+        return this.nodeId;
       }
     },
     methods: {
@@ -50,7 +53,7 @@
       emitDragEvent() {
         if(!this.nodes)
         {
-          this.$root.$emit('drag-audio-file', {label: this.label, path: this.path, key: this.key } )
+          this.$root.$emit('drag-audio-file', {label: this.label, path: this.path, nodeId: this.nodeId } )
         }
       }
     }

@@ -41,6 +41,7 @@ export default class Build {
         created: async function()
         {
 
+
           var existingAudioFolders = await LocalStorageHelper.get("audioFolders");
 
           console.log('found folders', existingAudioFolders )
@@ -140,8 +141,9 @@ export default class Build {
 
       case 'removeaudiofolder':
           //var response = await this.socketClient.emit('addAudioFolder');
-          //self.addAudioFolders(response) 
-          console.log('remove audio folderr', target)
+          //self.addAudioFolders(response)
+          var nodeId = target.getAttribute('data-node-id')
+          self.removeAudioFolder(nodeId)
           break;
       default:
           break;
@@ -150,6 +152,8 @@ export default class Build {
 
   async addAudioFolders(folders)
   {
+
+
     for(var folder of folders)
     {
       var existingAudioFolders = await LocalStorageHelper.get("audioFolders");
@@ -158,16 +162,33 @@ export default class Build {
 
       if(existingAudioFolders) selectedFolders = existingAudioFolders;
 
-      console.log('existing folders', selectedFolders)
+      selectedFolders.push({ path: folder, nodeId: null });
 
-      selectedFolders.push(folder);
+      await this.buildAudioFolders(selectedFolders);
 
       Vue.set(fileTree, 'audioFolders', selectedFolders )
-      await this.buildAudioFolders(selectedFolders);
 
       LocalStorageHelper.set("audioFolders",selectedFolders)
 
     }
+  }
+
+  async removeAudioFolder(nodeId)
+  {
+
+    console.log('remove audio folderr', nodeId)
+
+
+    var existingAudioFolders = await LocalStorageHelper.get("audioFolders");
+ 
+
+    var remainingAudioFolders = existingAudioFolders.filter((item) => item.nodeId != nodeId)
+
+    await this.buildAudioFolders(remainingAudioFolders);
+
+    Vue.set(fileTree, 'audioFolders', remainingAudioFolders )
+
+    LocalStorageHelper.set("audioFolders",remainingAudioFolders)
   }
 
   async buildAudioFolders(selectedFolders)
@@ -199,12 +220,16 @@ export default class Build {
         try{
           var files = await this.socketClient.emit('findAudioInDir', folder );
 
-          var foldername = folder.substring(folder.lastIndexOf('/')+1);
+          var folderpath = folder.path;
+          var foldername = folderpath.substring(folderpath.lastIndexOf('/')+1);
+          var nodeId = elementKey++;
+          folder.nodeId = nodeId;  //set the folder nodeId
+
           var subnode = {
             label: foldername,
-            path : folder,
+            path : folderpath,
             nodes: [],
-            key: elementKey++
+            nodeId: nodeId
           };
 
 
@@ -216,7 +241,7 @@ export default class Build {
              var filenode = {
                label:filename,
                path:file,
-               key: elementKey++
+               nodeId: elementKey++
              }
 
             subnode.nodes.push(filenode)

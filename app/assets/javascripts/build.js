@@ -9,7 +9,7 @@ import TreeMenu from './vue/TreeMenu.vue'
 
 var buildComponent;
 var fileTree;
-
+var alertBox;
 
  //https://vuejsdevelopers.com/2017/10/23/vue-js-tree-menu-recursive-components/
 //https://dzone.com/articles/build-a-collapsible-tree-menu-with-vuejs-recursive-1
@@ -89,12 +89,10 @@ export default class Build {
                 case 'connect':
 
                     var response = await self.socketClient.emit('connectToLaunchpad')
-                    if(response.success)
+                    self.connected = response.success
+                    if(!response.success)
                     {
-                      self.connected = true;
-                    }else{
-                      self.connected = false;
-                      self.errorMessage = response.message;
+                      self.setAlertMessage('red',response.message)
                     }
                     break;
 
@@ -107,10 +105,19 @@ export default class Build {
          }
       })
 
+      alertBox = new Vue({
+         el: '#alert-box',
+         data: {
 
+           alertMessage: null,
+           alertClass: null
+         },
+         methods: {
+
+          }
+       })
 
       await ContextMenuHelper.buildMenu(window,'.audio-list',(evt,target)=> self.handleEvent(evt,target));
-
 
   }
 
@@ -180,7 +187,7 @@ export default class Build {
 
 
     var existingAudioFolders = await LocalStorageHelper.get("audioFolders");
- 
+
 
     var remainingAudioFolders = existingAudioFolders.filter((item) => item.nodeId != nodeId)
 
@@ -256,35 +263,29 @@ export default class Build {
 
 
 
-/*
-      var tree =  {
-        label: 'Audio List',
-        nodes: [
-          {
-            label: 'item1',
-            nodes: [
-              {
-                label: 'item1.1'
-              },
-              {
-                label: 'item1.2',
-                nodes: [ ]
-              }
-            ]
-          },
-          {
-            label: 'item2',
-            path:'thisismypath'
-          }
-        ]
-      }
-
-*/
 
       return tree;
 
 
   }
+
+
+  async setAlertMessage(color,msg)
+  {
+      Vue.set(alertBox, 'alertClass', color )
+      Vue.set(alertBox, 'alertMessage', msg )
+
+      await this.sleep(1000);
+
+      Vue.set(alertBox, 'alertMessage', null )
+
+  }
+
+  sleep(ms){
+    return new Promise(resolve=>{
+        setTimeout(resolve,ms)
+    })
+}
 
 
 };

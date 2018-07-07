@@ -27,7 +27,7 @@ npm run app
 ```  
 
 # Developer TODO
-1.  
+1.  integrate electron-tree-view for the left hand column !! 
 
 
 ** All important code will live in the backend Nodejs, the front end is just cosmetic

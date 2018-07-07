@@ -1,6 +1,10 @@
 var remote = require('electron').remote;
 var buildEditorContextMenu = remote.require('electron-editor-context-menu');
 
+const Menu = remote.Menu;
+const MenuItem = remote.MenuItem;
+
+
 
 export default class ContextMenuHelper {
   constructor( ){
@@ -8,7 +12,7 @@ export default class ContextMenuHelper {
   }
 
   //window,
-  static async buildMenu(win,menuClass)
+  static async buildMenu(win,menuClass,handleEvent)
   {
     win.addEventListener('contextmenu', function(e) {
       console.log('right click')
@@ -18,7 +22,31 @@ export default class ContextMenuHelper {
 
       console.log('show menu')
 
-      var menu = buildEditorContextMenu();
+
+
+
+
+      const template = [
+
+          {label: 'Add Audio Folder',
+          role: 'addaudiofolder',
+          click: function(menuItem,currentWindow){
+                handleEvent('addAudioFolder')
+            }
+          },
+
+          {type: 'separator'},
+          {role: 'cut'},
+          {role: 'copy'},
+          {role: 'paste'},
+          {role: 'delete'},
+          {role: 'selectall'}
+
+      ]
+
+
+
+      var menu = Menu.buildFromTemplate(template);
 
       // The 'contextmenu' event is emitted after 'selectionchange' has fired but possibly before the
       // visible selection has changed. Try to wait to show the menu until after that, otherwise the
@@ -26,6 +54,8 @@ export default class ContextMenuHelper {
       setTimeout(function() {
         menu.popup(remote.getCurrentWindow());
       }, 30);
+
+
     });
 
   }

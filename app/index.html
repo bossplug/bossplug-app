@@ -25,8 +25,17 @@
               Audio List
             </div>
             <div class="thin-list">
-                right click ... add samples folder
+                <div class="audioFileContainer" id="filetree">
+                  <tree-menu
+                    :label="tree.label" 
+                    :nodes="tree.nodes"
+                    :depth="0"
+                  ></tree-menu>
+                </div>
             </div>
+
+
+
           </div>
 
 

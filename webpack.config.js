@@ -5,6 +5,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+var VueLoaderPlugin = require('vue-loader/lib/plugin')
+var extractPlugin;
 
 var environment = process.env.NODE_ENV || 'development';
 
@@ -15,21 +17,22 @@ var htmlPlugin = new HtmlWebpackPlugin({
       template: 'app/index.html',
 });
 */
-var extractPlugin = new ExtractTextPlugin({
-   filename: 'assets/main.css'
-});
+
 
 
 var webpackPlugins = [
-    extractPlugin,
+      extractPlugin   = new ExtractTextPlugin({
+       filename: 'assets/main.css'
+    }) ,
     new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: '"production"'
         }
       }),
-      new CopyWebpackPlugin([
+    new CopyWebpackPlugin([
             {from:'app/assets/img',to:'assets/img'}
-        ])
+        ]),
+    new VueLoaderPlugin()
 ]
 
 
@@ -80,6 +83,10 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+              test: /\.vue$/,
+              loader: 'vue-loader'
             },
             {
                 test: /\.scss$/,

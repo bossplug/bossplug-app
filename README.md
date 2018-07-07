@@ -2,10 +2,10 @@
 
 Modular music studio for the Launchpad.   
 
-Bossplug serves as an editor for .boss configuration files.   
+Bossplug serves as an editor for .boss configuration files.   You can also play using the pad in 'play' mode.
+ 
 
-The studio is composed entirely of .plug plugin modules.  
-
+![image](https://user-images.githubusercontent.com/38132633/42414901-0a62df98-820e-11e8-871c-1294c259fdbe.png)
 
 ## To Use
 

@@ -1,0 +1,11 @@
+{
+  "name":"CoolPadConfig",
+  "cellconfig": [
+      {
+        "cellId": "0",
+        "sfxName": "drum hit",
+        "sfxHash": "0x0"
+      }
+
+  ]
+}

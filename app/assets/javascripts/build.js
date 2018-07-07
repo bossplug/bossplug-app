@@ -120,12 +120,12 @@ export default class Build {
                 case 'loadConfig':
                     var response = await self.socketClient.emit('loadPadConfig')
 
-                    if(response && response[0] && response[0].endsWith('.pad'))
+                    if(response.success)
                     {
-                      self.setAlertMessage('green',response)
-                      self.loadPadConfigFile(response[0])
+                      self.setAlertMessage('green',response.message)
+                      self.setPadConfig(response.padconfig)
                     }else{
-                      self.setAlertMessage('red','Error: Not a .pad configuration')
+                      self.setAlertMessage('red',response.message)
                     }
 
                     break;
@@ -222,7 +222,7 @@ export default class Build {
     return null;
   }
 
-  async loadPadConfigFile()
+  async setPadConfig()
   {
 
   }

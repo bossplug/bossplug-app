@@ -94,11 +94,14 @@ export default class Build {
       var padTree = self.buildPadTree();
       console.log('pad tree', padTree)
 
+      var initialPadConfig = await self.getInitialPadConfig()
+
      bossComponent = new Vue({
         el: '#theboss',
         data: {
           connected: false,
-          pad: padTree
+          pad: padTree,
+          padConfig: initialPadConfig
         },
         methods: {
            clickButton: async function (buttonName) {
@@ -107,7 +110,6 @@ export default class Build {
 
              switch(buttonName) {
                 case 'connect':
-
                     var response = await self.socketClient.emit('connectToLaunchpad')
                     self.connected = response.success
                     if(!response.success)
@@ -115,7 +117,18 @@ export default class Build {
                       self.setAlertMessage('red',response.message)
                     }
                     break;
+                case 'loadConfig':
+                    var response = await self.socketClient.emit('loadPadConfig')
 
+                    if(response && response[0] && response[0].endsWith('.pad'))
+                    {
+                      self.setAlertMessage('green',response)
+                      self.loadPadConfigFile(response[0])
+                    }else{
+                      self.setAlertMessage('red','Error: Not a .pad configuration')
+                    }
+
+                    break;
                 default:
                     break;
             }
@@ -202,7 +215,16 @@ export default class Build {
     return tree;
   }
 
+  async getInitialPadConfig()
+  {
 
+    return null;
+  }
+
+  async loadPadConfigFile()
+  {
+    
+  }
 
   handleFileDragDrop(event,label){
 

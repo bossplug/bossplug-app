@@ -49,6 +49,10 @@
 
             <div class="pad-connect-container white-text h12 text-center">
 
+              <div class="whitespace-sm"></div>
+              <div class="waves-effect waves-light btn gray-text hoverable clickable" v-on:click="clickButton('loadConfig')" >Load Pad Config</div>
+              <div class="waves-effect waves-light btn gray-text hoverable clickable" v-on:click="clickButton('saveConfig')" v-if="padConfig" v-cloak>Load Pad Config</div>
+
               <div class="boss-container text-left">
                 <!--
                 <div class="pad-config-cell background-darksteel drop-target" data-cell-id="1" >

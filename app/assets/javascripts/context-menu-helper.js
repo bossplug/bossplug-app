@@ -31,16 +31,23 @@ export default class ContextMenuHelper {
           {label: 'Add Audio Folder',
           role: 'addaudiofolder',
           click: function(menuItem,currentWindow){
-                handleEvent('addAudioFolder')
+                handleEvent(menuItem,e.target)
+            }
+          },
+
+          {label: 'Remove Audio Folder',
+          role: 'removeaudiofolder',
+          click: function(menuItem,currentWindow){
+                handleEvent(menuItem,e.target)
             }
           },
 
           {type: 'separator'},
           {role: 'cut'},
-          {role: 'copy'},
-          {role: 'paste'},
+          {role: 'copy',accelerator: "CmdOrCtrl+C"},
+          {role: 'paste', accelerator: "CmdOrCtrl+V"},
           {role: 'delete'},
-          {role: 'selectall'}
+          {role: 'selectall',accelerator: "CmdOrCtrl+A"}
 
       ]
 

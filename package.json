@@ -9,7 +9,7 @@
     "webpack": "webpack",
     "app": "electron .",
     "dev": "webpack-dev-server",
-    "electron-dev": "electromon ./electron-dev",
+    "electron-dev": "electron ./electron-dev",
     "dist": "npm run webpack && build",
     "test": "electron-mocha"
   },

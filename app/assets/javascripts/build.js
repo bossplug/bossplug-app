@@ -3,6 +3,7 @@ import Vue from 'vue';
 var $ = require("jquery");
 
 const ContextMenuHelper = require('./context-menu-helper').default
+const LocalStorageHelper= require('./local-storage-helper').default
 
 import TreeMenu from './vue/TreeMenu.vue'
 
@@ -25,32 +26,18 @@ export default class Build {
 
 
 
-
     var tree =  {
-      label: 'roott',
-      nodes: [
-        {
-          label: 'item1',
-          nodes: [
-            {
-              label: 'item1.1'
-            },
-            {
-              label: 'item1.2',
-              nodes: [
-                {
-                  label: 'item1.2.1'
-                }
-              ]
-            }
-          ]
-        },
-        {
-          label: 'item2'
-        }
-      ]
+      label: 'Audio List',
+      nodes: []
     }
 
+       var existingAudioTree = await LocalStorageHelper.get("audioTree");
+
+     console.log('found tree', existingAudioTree )
+     if(existingAudioTree)
+     {
+       tree = existingAudioTree;
+     }
 
 
 
@@ -96,7 +83,8 @@ export default class Build {
 
              switch(buttonName) {
                 case 'connect':
-                    var response = await socketClient.emit('connectToLaunchpad')
+
+                    var response = await self.socketClient.emit('connectToLaunchpad')
                     if(response.success)
                     {
                       self.connected = true;
@@ -110,21 +98,14 @@ export default class Build {
                     break;
             }
 
-             // `event` is the native DOM event
-             /*if (event) {
-               alert(event.target.tagName)
-             }*/
-           },
-           greet: function()
-           {
-             console.log('hello')
+
            }
          }
       })
 
 
 
-      await ContextMenuHelper.buildMenu(window,'.audio-list',(evt)=> self.handleEvent(evt));
+      await ContextMenuHelper.buildMenu(window,'.audio-list',(evt,target)=> self.handleEvent(evt,target));
 
 
   }
@@ -132,9 +113,7 @@ export default class Build {
 
 
   handleMouseUp(event,label){
-      console.log('mouse up', event)
-
-      if(event.target.classList.contains('drag-target'))
+      if(event.target.classList.contains('drop-target'))
       {
           var cellId = event.target.getAttribute('data-cell-id');
 
@@ -144,14 +123,22 @@ export default class Build {
   }
 
   //consider stuffing this in another class
-  async handleEvent(eventName)
+  async handleEvent(evt,target)
   {
     var self = this;
 
-    switch(eventName){
-      case 'addAudioFolder':
+    var role = evt.role;
+
+    switch(role){
+      case 'addaudiofolder':
           var response = await this.socketClient.emit('addAudioFolder');
           self.addAudioFolders(response)
+          break;
+
+      case 'removeaudiofolder':
+          //var response = await this.socketClient.emit('addAudioFolder');
+          //self.addAudioFolders(response)
+          console.log('remove audio folderr', target)
           break;
       default:
           break;
@@ -171,6 +158,11 @@ export default class Build {
 
       Vue.set(buildComponent, 'audioFolders', selectedFolders )
       Vue.set(fileTree, 'tree', tree )
+      //show children of root
+
+      LocalStorageHelper.set("audioTree",tree)
+
+
 
       console.log('set tree',tree)
 
@@ -182,10 +174,56 @@ export default class Build {
 
     async buildFileTree(folders,containerClass)
     {
-
+      console.log('folders',folders   )
+      var audioFiles = [];
 
       var tree =  {
-        label: 'reett',
+        label: 'Audio List',
+        nodes: []
+      }
+
+      var elementKey = 0;
+
+      for(var folder of folders)
+      {
+        try{
+          var files = await this.socketClient.emit('findAudioInDir', folder );
+
+          var foldername = folder.substring(folder.lastIndexOf('/')+1);
+          var subnode = {
+            label: foldername,
+            path : folder,
+            nodes: [],
+            key: elementKey
+          };
+          elementKey++;
+
+           for(var file of files)
+           {
+             console.log('found audio file',file, ' in folder ', folder )
+             var filename = file.substring(file.lastIndexOf('/')+1);
+
+             var filenode = {
+               label:filename,
+               path:file,
+               key: elementKey
+             }
+             elementKey++;
+            subnode.nodes.push(filenode)
+           }
+
+            tree.nodes.push( subnode )
+        }catch(err)
+        {
+          console.error(err)
+        }
+      }
+
+
+
+/*
+      var tree =  {
+        label: 'Audio List',
         nodes: [
           {
             label: 'item1',
@@ -200,12 +238,13 @@ export default class Build {
             ]
           },
           {
-            label: 'item2'
+            label: 'item2',
+            path:'thisismypath'
           }
         ]
       }
 
-
+*/
 
       return tree;
 

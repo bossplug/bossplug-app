@@ -16,7 +16,7 @@
 
     <div class="row h12">
 
-        <div class="col s2 zeropad h12" id="filetree" >
+        <div class="col s2 zeropad h12" id="filetree"   >
 
 
 
@@ -27,6 +27,7 @@
             <div class="thin-list">
                 <div class="audioFileContainer" >
                   <tree-menu
+                    v-on:drag-audio-file="dragAudioFile"
                     :label="tree.label"
                     :nodes="tree.nodes"
                     :depth="0"

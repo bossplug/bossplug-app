@@ -51,13 +51,16 @@ export default class Build {
 
 
 
+
       fileTree = new Vue({
         el: '#filetree',
         data:  {
           tree: tree
         }  ,
         methods: {
-
+          dragAudioFile: function(label) {
+            console.log('test',label)
+          }
         },
          components:
         {
@@ -66,7 +69,9 @@ export default class Build {
       })
 
 
-
+      fileTree.$on('drag-audio-file', label => {
+            console.log('start dragging ', label) // should return 'I am being fired here'
+      });
 
      buildComponent = new Vue({
         el: '#build',

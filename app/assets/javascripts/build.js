@@ -1,5 +1,7 @@
 import Vue from 'vue';
 
+var $ = require("jquery");
+
 const ContextMenuHelper = require('./context-menu-helper').default
 
 import TreeMenu from './vue/TreeMenu.vue'
@@ -71,7 +73,15 @@ export default class Build {
 
       fileTree.$on('drag-audio-file', label => {
             console.log('start dragging ', label) // should return 'I am being fired here'
+
+            $('.boss-container').off();
+            $('.boss-container').on('mouseup',(event) => self.handleMouseUp(event,label));
+
+          //  window.addEventListener('mouseup',(event) => self.handleMouseUp(event,label) )
+
       });
+
+
 
      buildComponent = new Vue({
         el: '#build',
@@ -117,6 +127,20 @@ export default class Build {
       await ContextMenuHelper.buildMenu(window,'.audio-list',(evt)=> self.handleEvent(evt));
 
 
+  }
+
+
+
+  handleMouseUp(event,label){
+      console.log('mouse up', event)
+
+      if(event.target.classList.contains('drag-target'))
+      {
+          var cellId = event.target.getAttribute('data-cell-id');
+
+          console.log('dropped ',label,' on cell ', cellId)
+
+      }
   }
 
   //consider stuffing this in another class

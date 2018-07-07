@@ -1,7 +1,7 @@
 <template>
 <div class="tree-menu"   >
   <div class="label-wrapper" @click="toggleChildren"  >
-    <div :style="indent" :class="labelClasses" @click="emitDragEvent">
+    <div :style="indent" :class="labelClasses" @mousedown="emitDragEvent">
       <i v-if="nodes" class="icon" :class="iconClasses"></i>
       {{ label }}
     </div>

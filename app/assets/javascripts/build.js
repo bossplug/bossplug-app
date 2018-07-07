@@ -5,7 +5,12 @@ const ContextMenuHelper = require('./context-menu-helper').default
 import TreeMenu from './vue/TreeMenu.vue'
 
 var buildComponent;
-var fileTree; //https://vuejsdevelopers.com/2017/10/23/vue-js-tree-menu-recursive-components/
+var fileTree;
+
+
+ //https://vuejsdevelopers.com/2017/10/23/vue-js-tree-menu-recursive-components/
+//https://dzone.com/articles/build-a-collapsible-tree-menu-with-vuejs-recursive-1
+
 
 export default class Build {
   constructor( ){
@@ -20,7 +25,7 @@ export default class Build {
 
 
     var tree =  {
-      label: 'root',
+      label: 'roott',
       nodes: [
         {
           label: 'item1',
@@ -44,12 +49,14 @@ export default class Build {
       ]
     }
 
-  /*  var temp = Vue.component('tree-menu', {
+
+
+  /*  var comp =   Vue.component('tree-menu', {
        template: '#tree-menu',
        props: [ 'nodes', 'label', 'depth' ],
        data() {
           return {
-            showChildren: true
+            showChildren: false
           }
        },
        computed: {
@@ -68,23 +75,32 @@ export default class Build {
        },
        methods: {
          toggleChildren() {
-           console.log('toggle children')
             this.showChildren = !this.showChildren;
          }
        }
      });*/
 
-
-
-     fileTree = new Vue({
+     /*fileTree = new Vue({
         el: '#filetree',
         data: {
            tree
         },
-        components: {
+        methods: {
+            greet: function()
+            {
+              alert('helloo')
+              console.log('test')
+            }
+        },
+         components:
+        {
           TreeMenu
         }
-      })
+      })*/
+
+
+
+
 
 
 
@@ -92,7 +108,8 @@ export default class Build {
         el: '#build',
         data: {
           connected: false,
-          audioFolders: []
+          audioFolders: [],
+          treeData: tree
         },
         methods: {
            clickButton: async function (buttonName) {
@@ -119,7 +136,15 @@ export default class Build {
              /*if (event) {
                alert(event.target.tagName)
              }*/
+           },
+           greet: function()
+           {
+             console.log('hello')
            }
+         },
+          components:
+         {
+           TreeMenu
          }
       })
 
@@ -169,37 +194,29 @@ export default class Build {
     {
 
 
-      var tree = {
-          name: 'My Tree',
-          children: [
-            { name: 'hello' },
-            { name: 'wat' },
-            {
-              name: 'child folder',
-              children: [
-                {
-                  name: 'child folder',
-                  children: [
-                    { name: 'hello' },
-                    { name: 'wat' }
-                  ]
-                },
-                { name: 'hello' },
-                { name: 'wat' },
-                {
-                  name: 'child folder',
-                  children: [
-                    { name: 'hello' },
-                    { name: 'wat' }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
+      var tree =  {
+        label: 'roott',
+        nodes: [
+          {
+            label: 'item1',
+            nodes: [
+              {
+                label: 'item1.1'
+              },
+              {
+                label: 'item1.2',
+                nodes: [ ]
+              }
+            ]
+          },
+          {
+            label: 'item2'
+          }
+        ]
+      }
 
 
-        Vue.component('item', {
+     /*Vue.component('item', {
     template: '#item-template',
     props: {
       model: Object
@@ -234,9 +251,7 @@ export default class Build {
         })
       }
     }
-  })
-
-
+  })*/
 
 
 

@@ -1,6 +1,6 @@
 <template>
   <div class="tree-menu">
-    <div class="cont" :style="indent" @click="toggleChildren()" >{{ label }}</div>
+    <div :style="indent" @click="toggleChildren">{{ label }}</div>
     <tree-menu
       v-if="showChildren"
       v-for="node in nodes"
@@ -15,17 +15,16 @@
   export default {
     props: [ 'label', 'nodes', 'depth' ],
     data() {
-      return { showChildren: true }
+      return { showChildren: false }
     },
     name: 'tree-menu',
     computed: {
       indent() {
-        return { transform: `translate(${this.depth * 10}px)` }
+        return { transform: `translate(${this.depth * 50}px)` }
       }
     },
     methods: {
       toggleChildren() {
-        console.log('meep')
         this.showChildren = !this.showChildren;
       }
     }

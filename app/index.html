@@ -27,11 +27,19 @@
             <div class="thin-list">
                 <div class="audioFileContainer" id="filetree">
                   <tree-menu
-                    :label="tree.label" 
-                    :nodes="tree.nodes"
+                    :label="treeData.label"
+                    :nodes="treeData.nodes"
                     :depth="0"
                   ></tree-menu>
+
+
+               <div  v-on:click="greet"> clickk </div>
+
                 </div>
+
+
+
+
             </div>
 
 

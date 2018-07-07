@@ -41,14 +41,14 @@ export default class ContextMenuHelper {
                 handleEvent(menuItem,e.target)
             }
           },
-
+          /*
           {type: 'separator'},
           {role: 'cut'},
           {role: 'copy',accelerator: "CmdOrCtrl+C"},
           {role: 'paste', accelerator: "CmdOrCtrl+V"},
           {role: 'delete'},
           {role: 'selectall',accelerator: "CmdOrCtrl+A"}
-
+              */
       ]
 
 

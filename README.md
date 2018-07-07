@@ -27,9 +27,7 @@ npm run app
 ```  
 
 # Developer TODO
-1.  integrate electron-tree-view for the left hand column !!
-
-??  npm install vued3tree
+1. Grab the audio file on nodejs side, do processing, then stream to frontend to playback!
 
 ** All important code will live in the backend Nodejs, the front end is just cosmetic
 
@@ -55,7 +53,7 @@ Default plugins:
 An audio file (or midi ?) which has metadata including the milliseconds for the 'hit time'.  Always referred to by its SHA3 hash.
 
 
-
+| aplay -f cd
 
 
 ## License

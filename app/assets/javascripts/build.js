@@ -4,7 +4,13 @@ var $ = require("jquery");
 
 const ContextMenuHelper = require('./context-menu-helper').default
 const LocalStorageHelper= require('./local-storage-helper').default
+
 const AudioTreeHelper= require('./audio-tree-helper').default
+
+
+const AudioHelper= require('./audio-helper').default
+
+
 
 import TreeMenu from './vue/TreeMenu.vue'
 
@@ -71,8 +77,10 @@ export default class Build {
 
       });
 
-      fileTree.$on('activate-audio-file', label => {
-            console.log('activate audio file', label) // should return 'I am being fired here'
+      fileTree.$on('activate-audio-file', sfx => {
+            console.log('activate audio file', sfx) // should return 'I am being fired here'
+
+            motherShip.$emit('activate-sound', sfx)
 
             //$('.boss-container').off();
             //$('.boss-container').on('mouseup',(event) => self.handleFileDragDrop(event,label));
@@ -82,7 +90,7 @@ export default class Build {
 
 
      buildComponent = new Vue({
-        el: '#build',
+        el: '#theboss',
         data: {
           connected: false
         },
@@ -110,6 +118,25 @@ export default class Build {
            }
          }
       })
+
+      motherShip = new Vue({
+         el: '#mothership',
+         data: {
+         },
+         methods: {
+           activateSound: async function (sfx) {
+             console.log('sound', sfx)
+           }
+          }
+       })
+
+
+       motherShip.$on('activate-sound', sfx => {
+             console.log('activate audio file', sfx) // should return 'I am being fired here'
+
+            AudioHelper.playSound(self.socketClient,sfx)
+       });
+
 
       alertBox = new Vue({
          el: '#alert-box',

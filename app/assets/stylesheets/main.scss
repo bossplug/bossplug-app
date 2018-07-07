@@ -37,8 +37,26 @@
 .audio-list
 {
   padding:5px;
-  overflow-y:auto;
 
+
+    overflow-y:auto;
+   
+
+
+}
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 3px;
 }
 
 

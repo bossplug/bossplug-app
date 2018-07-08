@@ -4,6 +4,7 @@
     <div v-for="cell in cells"
       :label="cell.label" :path="cell.path"
       class="pad-config-cell background-darksteel drop-target text-center"
+      :class="labelClasses"
       @click="clickedCell" @dblclick="activateCell"
       v-bind:data-cell-id="cell.cellId"  >
        {{ cell.label }}
@@ -25,8 +26,9 @@
     name: 'launch-pad',
     computed: {
 
-      labelClasses() {
-        return {   }
+      labelClasses() {  //cant get this working
+
+        return { 'missing-files': (this.path == null && this.label)  }
       },
 
       getCellId() {
@@ -36,7 +38,7 @@
     methods: {
 
       clickedCell() {
-
+        console.log('meep',{label: this.label, path: this.path, cellId: this.cellId })
           this.$root.$emit('activate-audio-file', {label: this.label, path: this.path, cellId: this.cellId } )
 
       },

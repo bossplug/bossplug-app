@@ -91,7 +91,7 @@ export default class Build {
       });
 
 
-      var padTree = Build.buildEmptyPadTree();
+      var padTree = self.getPadConfig();
       console.log('pad tree', padTree)
 
 
@@ -205,35 +205,6 @@ export default class Build {
 
 
 
- static buildEmptyPadTree()
-  {
-    var tree = {
-      cells:[]
-    };
-
-    var cellId = 0;
-    for(var x=0;x<8;x++)
-    {
-      for(var y=0;y<8;y++)
-      {
-        tree.cells.push(
-          {
-            cellId: cellId++,
-            cellX: x,
-            cellY: y,
-            path:null,
-            label:'---',
-            hash:null
-          }
-        )
-      }
-    }
-
-    return tree;
-  }
-
-
-
   async updatePadConfig(padConfig,padTree)
   {
 
@@ -258,6 +229,20 @@ export default class Build {
 
 
       }
+  }
+
+
+  async getPadConfig()
+  {
+     var response = await this.socketClient.emit('getPadConfig');
+     if(response.success)
+     {
+       this.setAlertMessage('blue',response.message)
+       var config = response.padConfig
+       this.updatePadConfig(response.padConfig,response.padTree)
+     }else{
+       this.setAlertMessage('red',response.message)
+     }
   }
 
   async assignOptionToPadConfig(optionName,value)

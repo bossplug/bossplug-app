@@ -1,13 +1,17 @@
 <template>
 <div class="launch-pad"   >
 
-    <div v-for="cell in cells"
-      :label="cell.label" :path="cell.path"
-      class="pad-config-cell background-darksteel drop-target text-center"
-      :class="labelClasses"
-      @click="clickedCell" @dblclick="activateCell"
-      v-bind:data-cell-id="cell.cellId"  >
-       {{ cell.label }}
+    <div v-for="cell in cells" class="pad-config-cell background-darksteel ">
+      <div class="drop-target text-center"
+        v-if="cell.label"
+        :class="{'missing-files': (cell.path == null && cell.label!='---')}"
+        @click="clickedCell" @dblclick="activateCell"
+        v-bind:data-label="cell.label"
+        v-bind:data-path="cell.path"
+        v-bind:data-cell-id="cell.cellId" >
+
+       {{ cell.label  }}
+     </div>
     </div>
 
 
@@ -26,9 +30,9 @@
     name: 'launch-pad',
     computed: {
 
-      labelClasses() {  //cant get this working
-
-        return { 'missing-files': (this.path == null && this.label)  }
+      //these dont work for cells, can only access global data
+      getCellLabel() {
+        return this.label;
       },
 
       getCellId() {
@@ -37,14 +41,24 @@
     },
     methods: {
 
-      clickedCell() {
-        console.log('meep',{label: this.label, path: this.path, cellId: this.cellId })
-          this.$root.$emit('activate-audio-file', {label: this.label, path: this.path, cellId: this.cellId } )
+      clickedCell(element) {
+        var target = element.target;
+        var label = target.getAttribute('data-label')
+        var path = target.getAttribute('data-path')
+        var cellId = target.getAttribute('data-cell-id') //parse int ?
+
+        console.log('clicked',{label: label, path: path, cellId: cellId })
+        this.$root.$emit('activate-audio-file', {label: label, path: path, cellId: cellId } )
 
       },
-      activateCell() {
+      activateCell(element) {
+        var target = element.target;
+        var label = target.getAttribute('data-label')
+        var path = target.getAttribute('data-path')
+        var cellId = target.getAttribute('data-cell-id') //parse int ?
 
-          this.$root.$emit('activate-audio-file', {label: this.label, path: this.path, cellId: this.cellId } )
+        console.log('dblclicked',{label: label, path: path, cellId: cellId })
+        this.$root.$emit('activate-audio-file', {label: label, path: path, cellId: cellId } )
 
       }
     }

@@ -213,6 +213,7 @@ export default class Build {
     Vue.set(bossComponent, 'padConfig', padConfig )
     Vue.set(bossComponent, 'padTree', padTree )
     console.log('update pad config ', padConfig)
+    console.log('update pad tree ', padTree)
   }
 
   async handleFileDragDrop(event,item){

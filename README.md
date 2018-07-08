@@ -27,7 +27,7 @@ npm run app
 ```  
 
 # Developer TODO
-1. Grab the audio file on nodejs side, do processing, then stream to frontend to playback!  NEED to ultimately play the audio stream w Howler !!! 
+1. Grab the audio file on nodejs side, do processing, then stream to frontend to playback!  NEED to ultimately play the audio stream w Howler !!!
 
 2. Clicking on a pad button opens the config for it - on mothership
 
@@ -57,6 +57,9 @@ An audio file (or midi ?) which has metadata including the milliseconds for the 
 
 | aplay -f cd
 
+
+## ioHook
+Make sure it is configured correctly !!! Node 8.9 and Electron 2 : https://wilixlead.github.io/iohook/installation.html
 
 ## License
 

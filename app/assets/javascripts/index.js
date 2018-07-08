@@ -19,6 +19,8 @@ var socketClient = new SocketClient(audioPlayer);
 import Build from './build';
 var build = new Build(audioPlayer);
 
+import KeyListener from './key-listener';
+var keyListener = new KeyListener(socketClient);
 
 
 function init()
@@ -27,6 +29,7 @@ function init()
 
   audioPlayer.init();
   socketClient.init();
+  keyListener.init(socketClient);
 
   if(document.getElementById("build")){
     build.init(socketClient);

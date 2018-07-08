@@ -30,8 +30,8 @@ export default class AudioPlayer {
 
     if(!sfx.preloaded)
     {
-      var response = await socketClient.emit('queueSound',sfx);
-      console.log('got ',response)
+    //  var response = await socketClient.emit('queueSound',sfx);
+    //  console.log('got ',response)
       return;
     }
 
@@ -42,7 +42,7 @@ export default class AudioPlayer {
 
     const socketServer = 'http://'+current_hostname+':3000';
     var socketsPath ;
-     
+
 
     var socketsPath =  socketServer+'/'+sfx.hash+'.wav'
       // Setup the new Howl.

@@ -91,17 +91,17 @@ export default class Build {
       });
 
 
-      var padTree = Build.buildPadTree();
+      var padTree = Build.buildEmptyPadTree();
       console.log('pad tree', padTree)
 
-      var initialPadConfig = await self.getInitialPadConfig()
+
 
      bossComponent = new Vue({
         el: '#theboss',
         data: {
           connected: false,
-          pad: padTree,
-          padConfig: initialPadConfig
+          padTree: padTree,
+          padConfig: null
         },
         methods: {
            clickButton: async function (buttonName) {
@@ -123,7 +123,7 @@ export default class Build {
                     if(response.success)
                     {
                       self.setAlertMessage('green',response.message)
-                      self.updatePadConfig(response.padconfig)
+                      self.updatePadConfig(response.padConfig,response.padTree)
                     }else{
                       self.setAlertMessage('red',response.message)
                     }
@@ -135,7 +135,6 @@ export default class Build {
                     if(response.success)
                     {
                       self.setAlertMessage('green',response.message)
-                      self.updatePadConfig(response.padconfig)
                     }else{
                       self.setAlertMessage('red',response.message)
                     }
@@ -146,7 +145,13 @@ export default class Build {
             }
 
 
-           }
+          },
+          setPadConfigName: async function (element) {
+
+            var val = element.target.value;
+            console.log(val)
+            self.assignOptionToPadConfig('name',val)
+          }
          },
           components:
          {
@@ -200,7 +205,7 @@ export default class Build {
 
 
 
- static buildPadTree()
+ static buildEmptyPadTree()
   {
     var tree = {
       cells:[]
@@ -217,7 +222,8 @@ export default class Build {
             cellX: x,
             cellY: y,
             path:null,
-            label:'---'
+            label:'---',
+            hash:null
           }
         )
       }
@@ -226,16 +232,16 @@ export default class Build {
     return tree;
   }
 
-  async getInitialPadConfig()
+
+
+  async updatePadConfig(padConfig,padTree)
   {
 
-    return null;
-  }
+    //need to update the tree ..for rendering
 
-  async updatePadConfig(padConfig)
-  {
     Vue.set(bossComponent, 'padConfig', padConfig )
-    console.log('update pad config ', config)
+    Vue.set(bossComponent, 'padTree', padTree )
+    console.log('update pad config ', padConfig)
   }
 
   async handleFileDragDrop(event,item){
@@ -254,16 +260,28 @@ export default class Build {
       }
   }
 
-
+  async assignOptionToPadConfig(optionName,value)
+  {
+     var response = await this.socketClient.emit('assignOptionToPadConfig',{optionName:optionName,value:value});
+     if(response.success)
+     {
+       this.setAlertMessage('blue',response.message)
+       var config = response.padConfig
+       this.updatePadConfig(response.padConfig,response.padTree)
+     }else{
+       this.setAlertMessage('red',response.message)
+     }
+  }
 
   async assignSoundToPadConfig(item,cellId)
   {
      var response = await this.socketClient.emit('assignSoundToPadConfig',{sfx:item,cellId:cellId});
      if(response.success)
      {
-       this.setAlertMessage('blue','Assigned '+item.label+' to cell '+ cellId + '.')
-       var config = response.padConfig
-       this.updatePadConfig(config)
+       this.setAlertMessage('blue',response.message)
+       this.updatePadConfig(response.padConfig,response.padTree)
+     }else{
+        this.setAlertMessage('red',response.message)
      }
   }
 

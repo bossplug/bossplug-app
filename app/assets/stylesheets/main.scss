@@ -102,6 +102,19 @@
 
 }
 
+.relative
+{
+    position: relative;
+}
+
+.absolute-top
+{
+  position:absolute;
+  top:10px;
+  left:50px;
+  padding:5px 15px;
+}
+
 .absolute-bottom
 {
   position:absolute;

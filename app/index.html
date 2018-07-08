@@ -45,7 +45,11 @@
           <div class="background-sativa h4 border-bottom-black" id="mothership" >
 
           </div>
-          <div class="background-steel h8" id="theboss" >
+          <div class="background-steel h8 relative" id="theboss" >
+
+            <div class="title-container absolute-top">
+              <input type="text" class="white-text" v-if="padConfig" v-model="padConfig.name" v-on:change="setPadConfigName" v-cloak></input>
+            </div>
 
             <div class="pad-connect-container white-text h12 text-center">
 
@@ -61,9 +65,9 @@
               -->
 
                 <launch-pad
-                  :cells="pad.cells"
-                  :label="pad.label"
-                  :path="pad.path"
+                  :cells="padTree.cells"
+                  :label="padTree.label"
+                  :path="padTree.path"
                   :depth="0"
                 ></launch-pad>
 

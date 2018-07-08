@@ -1,7 +1,7 @@
 <template>
 <div class="launch-pad"   >
 
-    <div v-for="cell in cells" class="pad-config-cell background-darksteel ">
+    <div v-for="cell in cells" class="pad-config-cell background-darksteel hoverable">
       <div class="drop-target text-center"
         v-if="cell.label"
         :class="{'missing-files': (cell.path == null && cell.label!='---')}"

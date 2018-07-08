@@ -162,6 +162,11 @@ export default class Build {
          }
       })
 
+
+      bossComponent.$on('activate-audio-file', sfx => {
+            motherShip.$emit('activate-sound', sfx)
+      });
+
       motherShip = new Vue({
          el: '#mothership',
          data: {

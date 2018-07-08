@@ -41,10 +41,10 @@ export default class AudioPlayer {
     var current_hostname = window.location.hostname;
 
     const socketServer = 'http://'+current_hostname+':3000';
-    var socketsPath = socketServer+'/'+'01a44c3ec60726bce9d890ec5e2747b4a4058cd2f271933424d7827c95464ff8'+'.wav'
-    console.log(socketsPath)
+    var socketsPath ;
+     
 
-    socketsPath =  socketServer+'/'+sfx.hash+'.wav'
+    var socketsPath =  socketServer+'/'+sfx.hash+'.wav'
       // Setup the new Howl.
       const audio = new Howl({
           src: socketsPath,

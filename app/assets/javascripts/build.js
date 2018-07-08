@@ -79,13 +79,14 @@ export default class Build {
       fileTree.$on('drag-audio-file', item => {
             //console.log('start dragging ', label) // should return 'I am being fired here'
             self.setDragMessage('red', item.label)
+            Vue.set(bossComponent, 'draggedSound', item )
 
             $('.boss-container').off();
             $(window).off();
 
 
             $('.boss-container').on('mouseup',(event) => self.handleFileDragDrop(event,item));
-            $(window).on('mouseup',(event)=> self.setDragMessage('red', null)  )
+            $(window).on('mouseup',(event)=> self.cancelFileDragDrop(event,item)   )
             $(window).on('mousemove',(event)=> self.updateDragBox(event)  )
       });
 
@@ -105,7 +106,8 @@ export default class Build {
           connected: false,
           audioPreloaded:false,
           padTree: padTree,
-          padConfig: null
+          padConfig: null,
+          draggedSound: null
         },
         methods: {
            clickButton: async function (buttonName) {
@@ -238,17 +240,27 @@ export default class Build {
   async handleFileDragDrop(event,item){
 
         console.log('handle drop ' )
+        var droppedSound = bossComponent.draggedSound;
 
-      if(event.target.classList.contains('drop-target'))
+      if(event.target.classList.contains('drop-target') && droppedSound)
       {
+ 
           $('.boss-container').off();
           var cellId = event.target.getAttribute('data-cell-id');
 
           console.log('dropped ',item,' on cell ', cellId)
           await this.assignSoundToPadConfig(item,cellId)
 
-
+          this.cancelFileDragDrop(event,item)
       }
+  }
+
+  async cancelFileDragDrop(event,item)
+  {
+      console.log('cancel drag drop ')
+      this.setDragMessage('red', null)
+       ///$(window).off();
+       Vue.set(bossComponent, 'draggedSound', null )
   }
 
 

@@ -3,8 +3,8 @@
 var io = require('socket.io-client');
 
 export default class SocketClient {
-  constructor( ){
-
+  constructor(audioPlayer){
+    this.audioPlayer = audioPlayer;
   }
 
   async init()
@@ -25,6 +25,12 @@ export default class SocketClient {
 
     });
 
+    this.socket.on('playLocalSound', async function (data,fn) {
+            console.log('playLocalSound', data)
+            var success = await self.audioPlayer.playSound(self,data);
+            fn(JSON.stringify(data));  //immediate response
+      });
+
 
     this.socket.on('disconnect', () => {
       console.log('disconnected from socket.io server');
@@ -42,7 +48,7 @@ export default class SocketClient {
 
 
     var response = await new Promise((resolve, reject) => {
-          self.socket.emit(name,value,function(res){ 
+          self.socket.emit(name,value,function(res){
             resolve(JSON.parse(res));
           });
       });

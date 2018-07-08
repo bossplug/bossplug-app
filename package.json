@@ -35,6 +35,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "howler": "^2.0.13",
     "html-loader": "^0.5.5",
+    "iohook": "^0.2.0",
     "jquery": "^3.3.1",
     "js-sha3": "^0.7.0",
     "launchpad-mini": "git+https://git@github.com/Granjow/launchpad-mini.git",
@@ -102,5 +103,20 @@
       "target": "squirrel",
       "icon": "build/icon.ico"
     }
+  },
+  "iohook": {
+    "targets": [
+      "node-59",
+      "electron-57"
+    ],
+    "platforms": [
+      "win32",
+      "darwin",
+      "linux"
+    ],
+    "arches": [
+      "x64",
+      "ia32"
+    ]
   }
 }

@@ -3,7 +3,7 @@
 Modular music studio for the Launchpad.   
 
 Bossplug serves as an editor for .boss configuration files.   You can also play using the pad in 'play' mode.
- 
+
 
 ![image](https://user-images.githubusercontent.com/38132633/42414901-0a62df98-820e-11e8-871c-1294c259fdbe.png)
 
@@ -27,7 +27,7 @@ npm run app
 ```  
 
 # Developer TODO
-1. Grab the audio file on nodejs side, do processing, then stream to frontend to playback!
+1. Grab the audio file on nodejs side, do processing, then stream to frontend to playback!  NEED to ultimately play the audio stream w Howler !!! 
 
 2. Clicking on a pad button opens the config for it - on mothership
 

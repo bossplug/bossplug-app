@@ -27,8 +27,14 @@ export default class AudioPlayer {
 
     async playSound(socketClient,sfx)
   {
-    //var response = await socketClient.emit('queueSound',sfx);
-    //console.log('got ',response)
+
+    if(!sfx.preloaded)
+    {
+      var response = await socketClient.emit('queueSound',sfx);
+      console.log('got ',response)
+      return;
+    }
+
 
     console.log('howl',sfx)
 
@@ -55,7 +61,7 @@ preload: false,
 
   */
 
- 
+
 
   /*  var stream = new Howl({
         src: [sfx.path],

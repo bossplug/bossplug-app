@@ -21,6 +21,7 @@
   ],
   "license": "CC0-1.0",
   "dependencies": {
+    "app-root-path": "^2.1.0",
     "architect": "^0.1.13",
     "audio-context": "^1.0.3",
     "audio-generator": "^2.1.2",

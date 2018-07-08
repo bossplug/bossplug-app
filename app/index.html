@@ -49,7 +49,13 @@
 
         </div>
         <div class="col s9 zeropad h12"    >
-          <div class="background-sativa h4 border-bottom-black" id="mothership" >
+          <div class="background-sativa h4 border-bottom-black"  >
+            <div class="white-text" id="metronome" v-if="enabled" v-cloak>
+              Use chart js to render a donut
+            </div>
+            <div class="" id="cell-editor" v-if="enabled" v-cloak>
+              Seems to lay over the metronome , has an X button in top right to disable
+            </div>
 
           </div>
           <div class="background-steel h8 relative" id="theboss" >

@@ -10,21 +10,24 @@ const AudioTreeHelper= require('./audio-tree-helper').default
 
 //const AudioPlayer= require('./audio-player').default
 
-
-
+const MetronomeHelper = require('./metronome-helper').default
+var metronomeHelper;
 
 import LaunchPad from './vue/LaunchPad.vue'
 import TreeMenu from './vue/TreeMenu.vue'
 
-var motherShip;
+
 var bossComponent;
 var fileTree;
 
+
+var cellEditor;
 
 var alertBox;
 var dragBox;
  //https://vuejsdevelopers.com/2017/10/23/vue-js-tree-menu-recursive-components/
 //https://dzone.com/articles/build-a-collapsible-tree-menu-with-vuejs-recursive-1
+
 
 
 export default class Build {
@@ -91,7 +94,7 @@ export default class Build {
       });
 
       fileTree.$on('activate-audio-file', sfx => {
-            motherShip.$emit('activate-sound', sfx)
+            metronomeHelper.metronome.$emit('activate-sound', sfx)
       });
 
 
@@ -176,27 +179,29 @@ export default class Build {
       })
 
 
-      bossComponent.$on('activate-audio-file', sfx => {
-            motherShip.$emit('activate-sound', sfx)
+      bossComponent.$on('edit-cell', cell => {
+          //  metronome.$emit('activate-sound', sfx)
+          //begin editing sfx
+          this.enableCellEditor(cell,true)
+
       });
 
-      motherShip = new Vue({
-         el: '#mothership',
-         data: {
-         },
-         methods: {
-
-          }
-       })
+      metronomeHelper = new MetronomeHelper(this.audioPlayer);
+      await metronomeHelper.init();
 
 
-       motherShip.$on('activate-sound', sfx => {
-             console.log('activate audio file  ', sfx) // should return 'I am being fired here'
 
-            this.audioPlayer.playSound(self.socketClient,sfx)
-            self.setAlertMessage('blue',sfx.label)
-       });
 
+
+       cellEditor = new Vue({
+          el: '#cell-editor',
+          data: {
+            enabled: false
+          },
+          methods: {
+
+           }
+        })
 
       alertBox = new Vue({
          el: '#alert-box',
@@ -224,7 +229,18 @@ export default class Build {
 
   }
 
-
+  async enableCellEditor(cell,enable)
+  {
+    console.log('enable cell editor',cell,enable)
+    if(enable)
+    {
+      Vue.set(metronome, 'enabled', false )
+      Vue.set(cellEditor, 'enabled', true )
+    }else{
+      Vue.set(metronome, 'enabled', true )
+      Vue.set(cellEditor, 'enabled', false )
+    }
+  }
 
   async updatePadConfig(padConfig,padTree)
   {
@@ -244,7 +260,7 @@ export default class Build {
 
       if(event.target.classList.contains('drop-target') && droppedSound)
       {
- 
+
           $('.boss-container').off();
           var cellId = event.target.getAttribute('data-cell-id');
 

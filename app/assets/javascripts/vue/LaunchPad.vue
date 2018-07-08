@@ -2,7 +2,7 @@
 <div class="launch-pad"   >
 
     <div v-for="cell in cells" class="pad-config-cell background-darksteel hoverable">
-      <div class="drop-target text-center"
+      <span class="drop-target text-center"
         v-if="cell.label"
         :class="{'missing-files': (cell.path == null && cell.label!='---'), 'preloaded': cell.preloaded }"
         @click="clickedCell"
@@ -11,9 +11,8 @@
         v-bind:data-preloaded="cell.preloaded"
         v-bind:hash="cell.hash"
         v-bind:data-cell-id="cell.cellId" >
-
-       <span>{{ cell.label  }}</span>
-     </div>
+          {{ cell.label  }} 
+     </span>
     </div>
 
 

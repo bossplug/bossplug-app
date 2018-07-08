@@ -82,6 +82,8 @@
               <div class="whitespace-sm"></div>
               <div class="waves-effect waves-light btn gray-text hoverable clickable" v-on:click="clickButton('connect')" v-if="!connected">Connect to a Launchpad</div>
               <div class="waves-effect waves-light btn green gray-text hoverable clickable" v-on:click="clickButton('connect')" v-if="connected" v-cloak>Connected</div>
+
+              <div class="waves-effect waves-light btn green gray-text hoverable clickable" v-on:click="clickButton('preloadAudio')" v-if="!audioPreloaded" v-cloak>Preload Audio</div>
             </div>
 
 

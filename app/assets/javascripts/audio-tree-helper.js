@@ -91,16 +91,19 @@ export default class AudioTreeHelper {
             nodeId: nodeId
           };
 
+          console.log('files',files)
 
            for(var file of files)
            {
+             var filepath = file.path;
              //console.log('found audio file',file, ' in folder ', folder )
-             var filename = file.substring(file.lastIndexOf('/')+1);
+             var filename = filepath.substring(filepath.lastIndexOf('/')+1);
 
              var filenode = {
                label:filename,
-               path:file,
-               nodeId: elementKey++
+               path:filepath,
+               nodeId: elementKey++,
+               hash: file.hash
              }
 
             subnode.nodes.push(filenode)

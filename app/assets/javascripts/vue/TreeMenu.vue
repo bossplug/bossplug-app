@@ -13,6 +13,7 @@
     :label="node.label"
     :path="node.path"
     :nodeId="node.nodeId"
+    :hash="node.hash"
     :depth="depth + 1"
   >
   </tree-menu>
@@ -24,7 +25,7 @@
 
 <script>
   export default {
-    props: [ 'label', 'path', 'nodeId', 'nodes', 'depth' ],
+    props: [ 'label', 'path', 'nodeId','hash', 'nodes', 'depth' ],
     data() {
       return { showChildren: this.depth == 0 }
     },
@@ -53,13 +54,14 @@
       emitDragEvent() {
         if(!this.nodes)
         {
-          this.$root.$emit('drag-audio-file', {label: this.label, path: this.path, nodeId: this.nodeId } )
+          this.$root.$emit('drag-audio-file', {label: this.label, path: this.path, nodeId: this.nodeId, hash:this.hash } )
         }
       },
       emitActionEvent() {
         if(!this.nodes)
         {
-          this.$root.$emit('activate-audio-file', {label: this.label, path: this.path, nodeId: this.nodeId } )
+          console.log('play sfx with hash', this.hash)
+          this.$root.$emit('activate-audio-file', {label: this.label, path: this.path, nodeId: this.nodeId, hash:this.hash } )
         }
       }
     }

@@ -103,6 +103,7 @@ export default class Build {
         el: '#theboss',
         data: {
           connected: false,
+          audioPreloaded:false,
           padTree: padTree,
           padConfig: null
         },
@@ -117,6 +118,16 @@ export default class Build {
                     self.connected = response.success
                     if(!response.success)
                     {
+                      self.setAlertMessage('red',response.message)
+                    }
+                    break;
+                case 'preloadAudio':
+                    var response = await self.socketClient.emit('preloadAudio')
+                    self.connected = response.success
+                    if(response.success)
+                    {
+                      self.updatePadConfig(response.padConfig,response.padTree)
+                    }else{
                       self.setAlertMessage('red',response.message)
                     }
                     break;
@@ -247,7 +258,6 @@ export default class Build {
      if(response.success)
      {
        this.setAlertMessage('blue',response.message)
-       var config = response.padConfig
        this.updatePadConfig(response.padConfig,response.padTree)
      }else{
        this.setAlertMessage('red',response.message)

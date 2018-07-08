@@ -26,6 +26,7 @@
     "audio-generator": "^2.1.2",
     "av": "^0.4.9",
     "bufferutil": "^4.0.0",
+    "cors": "^2.8.4",
     "electron-editor-context-menu": "^1.1.1",
     "electron-json-storage": "^4.1.0",
     "electron-tree-view": "^1.1.0",

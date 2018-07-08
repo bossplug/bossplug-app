@@ -3,10 +3,9 @@
   <head>
     <meta charset="UTF-8">
 
-    <title>Lava Wallet</title>
+    <title>Bossplug</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
- 
 
   <link href="assets/main.css" rel="stylesheet"></head>
   <body>
@@ -15,60 +14,162 @@
 
     <div class="tab-group" id="nav-primary">
   <div class="tab-item" v-bind:class="{  active: (activeTab=='home') }"   v-on:click="clickTab('home')">
-    <span class="icon icon-home"></span>
-    Home
+    <span class="icon icon-tools"></span>
+    Build
   </div>
   <div class="tab-item" v-bind:class="{  active: (activeTab=='accounts') }"  v-on:click="clickTab('accounts')">
-    <span class="icon icon-menu"></span>
-    Accounts
+    <span class="icon icon-sound"></span>
+    Play
   </div>
   <div class="tab-item" v-bind:class="{  active: (activeTab=='transfer') }"  v-on:click="clickTab('transfer')">
     <span class="icon icon-shuffle"></span>
-    Transfer
+    Tinker
   </div>
 
 </div>
 
 
-    <div class="container" id="home">
+    <div class="overview build-background h12" >
+
+
+    <div class="row h12" id="build">
+
+        <div class="col s3 zeropad h12" id="filetree"   >
 
 
 
-    <div class="row">
+          <div class="audio-list background-darksteel white-text h12 border-right-black">
+            <div class="titlebar text-center">
 
-        <div class="col s6">
-
-
-               <div class="whitespace-md"></div>
-
-          <nav class="nav-group" id="home-menu">
+            </div>
+            <div class="thin-list">
 
 
-            <span class="nav-group-item" v-on:click="clickButton('addaccount')">
-              <span class="icon icon-plus-circled"></span>
-              Add an Ethereum Account
-            </span>
-            <span class="nav-group-item" v-on:click="clickButton('addressbook')">
-              <span class="icon icon-eye"></span>
-              View the Address Book
-            </span>
-            <span class="nav-group-item" v-on:click="clickButton('settings')">
-              <span class="icon icon-layout"></span>
-              Settings
-            </span>
 
-          </nav>
+                <div class="audioFileContainer" >
+                  <tree-menu
+                    v-on:drag-audio-file="dragAudioFile"
+                    :label="tree.label"
+                    :nodes="tree.nodes"
+                    :path="tree.path"
+                    :depth="0"
+                  ></tree-menu>
+
+                </div>
+
+                <div v-if='loading'>
+                  <div class="preloader-wrapper big active" >
+     <div class="spinner-layer spinner-blue">
+       <div class="circle-clipper left">
+         <div class="circle"></div>
+       </div><div class="gap-patch">
+         <div class="circle"></div>
+       </div><div class="circle-clipper right">
+         <div class="circle"></div>
+       </div>
+     </div>
+
+     <div class="spinner-layer spinner-red">
+       <div class="circle-clipper left">
+         <div class="circle"></div>
+       </div><div class="gap-patch">
+         <div class="circle"></div>
+       </div><div class="circle-clipper right">
+         <div class="circle"></div>
+       </div>
+     </div>
+
+     <div class="spinner-layer spinner-yellow">
+       <div class="circle-clipper left">
+         <div class="circle"></div>
+       </div><div class="gap-patch">
+         <div class="circle"></div>
+       </div><div class="circle-clipper right">
+         <div class="circle"></div>
+       </div>
+     </div>
+
+     <div class="spinner-layer spinner-green">
+       <div class="circle-clipper left">
+         <div class="circle"></div>
+       </div><div class="gap-patch">
+         <div class="circle"></div>
+       </div><div class="circle-clipper right">
+         <div class="circle"></div>
+       </div>
+     </div>
+   </div>
+
+                </div>
+
+            </div>
+
+          </div>
 
         </div>
-        <div class="col s6">
-          <img src="/assets/img/lavalogo.png" height="300px"></img>
+        <div class="col s9 zeropad h12"    >
+          <div class="background-sativa h4 border-bottom-black" id="mothership" >
+
+          </div>
+          <div class="background-steel h8 relative" id="theboss" >
+
+            <div class="title-container absolute-top">
+              <input type="text" class="white-text" v-if="padConfig" v-model="padConfig.name" v-on:change="setPadConfigName" v-cloak></input>
+            </div>
+
+            <div class="pad-connect-container white-text h12 text-center">
+
+              <div class="whitespace-sm"></div>
+              <div class="waves-effect waves-light btn gray-text hoverable clickable" v-on:click="clickButton('loadConfig')" >Load Pad Config</div>
+              <div class="waves-effect waves-light btn gray-text hoverable clickable" v-on:click="clickButton('saveConfig')" v-if="padConfig" v-cloak>Save Pad Config</div>
+
+              <div class="boss-container text-left">
+                <!--
+                <div class="pad-config-cell background-darksteel drop-target" data-cell-id="1" >
+                  ---
+                </div>
+              -->
+
+                <launch-pad
+                  :cells="padTree.cells"
+                ></launch-pad>
+
+              </div>
+
+
+
+              <div class="whitespace-sm"></div>
+              <div class="waves-effect waves-light btn gray-text hoverable clickable" v-on:click="clickButton('connect')" v-if="!connected">Connect to a Launchpad</div>
+              <div class="waves-effect waves-light btn green gray-text hoverable clickable" v-on:click="clickButton('connect')" v-if="connected" v-cloak>Connected</div>
+
+              <div class="waves-effect waves-light btn green gray-text hoverable clickable" v-on:click="clickButton('preloadAudio')" v-if="!audioPreloaded" v-cloak>Preload Audio</div>
+            </div>
+
+
+
+
+          </div>
         </div>
 
 
     </div>
-       
+
 
     </div>
+
+
+
+        <div class="alert-box absolute-bottom" v-if="alertMessage" v-bind:class="[alertClass]" id="alert-box" >
+  {{alertMessage}}
+</div>
+
+
+        <div class="drag-box absolute-drag" v-if="dragMessage" v-bind:class="[dragClass]" id="drag-box" >
+  {{dragMessage}}
+</div>
+
+
+
 
   <script type="text/javascript" src="bundle.js"></script></body>
 </html>

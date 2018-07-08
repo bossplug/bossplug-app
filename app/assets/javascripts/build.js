@@ -8,7 +8,7 @@ const LocalStorageHelper= require('./local-storage-helper').default
 const AudioTreeHelper= require('./audio-tree-helper').default
 
 
-const AudioHelper= require('./audio-helper').default
+//const AudioPlayer= require('./audio-player').default
 
 
 
@@ -28,8 +28,8 @@ var dragBox;
 
 
 export default class Build {
-  constructor( ){
-
+  constructor(audioPlayer){
+    this.audioPlayer=audioPlayer;
   }
 
   async init(socketClient){
@@ -191,7 +191,7 @@ export default class Build {
        motherShip.$on('activate-sound', sfx => {
              console.log('activate audio file  ', sfx) // should return 'I am being fired here'
 
-            AudioHelper.playSound(self.socketClient,sfx)
+            this.audioPlayer.playSound(self.socketClient,sfx)
             self.setAlertMessage('blue',sfx.label)
        });
 

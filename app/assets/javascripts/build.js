@@ -48,7 +48,8 @@ export default class Build {
         el: '#filetree',
         data:  {
           tree: tree,
-          audioFolders: []
+          audioFolders: [],
+          loading: true
         } ,
         created: async function()
         {
@@ -60,6 +61,8 @@ export default class Build {
            var tree = await AudioTreeHelper.buildAudioFolders(existingAudioFolders, self.socketClient)
            this.tree = tree;
           }
+
+          this.loading = false;
         },
         methods: {
           dragAudioFile: function(label) {

@@ -13,8 +13,8 @@ export default class MetronomeChart {
   		};
 
       window.chartColors = {
-          primary: '#6c5ce7' ,
-          secondary: '#a29bfe'
+          primary: '#dfe6e9' ,
+          secondary: '#fdcb6e'
       };
 
 

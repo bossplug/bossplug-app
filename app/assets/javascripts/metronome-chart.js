@@ -21,25 +21,19 @@ export default class MetronomeChart {
   					data: [
   						randomScalingFactor(),
   						randomScalingFactor(),
-  						randomScalingFactor(),
-  						randomScalingFactor(),
-  						randomScalingFactor(),
+  						 
   					],
   					backgroundColor: [
   						window.chartColors.red,
   						window.chartColors.orange,
-  						window.chartColors.yellow,
-  						window.chartColors.green,
-  						window.chartColors.blue,
+
   					],
   					label: 'Dataset 1'
   				}],
   				labels: [
   					'Red',
   					'Orange',
-  					'Yellow',
-  					'Green',
-  					'Blue'
+
   				]
   			},
   			options: {
@@ -58,19 +52,27 @@ export default class MetronomeChart {
 
   		window.onload = function() {
   			var ctx = document.getElementById('metronome-chart').getContext('2d');
-  			window.myDoughnut = new Chart(ctx, config);
+  			window.metronomeChart = new Chart(ctx, config);
   		};
-
 
 
   		var colorNames = Object.keys(window.chartColors);
 
 
+    }
 
+    setChartValue(beatPercent, beatMilliseconds)
+    {
 
+      if(!window.metronomeChart){
+        console.log('no chart');
+        return false;
+      }
+      console.log('set chart value', beatPercent)
 
-
-
+      window.metronomeChart.data.datasets[0].data[0] = beatMilliseconds; // Would update the first dataset's value of 'March' to be 50
+      window.metronomeChart.update();
+      return true;
     }
 
 }

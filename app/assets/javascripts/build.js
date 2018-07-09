@@ -33,12 +33,13 @@ var dragBox;
 export default class Build {
   constructor(audioPlayer){
     this.audioPlayer=audioPlayer;
+
   }
 
-  async init(socketClient){
+  async init(socketClient,musicMan){
     var self = this;
     self.socketClient=socketClient;
-
+    this.musicMan=musicMan;
 
 
     var tree =  {
@@ -186,7 +187,7 @@ export default class Build {
 
       });
 
-      metronomeComponent = new MetronomeComponent(this.audioPlayer);
+      metronomeComponent = new MetronomeComponent(this.audioPlayer,this.musicMan);
       await metronomeComponent.init();
 
 

@@ -13,6 +13,9 @@ var settings = new Settings();
 import AudioPlayer from './audio-player';
 var audioPlayer = new AudioPlayer();
 
+import MusicMan from './music-man';
+var musicMan = new MusicMan(audioPlayer);
+
 import SocketClient from './socketclient';
 var socketClient = new SocketClient(audioPlayer);
 
@@ -28,11 +31,12 @@ function init()
   nav.init();
 
   audioPlayer.init();
+  musicMan.init();
   socketClient.init();
   keyListener.init(socketClient);
 
   if(document.getElementById("build")){
-    build.init(socketClient);
+    build.init(socketClient,musicMan);
   }
 
   if(document.getElementById("settings")){

@@ -13,12 +13,15 @@ var metronomeChart;
 
 var lastRender = 0;
 
+var beatMilliseconds = 0;
+
 export default class MetronomeComponent {
-  constructor(audioPlayer){
+  constructor(audioPlayer,musicMan){
     this.audioPlayer=audioPlayer;
+    this.musicMan=musicMan;
   }
 
-  async init()
+  async init(musicMan)
   {
 
 
@@ -33,11 +36,14 @@ export default class MetronomeComponent {
         }
      })
 
+
      metronomeChart = new MetronomeChart()
      metronomeChart.init();
 
+
+
     // window.requestAnimationFrame(this.loop.bind(this))
-     window.requestAnimationFrame(  this.loop.bind(this) );
+     window.requestAnimationFrame( this.loop.bind(this) );
 
      metronome.$on('activate-sound', sfx => {
            console.log('activate audio file  ', sfx) // should return 'I am being fired here'
@@ -50,25 +56,53 @@ export default class MetronomeComponent {
 
   loop(timestamp )
   {
-
-
     var progress = timestamp - lastRender;
 
      this.update(progress)
-     this.draw()
+     //this.draw()
 
      lastRender = timestamp;
 
-    window.requestAnimationFrame(  this.loop.bind(this) );
+    window.requestAnimationFrame( this.loop.bind(this) );
   }
 
-  update(progress) {
-    //console.log('update',progress)
-    // Draw the state of the world
+  update(progressMilliseconds) {
+
+    beatMilliseconds += progressMilliseconds;
+
+    if(beatMilliseconds+progressMilliseconds > this.getMillisecondsPerBeat())
+    {
+
+      var undershoot = (beatMilliseconds - this.getMillisecondsPerBeat() );
+      this.beat(undershoot)
+    }
+
+    var beatPercent = (beatMilliseconds/this.getMillisecondsPerBeat())
+    metronomeChart.setChartValue( beatPercent, beatMilliseconds )
+
   }
 
-  draw() {
-    // Draw the state of the world
+  beat(undershoot)
+  {
+    beatMilliseconds = 0;
+
+    this.musicMan.beat(undershoot)
+
+    console.log('new beat', undershoot)
+  }
+
+  getBeatsPerMinute() {
+
+    if( metronome && metronome.beatsPerMinute   )
+    {
+      return metronome.beatsPerMinute
+    }
+
+    return 120;
+  }
+
+  getMillisecondsPerBeat() {
+    return Math.ceil( (1.0 / this.getBeatsPerMinute() ) * 60 * 1000 );
   }
 
 

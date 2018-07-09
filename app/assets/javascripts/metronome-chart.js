@@ -12,24 +12,44 @@ export default class MetronomeChart {
   			return Math.round(Math.random() * 100);
   		};
 
-      window.chartColors = {};
+      window.chartColors = {
+          primary: '#6c5ce7' ,
+          secondary: '#a29bfe'
+      };
+
+
 
   		var config = {
   			type: 'doughnut',
   			data: {
-  				datasets: [{
-  					data: [
-  						randomScalingFactor(),
-  						randomScalingFactor(),
-  						 
-  					],
-  					backgroundColor: [
-  						window.chartColors.red,
-  						window.chartColors.orange,
+  				datasets: [
+          {
+            data: [
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ],
+            backgroundColor: [
+              window.chartColors.transparent,
+              window.chartColors.transparent,
 
-  					],
-  					label: 'Dataset 1'
-  				}],
+            ],
+            label: 'Beat Bar'
+          },
+          {
+            data: [
+              0,
+              1,
+
+            ],
+            backgroundColor: [
+              window.chartColors.transparent,
+              window.chartColors.primary,
+
+            ],
+            label: 'Beat Duration'
+          }],
   				labels: [
   					'Red',
   					'Orange',
@@ -41,9 +61,10 @@ export default class MetronomeChart {
   				legend: null,
   				title: {
   					display: false,
-  					text: 'Chart.js Doughnut Chart'
+  					text: 'Metronome'
   				},
   				animation: {
+            duration: 1,
   					animateScale: true,
   					animateRotate: true
   				}
@@ -61,7 +82,7 @@ export default class MetronomeChart {
 
     }
 
-    setChartValue(beatPercent, beatMilliseconds)
+    setChartValue(beatPercent, beatMilliseconds, barBeatCount)
     {
 
       if(!window.metronomeChart){
@@ -70,7 +91,23 @@ export default class MetronomeChart {
       }
       console.log('set chart value', beatPercent)
 
-      window.metronomeChart.data.datasets[0].data[0] = beatMilliseconds; // Would update the first dataset's value of 'March' to be 50
+      var chartPercent = ( barBeatCount +  beatPercent )
+
+
+      //beat colors
+      for(var i=0;i<4;i++)
+      {
+        if(i >= 4-barBeatCount ||  barBeatCount == 0  )
+        {
+          window.metronomeChart.data.datasets[0].backgroundColor[i] = window.chartColors.secondary;
+        }else{
+          window.metronomeChart.data.datasets[0].backgroundColor[i] = window.chartColors.transparent;
+        }
+
+      }
+
+      window.metronomeChart.data.datasets[1].data[0] = 4.0 - chartPercent; // Would update the first dataset's value of 'March' to be 50
+      window.metronomeChart.data.datasets[1].data[1] =   chartPercent; // Would update the first dataset's value of 'March' to be 50
       window.metronomeChart.update();
       return true;
     }

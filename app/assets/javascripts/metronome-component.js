@@ -13,6 +13,9 @@ var metronomeChart;
 
 var lastRender = 0;
 
+var beatsPerBar = 4;
+var beatCount = 0;
+
 var beatMilliseconds = 0;
 
 export default class MetronomeComponent {
@@ -78,12 +81,14 @@ export default class MetronomeComponent {
     }
 
     var beatPercent = (beatMilliseconds/this.getMillisecondsPerBeat())
-    metronomeChart.setChartValue( beatPercent, beatMilliseconds )
+    var barBeatCount = beatCount % 4;
+    metronomeChart.setChartValue( beatPercent, beatMilliseconds, barBeatCount )
 
   }
 
   beat(undershoot)
   {
+    beatCount++;
     beatMilliseconds = 0;
 
     this.musicMan.beat(undershoot)

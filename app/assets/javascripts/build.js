@@ -10,8 +10,8 @@ const AudioTreeHelper= require('./audio-tree-helper').default
 
 //const AudioPlayer= require('./audio-player').default
 
-const MetronomeHelper = require('./metronome-helper').default
-var metronomeHelper;
+const MetronomeComponent = require('./metronome-component').default
+var metronomeComponent;
 
 import LaunchPad from './vue/LaunchPad.vue'
 import TreeMenu from './vue/TreeMenu.vue'
@@ -94,7 +94,7 @@ export default class Build {
       });
 
       fileTree.$on('activate-audio-file', sfx => {
-            metronomeHelper.metronome.$emit('activate-sound', sfx)
+            metronomeComponent.metronome.$emit('activate-sound', sfx)
       });
 
 
@@ -186,8 +186,8 @@ export default class Build {
 
       });
 
-      metronomeHelper = new MetronomeHelper(this.audioPlayer);
-      await metronomeHelper.init();
+      metronomeComponent = new MetronomeComponent(this.audioPlayer);
+      await metronomeComponent.init();
 
 
 

@@ -50,9 +50,13 @@
         </div>
         <div class="col s9 zeropad h12"    >
           <div class="background-sativa h4 border-bottom-black"  >
-            <div class="white-text" id="metronome" v-if="enabled" v-cloak>
-              Use chart js to render a donut
-            </div>
+            <div class="metronome white-text" id="metronome" v-if="enabled" v-cloak>
+              <div class="chart-container" style="position: relative; height:30vh; width:30vw; padding:10px">
+                <canvas id="metronome-chart"  >
+                  chart
+                </canvas>
+              </div>
+              </div>
             <div class="" id="cell-editor" v-if="enabled" v-cloak>
               Seems to lay over the metronome , has an X button in top right to disable
             </div>

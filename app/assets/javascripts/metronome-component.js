@@ -6,9 +6,14 @@ const LocalStorageHelper= require('./local-storage-helper').default
 var metronome;
 
 
+const MetronomeChart = require('./metronome-chart').default
+var metronomeChart;
+
+
+
 var lastRender = 0;
 
-export default class MetronomeHelper {
+export default class MetronomeComponent {
   constructor(audioPlayer){
     this.audioPlayer=audioPlayer;
   }
@@ -20,14 +25,16 @@ export default class MetronomeHelper {
     metronome = new Vue({
        el: '#metronome',
        data: {
-         enabled: true
+         enabled: true,
+         beatsPerMinute: 120
        },
        methods: {
 
         }
      })
 
-
+     metronomeChart = new MetronomeChart()
+     metronomeChart.init();
 
     // window.requestAnimationFrame(this.loop.bind(this))
      window.requestAnimationFrame(  this.loop.bind(this) );
@@ -43,7 +50,7 @@ export default class MetronomeHelper {
 
   loop(timestamp )
   {
- 
+
 
     var progress = timestamp - lastRender;
 

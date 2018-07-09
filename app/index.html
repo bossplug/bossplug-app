@@ -9,7 +9,7 @@
 
 
 
-    <%= require('html-loader!./assets/html/navbar.html') %>
+    <%  require('html-loader!./assets/html/navbar.html') %>
 
     <div class="overview build-background h12" >
 
@@ -79,13 +79,35 @@
 
             <div class="col s8 cell-editor" id="cell-editor" v-if="enabled" v-cloak>
               <div class="card  grey darken-3 h12" style="position:relative">
-                  <div class="card-content white-text">
-                    Cell Editor
+                <div class="card-content white-text row h12">
 
+                    <!--
+                    <cell-editor
+                      :editingCell="editingCell"
+                    ></cell-editor>
+                  -->
 
+                  <div class="col s4">
 
-                    <div class="absolute-top-right btn btn-control transparent hoverable icon icon-cancel clickable"></div>
+                    <div class="title-container ">
+                      <input type="text" class="white-text" v-if="editingCell" v-model="editingCell.name" v-on:change="setCellName"  ></input>
+                    </div>
+
                   </div>
+                  <div class="col s1 h12">
+                  </div>
+                  <div class="col s4 h12">
+                    <div class="cell-attribute-editor h4">
+                      cell attr
+                    </div>
+                    <div class="cell-action-editor h4">
+                      cell action
+                    </div>
+                  </div>
+
+
+                  <div class="absolute-top-right btn btn-control transparent hoverable icon icon-cancel clickable"></div>
+                </div>
               </div>
             </div>
 
@@ -103,11 +125,7 @@
               <div class="waves-effect waves-light btn gray-text hoverable clickable" v-on:click="clickButton('saveConfig')" v-if="padConfig" v-cloak>Save Pad Config</div>
 
               <div class="boss-container text-left">
-                <!--
-                <div class="pad-config-cell background-darksteel drop-target" data-cell-id="1" >
-                  ---
-                </div>
-              -->
+
 
                 <launch-pad
                   :cells="padTree.cells"

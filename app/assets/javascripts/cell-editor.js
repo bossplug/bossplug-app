@@ -6,6 +6,7 @@ const LocalStorageHelper= require('./local-storage-helper').default
 var cellEditor;
 
 
+import CellEditorComponent from './vue/CellEditorComponent.vue'
 
 
 export default class CellEditor {
@@ -24,8 +25,15 @@ export default class CellEditor {
           editingCell: null
         },
         methods: {
-
-         }
+          setCellName: function()
+          {
+            console.log('set cell name')
+          }
+        },
+         components:
+        {
+          CellEditorComponent
+        }
       })
 
 
@@ -38,6 +46,7 @@ export default class CellEditor {
     if(enable)
     {
       Vue.set(cellEditor, 'enabled', true )
+      Vue.set(cellEditor, 'editingCell', cell )
     }else{
       Vue.set(cellEditor, 'enabled', false )
     }

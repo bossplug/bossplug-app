@@ -35,7 +35,9 @@ export default class MetronomeComponent {
          beatsPerMinute: 120
        },
        methods: {
-
+         setMetronomeBPM: function(){
+           console.log('set bpm')
+         }
         }
      })
 

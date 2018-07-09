@@ -161,7 +161,10 @@
   color:gray;
   white-space: nowrap;
 
-
+  span{
+  ///  width:100%;
+    display:block;
+  }
 
   .preloaded
   {
@@ -173,10 +176,17 @@
 {
   span
   {
+
     background-color: #333;
-    //text-overflow: ellipsis;
+    display:inline-block;
     //overflow:hidden;
   }
+
+  span.empty
+  {
+    width:100%;
+  }
+
 }
 
 .missing-files

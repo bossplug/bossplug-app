@@ -4,14 +4,14 @@
     <div v-for="cell in cells" class="pad-config-cell background-darksteel hoverable">
       <span class="drop-target text-center"
         v-if="cell.label"
-        :class="{'missing-files': (cell.path == null && cell.label!='---'), 'preloaded': cell.preloaded }"
+        :class="{'missing-files': (cell.path == null && cell.label!='---'), 'preloaded': cell.preloaded, 'empty': cell.label=='---'   }"
         @click="clickedCell"
         v-bind:data-label="cell.label"
         v-bind:data-path="cell.path"
         v-bind:data-preloaded="cell.preloaded"
         v-bind:hash="cell.hash"
         v-bind:data-cell-id="cell.cellId" >
-          {{ cell.label  }} 
+          {{ cell.label  }}
      </span>
     </div>
 

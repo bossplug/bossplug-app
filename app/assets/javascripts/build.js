@@ -170,9 +170,7 @@ export default class Build {
 
           },
           setPadConfigName: async function (element) {
-
             var val = element.target.value;
-            console.log(val)
             self.assignOptionToPadConfig('name',val)
           }
          },
@@ -187,7 +185,7 @@ export default class Build {
       metronomeComponent = new MetronomeComponent(this.audioPlayer,this.musicMan);
       await metronomeComponent.init();
 
-      cellEditor = new CellEditor( );
+      cellEditor = new CellEditor(self.socketClient);
       await cellEditor.init();
 
       bossComponent.$on('edit-cell', cell => {

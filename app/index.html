@@ -50,22 +50,34 @@
         </div>
         <div class="col s9 zeropad h12"    >
           <div class="background-sativa h4 border-bottom-black row " style="margin:0;padding:0"  >
-            <div class="metronome white-text col s4" id="metronome" v-if="enabled" v-cloak>
-              <div class="chart-container" style="position: relative; height:20vh; width:20vw; padding:10px">
-                <canvas id="metronome-chart"  >
-                  chart
-                </canvas>
+            <div  id="metronome" class="col s5 h12" v-if="enabled" v-cloak>
+            <div class="metronome white-text h12" >
+
+              <div style="float:left">
+                  <div class="chart-container" style="position: relative; height:20vh; width:20vw; padding:10px">
+                    <canvas id="metronome-chart"  >
+                      chart
+                    </canvas>
+                  </div>
+
+                  <div class="metronome-control-panel text-center">
+                    <div class="btn btn-control grey hoverable"><i class="icon icon-play"></i></div>
+                    <div class="btn btn-control grey hoverable"><i class="icon icon-stop"></i></div>
+                    <div class="btn btn-control grey hoverable"><i class="icon icon-pause"></i></div>
+                    <div class="bpm-input-container text-center" style="display:inline">   <input class="text-center" type="text" class="white-text" size="4" maxlength="4" style="width: 50px;"  v-model="beatsPerMinute" v-on:change="setMetronomeBPM" v-cloak></input>  </div>
+
+                  </div>
               </div>
 
-              <div class="metronome-control-panel text-center">
-                <div class="btn btn-control grey hoverable"><i class="icon icon-play"></i></div>
-                <div class="btn btn-control grey hoverable"><i class="icon icon-stop"></i></div>
-                <div class="btn btn-control grey hoverable"><i class="icon icon-pause"></i></div>
-                <div class="bpm-input-container text-center" style="display:inline">   <input class="text-center" type="text" class="white-text" size="4" maxlength="4" style="width: 50px;"  v-model="beatsPerMinute" v-on:change="setMetronomeBPM" v-cloak></input>  </div>
+              <div class="master-volume-container h12  " style="float:left; width: 50px; position:relative;  " >
+                  <input type="range" class="vranger rotate270" min="0" max="200" v-model="masterVolume" style="width:130px;"></input>
+              </div>
 
               </div>
-              </div>
-            <div class="col s8" id="pad-editor" v-if="enabled" v-cloak>
+            </div>
+
+
+            <div class="col s7" id="pad-editor" v-if="enabled" v-cloak>
               Seems to lay over the metronome , has an X button in top right to disable
             </div>
 

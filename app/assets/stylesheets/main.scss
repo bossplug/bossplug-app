@@ -32,7 +32,19 @@
   text-align:center;
 }
 
+.vranger {
+   position: absolute;
+   top: 50px;
+   left: -50px;
+   bottom:50px;
+   width:100px;
+ }
+ .rotate270
+ {
+   transform: rotate(270deg);
+  -moz-transform: rotate(270deg); /*do same for other browsers if required*/
 
+ }
 
 .audio-list
 {

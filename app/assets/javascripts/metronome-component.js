@@ -32,6 +32,7 @@ export default class MetronomeComponent {
        el: '#metronome',
        data: {
          enabled: true,
+         masterVolume:100,
          beatsPerMinute: 120
        },
        methods: {

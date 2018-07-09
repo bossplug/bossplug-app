@@ -93,7 +93,7 @@ export default class MetronomeComponent {
 
     this.musicMan.beat(undershoot)
 
-    console.log('new beat', undershoot)
+
   }
 
   getBeatsPerMinute() {

@@ -14,13 +14,14 @@ export default class MetronomeChart {
 
       window.chartColors = {
           primary: '#dfe6e9' ,
-          secondary: '#fdcb6e'
+          secondary: '#ffee58'
       };
 
 
 
   		var config = {
   			type: 'doughnut',
+
   			data: {
   				datasets: [
           {
@@ -30,6 +31,7 @@ export default class MetronomeChart {
               0.25,
               0.25
             ],
+            labels: [],
             backgroundColor: [
               window.chartColors.transparent,
               window.chartColors.transparent,
@@ -43,6 +45,7 @@ export default class MetronomeChart {
               1,
 
             ],
+            labels: [],
             backgroundColor: [
               window.chartColors.transparent,
               window.chartColors.primary,
@@ -50,13 +53,15 @@ export default class MetronomeChart {
             ],
             label: 'Beat Duration'
           }],
-  				labels: [
-  					'Red',
-  					'Orange',
-
-  				]
+  				labels: [ ]
   			},
+        gridLines : {
+          color: '#222'
+        },
+
   			options: {
+          borderColor: "#222",
+          backgroundColor: "#222",
   				responsive: true,
   				legend: null,
   				title: {
@@ -67,7 +72,10 @@ export default class MetronomeChart {
             duration: 1,
   					animateScale: true,
   					animateRotate: true
-  				}
+  				},
+          tooltips: {
+            enabled: false
+        },
   			}
   		};
 
@@ -86,10 +94,10 @@ export default class MetronomeChart {
     {
 
       if(!window.metronomeChart){
-        console.log('no chart');
+        console.log('no chart to update');
         return false;
       }
-      console.log('set chart value', beatPercent)
+
 
       var chartPercent = ( barBeatCount +  beatPercent )
 

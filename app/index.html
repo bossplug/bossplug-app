@@ -49,15 +49,20 @@
 
         </div>
         <div class="col s9 zeropad h12"    >
-          <div class="background-sativa h4 border-bottom-black"  >
-            <div class="metronome white-text" id="metronome" v-if="enabled" v-cloak>
-              <div class="chart-container" style="position: relative; height:30vh; width:30vw; padding:10px">
+          <div class="background-sativa h4 border-bottom-black row " style="margin:0;padding:0"  >
+            <div class="metronome white-text col s4" id="metronome" v-if="enabled" v-cloak>
+              <div class="chart-container" style="position: relative; height:25vh; width:25vw; padding:10px">
                 <canvas id="metronome-chart"  >
                   chart
                 </canvas>
               </div>
+              <div class="metronome-control-panel text-center">
+                <div class="btn btn-control grey hoverable"><i class="icon icon-play"></i></div>
+                <div class="btn btn-control grey hoverable"><i class="icon icon-stop"></i></div>
+                <div class="btn btn-control grey hoverable"><i class="icon icon-pause"></i></div>
               </div>
-            <div class="" id="cell-editor" v-if="enabled" v-cloak>
+              </div>
+            <div class="col s8" id="pad-editor" v-if="enabled" v-cloak>
               Seems to lay over the metronome , has an X button in top right to disable
             </div>
 

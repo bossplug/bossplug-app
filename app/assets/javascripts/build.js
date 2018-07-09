@@ -13,6 +13,10 @@ const AudioTreeHelper= require('./audio-tree-helper').default
 const MetronomeComponent = require('./metronome-component').default
 var metronomeComponent;
 
+
+const PadEditor = require('./pad-editor').default
+var padEditor;
+
 import LaunchPad from './vue/LaunchPad.vue'
 import TreeMenu from './vue/TreeMenu.vue'
 
@@ -190,6 +194,8 @@ export default class Build {
       metronomeComponent = new MetronomeComponent(this.audioPlayer,this.musicMan);
       await metronomeComponent.init();
 
+      padEditor = new PadEditor( );
+      await padEditor.init();
 
 
 

@@ -32,6 +32,13 @@
   text-align:center;
 }
 
+.master-volume-container
+{
+    position:absolute;
+    right:10px;
+    top:2vh;
+}
+
 .vranger {
    position: absolute;
    top: 50px;
@@ -127,6 +134,13 @@
   padding:5px 15px;
 }
 
+.absolute-top-right
+{
+  position:absolute;
+  top:5px;
+  right:5px;
+}
+
 .absolute-bottom
 {
   position:absolute;
@@ -167,15 +181,16 @@
 .pad-config-cell
 {
   display: inline-block;
-  padding: 5px 5px;
+
   margin: 2px 0px;
   width:12.5%;
   color:gray;
   white-space: nowrap;
 
   span{
-  ///  width:100%;
+    padding: 5px 5px;
     display:block;
+    width:100%;
   }
 
   .preloaded
@@ -186,9 +201,11 @@
 
 .pad-config-cell:hover
 {
+  text-align:center;
   span
   {
-
+    margin:0 auto;
+    width:auto;
     background-color: #333;
     display:inline-block;
     //overflow:hidden;
@@ -220,6 +237,12 @@
   .label-wrapper:hover {
     background: rgba(1,1,1,0.2);
   }
+}
+
+
+.cell-editor
+{
+    height:90%;
 }
 
 

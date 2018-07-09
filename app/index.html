@@ -50,7 +50,7 @@
         </div>
         <div class="col s9 zeropad h12"    >
           <div class="background-sativa h4 border-bottom-black row " style="margin:0;padding:0"  >
-            <div  id="metronome" class="col s5 h12" v-if="enabled" v-cloak>
+            <div  id="metronome" class="col s4 h12" style=" position:relative;  " v-if="enabled" v-cloak>
             <div class="metronome white-text h12" >
 
               <div style="float:left">
@@ -69,16 +69,24 @@
                   </div>
               </div>
 
-              <div class="master-volume-container h12  " style="float:left; width: 50px; position:relative;  " >
-                  <input type="range" class="vranger rotate270" min="0" max="200" v-model="masterVolume" style="width:130px;"></input>
+              <div class="master-volume-container h12  " style="  width: 50px; " >
+                  <input type="range" class="vranger rotate270" min="0" max="200" v-model="masterVolume" style="width:15vh;"></input>
               </div>
 
               </div>
             </div>
 
 
-            <div class="col s7" id="pad-editor" v-if="enabled" v-cloak>
-              Seems to lay over the metronome , has an X button in top right to disable
+            <div class="col s8 cell-editor" id="cell-editor" v-if="enabled" v-cloak>
+              <div class="card  grey darken-3 h12" style="position:relative">
+                  <div class="card-content white-text">
+                    Cell Editor
+
+
+
+                    <div class="absolute-top-right btn btn-control transparent hoverable icon icon-cancel clickable"></div>
+                  </div>
+              </div>
             </div>
 
           </div>

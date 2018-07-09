@@ -14,8 +14,8 @@ const MetronomeComponent = require('./metronome-component').default
 var metronomeComponent;
 
 
-const PadEditor = require('./pad-editor').default
-var padEditor;
+const CellEditor = require('./cell-editor').default
+var cellEditor;
 
 import LaunchPad from './vue/LaunchPad.vue'
 import TreeMenu from './vue/TreeMenu.vue'
@@ -25,7 +25,6 @@ var bossComponent;
 var fileTree;
 
 
-var cellEditor;
 
 var alertBox;
 var dragBox;
@@ -184,31 +183,23 @@ export default class Build {
       })
 
 
-      bossComponent.$on('edit-cell', cell => {
-          //  metronome.$emit('activate-sound', sfx)
-          //begin editing sfx
-          this.enableCellEditor(cell,true)
-
-      });
 
       metronomeComponent = new MetronomeComponent(this.audioPlayer,this.musicMan);
       await metronomeComponent.init();
 
-      padEditor = new PadEditor( );
-      await padEditor.init();
+      cellEditor = new CellEditor( );
+      await cellEditor.init();
+
+      bossComponent.$on('edit-cell', cell => {
+          //  metronome.$emit('activate-sound', sfx)
+          //begin editing sfx
+          cellEditor.enableCellEditor(cell,true)
+
+      });
 
 
 
 
-       cellEditor = new Vue({
-          el: '#cell-editor',
-          data: {
-            enabled: false
-          },
-          methods: {
-
-           }
-        })
 
       alertBox = new Vue({
          el: '#alert-box',
@@ -236,18 +227,7 @@ export default class Build {
 
   }
 
-  async enableCellEditor(cell,enable)
-  {
-    console.log('enable cell editor',cell,enable)
-    if(enable)
-    {
-      Vue.set(metronome, 'enabled', false )
-      Vue.set(cellEditor, 'enabled', true )
-    }else{
-      Vue.set(metronome, 'enabled', true )
-      Vue.set(cellEditor, 'enabled', false )
-    }
-  }
+
 
   async updatePadConfig(padConfig,padTree)
   {

@@ -2,7 +2,7 @@
 <div class="launch-pad"   >
 
     <div v-for="cell in cells" class="pad-config-cell background-darksteel hoverable">
-      <span class="drop-target text-center"
+      <span class="drop-target text-center clickable"
         v-if="cell.label"
         :class="{'missing-files': (cell.path == null && cell.label!='---'), 'preloaded': cell.preloaded, 'empty': cell.label=='---'   }"
         @click="clickedCell"

@@ -20,6 +20,9 @@ export default class MusicMan {
   async queueSFXEvent(sfx)
   {
 
+    var immediatePlay = true;
+    var queue = false;
+
     /*if(sfx.attributes.fadeIn ) //temp
     {
        this.audioPlayer.stopActivePlayback()
@@ -34,14 +37,31 @@ export default class MusicMan {
 
     if(sfx.attributes.waitForBeat || sfx.attributes.pulse)
     {
-      this.addToQueue(sfx)
-      return {success:true, sfx:sfx}
+      immediatePlay = false;
+      if(!this.sfxWithHashIsQueued(sfx.sfxHash))
+      {
+        queue = true;
+      }
+
     }
 
-      this.audioPlayer.playSound(sfx)
+    if(immediatePlay)this.audioPlayer.playSound(sfx)
+    if(queue)this.addToQueue(sfx)
 
-      return {success:true, sfx:sfx}
+    return {success:true, sfx:sfx}
   }
+
+
+  async triggerSFXEvent(eventName)
+  {
+    switch(eventName)
+    {
+      case 'cancelAllPlayback': this.audioPlayer.stopActivePlayback(); break;
+      case 'cancelAllLoops': sfxEventQueue = []; break;
+    }
+  }
+
+
 
   // array.splice(i, 1);  remove specific element  at key i
 
@@ -74,6 +94,26 @@ export default class MusicMan {
 
     }
 
+  }
+
+
+  sfxWithHashIsQueued(hash)
+  {
+
+    for(var i in sfxEventQueue)
+    {
+      var sfx = sfxEventQueue[i];
+       
+      if(sfx.attributes.waitForBeat || sfx.attributes.pulse)
+      {
+        if(sfx.sfxHash == hash)
+        {
+          return true;
+        }
+      }
+
+    }
+      return false;
   }
 
 

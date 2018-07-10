@@ -61,9 +61,9 @@
                   </div>
 
                   <div class="metronome-control-panel text-center">
-                    <div class="btn btn-control grey hoverable"><i class="icon icon-play"></i></div>
-                    <div class="btn btn-control grey hoverable"><i class="icon icon-stop"></i></div>
-                    <div class="btn btn-control grey hoverable"><i class="icon icon-pause"></i></div>
+                    <div class="btn btn-control grey hoverable" v-on:click="clickedButton('play')"><i class="icon icon-play clickable"></i></div>
+                    <div class="btn btn-control grey hoverable" v-on:click="clickedButton('pause')"><i class="icon icon-pause clickable"></i></div>
+                    <div class="btn btn-control grey hoverable" v-on:click="clickedButton('stop')"><i class="icon icon-stop clickable"></i></div>
                     <div class="bpm-input-container text-center" style="display:inline">   <input class="text-center" type="text" class="white-text" size="4" maxlength="4" style="width: 50px;"  v-model="beatsPerMinute" v-on:change="setMetronomeBPM" v-cloak></input>  </div>
 
                   </div>

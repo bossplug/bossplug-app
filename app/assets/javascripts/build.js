@@ -100,9 +100,9 @@ export default class Build {
             $(window).on('mousemove',(event)=> self.updateDragBox(event)  )
       });
 
-      fileTree.$on('activate-audio-file', sfx => {
+      /*fileTree.$on('activate-audio-file', sfx => {
             metronomeComponent.metronome.$emit('activate-sound', sfx)
-      });
+      });*/
 
 
       var padTree = self.getPadConfig();

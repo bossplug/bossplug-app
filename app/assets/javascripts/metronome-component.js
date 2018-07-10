@@ -24,20 +24,42 @@ export default class MetronomeComponent {
     this.musicMan=musicMan;
   }
 
-  async init(musicMan)
+  async init( )
   {
-
+    var self = this;
 
     metronome = new Vue({
        el: '#metronome',
        data: {
          enabled: true,
          masterVolume:100,
-         beatsPerMinute: 120
+         beatsPerMinute: 120,
+         active: false
        },
        methods: {
-         setMetronomeBPM: function(){
-           console.log('set bpm')
+         setMetronomeBPM: function(event){
+          var val = parseInt(event.target.value);
+           console.log('set bpm',val);
+           if(!isNaN(val))
+           {
+             this.beatsPerMinute = val;
+           }
+
+         },
+         clickedButton: async function(buttonName){
+           console.log('btnn',buttonName)
+           switch(buttonName)
+           {
+             case 'play': this.active=true; console.log(this); break;
+             case 'pause': this.active=false; break;
+             case 'stop':
+                    this.active=false;
+                    beatMilliseconds = 0;
+                    beatCount = 0;
+                    await self.musicMan.triggerSFXEvent('cancelAllPlayback');
+                    await self.musicMan.triggerSFXEvent('cancelAllLoops');
+                    break;
+           }
          }
         }
      })
@@ -47,16 +69,14 @@ export default class MetronomeComponent {
      metronomeChart.init();
 
 
-
-    // window.requestAnimationFrame(this.loop.bind(this))
      window.requestAnimationFrame( this.loop.bind(this) );
 
-     metronome.$on('activate-sound', sfx => {
+     /*metronome.$on('activate-sound', sfx => {
            console.log('activate audio file  ', sfx) // should return 'I am being fired here'
 
           this.audioPlayer.playSound(self.socketClient,sfx)
           self.setAlertMessage('blue',sfx.label)
-     });
+     });*/
 
   }
 
@@ -64,8 +84,11 @@ export default class MetronomeComponent {
   {
     var progress = timestamp - lastRender;
 
-     this.update(progress)
-     //this.draw()
+    if(metronome.active)
+    {
+      this.update(progress);
+    }
+
 
      lastRender = timestamp;
 
@@ -112,6 +135,8 @@ export default class MetronomeComponent {
   getMillisecondsPerBeat() {
     return Math.ceil( (1.0 / this.getBeatsPerMinute() ) * 60 * 1000 );
   }
+
+
 
 
 }

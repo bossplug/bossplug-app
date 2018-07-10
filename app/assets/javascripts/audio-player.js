@@ -66,11 +66,19 @@ export default class AudioPlayer {
           }
         })
 
-      allHowls[howlId] = {sfx: sfx, howl: audio};
-      activeHowls[howlId] = {sfx: sfx, howl: audio};
+
+      var play = audio.play()
+
+      allHowls[howlId] = {sfx: sfx, howl: audio, play: play};
+      activeHowls[howlId] = {sfx: sfx, howl: audio , play: play };
 
 
-      audio.play()
+      if(sfx.attributes.fadeIn)
+      {
+        audio.fade(0, 1, 400, play);
+      }else if (sfx.attributes.fadeOut) {
+        audio.fade(1, 0, 400, play);
+      }
 
       return {success:true, sfx:sfx}
 

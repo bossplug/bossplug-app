@@ -295,6 +295,7 @@ export default class Build {
      {
        alertBox.setAlertMessage('blue',response.message)
        this.updatePadConfig(response.padConfig,response.padTree)
+       cellEditor.enableCellEditor(false);
      }else{
         alertBox.setAlertMessage('red',response.message)
      }

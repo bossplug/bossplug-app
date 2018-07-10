@@ -18,23 +18,25 @@
   <div class="col s6 h12">
 
 
-    <div class="cell-attribute-editor h8" v-if="!addingAttribute">
+    <div class="cell-attribute-editor h10" v-if="!addingAttribute">
       <div class="btn " v-on:click="showAddAttribute">Add Attribute</div>
 
-      <div class="cell-attribute"
-      v-for="(attr,key) in getActiveAttributes"
-      :class="{'enabled': attr.value}"
-      v-bind:data-name="attr.value.name"
-      v-bind:data-value="attr.value.value"
+      <div class="h12 vertical-scroll">
+          <div class="cell-attribute"
+          v-for="(attr,key) in getActiveAttributes"
+          :class="{'enabled': attr.value}"
+          v-bind:data-name="attr.value.name"
+          v-bind:data-value="attr.value.value"
 
-      >
-      <span   @click="removeAttribute">x</span>
+          >
+          <span   @click="removeAttribute">x</span>
 
-         {{attr.value.label}}
+             {{attr.value.label}}
 
-      </div>
+          </div>
+        </div>
     </div>
-    <div class="cell-attribute-select h8 vertical-scroll"  v-if="addingAttribute">
+    <div class="cell-attribute-select h10 vertical-scroll"  v-if="addingAttribute">
 
 
         <div class="cell-attribute"
@@ -117,7 +119,7 @@
         var value = target.getAttribute('data-value')  //toggle
           console.log('enable!!',name,value,this.cell.cellId)
         this.$root.setCellAttribute(this.cell.cellId,name,null,true)
-        this.$root.toggleAddNewAttribute(false)
+        //this.$root.toggleAddNewAttribute(false)  //causes issues 
       }
 
     }

@@ -26,7 +26,7 @@ export default class CellEditor {
         data: {
         //  enabled: false,
           editingCell: null,
-          addingNewAttribute: false 
+          addingNewAttribute: false
         },
         methods: {
           toggleAddNewAttribute: function(enabled)
@@ -62,19 +62,24 @@ export default class CellEditor {
 
   async enableCellEditor(cellData,enable)
   {
-    var cellId = cellData.cellId;
-
-    if(enable)
+    if(cellData)
     {
-      var cell = await this.socketClient.emit('getCellData',cellId)
+      
 
-      console.log('meeepo',cell)
-      Vue.set(cellEditor, 'editingCell', cell )
-      //Vue.set(cellEditor, 'enabled', true )
+      var cellId = cellData.cellId;
 
-    }else{
-      Vue.set(cellEditor, 'editingCell', null )
+      if(enable && cellId)
+      {
+        var cell = await this.socketClient.emit('getCellData',cellId)
+
+        Vue.set(cellEditor, 'editingCell', cell )
+        return
+
+      }
+
     }
+      Vue.set(cellEditor, 'editingCell', null )
+
   }
 
 
@@ -100,8 +105,19 @@ export default class CellEditor {
      {
        this.alertBox.setAlertMessage('blue',response.message)
        var cell = await this.socketClient.emit('getCellData',cellId)
-       Vue.set(cellEditor, 'editingCell', cell )
-       this.bossComponent.$emit('refresh') //necessary ?
+
+       console.log('h cell is',cell)
+       console.log(cellEditor)
+
+
+       if(enabled)
+       {
+         Vue.set(cellEditor, 'addingNewAttribute', null )
+       }
+         Vue.set(cellEditor, 'editingCell', cell )
+
+
+        this.bossComponent.$emit('refresh') //necessary ?
      }else{
        this.alertBox.setAlertMessage('red',response.message)
      }

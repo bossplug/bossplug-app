@@ -21,6 +21,8 @@
 
 [v-cloak] {display: none}
 
+.hidden {display:none}
+
 .titlebar
 {
   padding:10px;
@@ -57,10 +59,7 @@
 {
   padding:5px;
 
-
-    overflow-y:auto;
-
-
+  overflow-y:auto;
 
 }
 ::-webkit-scrollbar {
@@ -250,6 +249,25 @@
     height:90%;
 }
 
+.cell-attribute
+{
+  display: inline-block;
+  padding: 2px;
+  margin:2px;
+  border: 1px solid gray;
+}
+
+.cell-attribute.enabled
+{
+  color:black;
+  background-color:white;
+}
+
+.cell-attribute:hover
+{
+  border: 1px solid white;
+  cursor:pointer;
+}
 
 ///Colors
 .background-skulls

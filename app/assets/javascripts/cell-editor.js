@@ -25,7 +25,7 @@ export default class CellEditor {
         el: '#cell-editor',
         data: {
         //  enabled: false,
-          editingCell: null, 
+          editingCell: null,
 
           test: {name:'test'}
         },
@@ -35,6 +35,12 @@ export default class CellEditor {
             var val = element.target.value;
             self.assignOptionToCellConfig(this.editingCell,'name',val)
           },
+          setCellAttribute: function(cellId,attribute,val)
+          {
+            console.log('toggle cell attr',cellId,attribute,val)
+            self.assignAttributeToCellConfig(cellId,attribute,val)
+          },
+          //add cell action - remove cell action
           closeEditor: function(element)
           {
             console.log('close editor')
@@ -69,19 +75,30 @@ export default class CellEditor {
   }
 
 
-  async assignOptionToCellConfig(cell, optionName,value)
+  async assignOptionToCellConfig(cell,optionName,value)
   {
      var response = await this.socketClient.emit('assignOptionToCellConfig',{cellId: cell.cellId, optionName:optionName,value:value});
      if(response.success)
      {
        this.alertBox.setAlertMessage('blue',response.message)
-
        var cell = await this.socketClient.emit('getCellData',cell.cellId)
        Vue.set(cellEditor, 'editingCell', cell )
-
-
        this.bossComponent.$emit('refresh')
+     }else{
+       this.alertBox.setAlertMessage('red',response.message)
+     }
+  }
 
+
+  async assignAttributeToCellConfig(cellId,attributeName,value)
+  {
+     var response = await this.socketClient.emit('assignAttributeToCellConfig',{cellId: cellId, attributeName:attributeName,value:value});
+     if(response.success)
+     {
+       this.alertBox.setAlertMessage('blue',response.message)
+       var cell = await this.socketClient.emit('getCellData',cellId)
+       Vue.set(cellEditor, 'editingCell', cell )
+       this.bossComponent.$emit('refresh') //necessary ?
      }else{
        this.alertBox.setAlertMessage('red',response.message)
      }

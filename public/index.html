@@ -12,22 +12,7 @@
 
 
 
-    <div class="tab-group" id="nav-primary">
-  <div class="tab-item" v-bind:class="{  active: (activeTab=='home') }"   v-on:click="clickTab('home')">
-    <span class="icon icon-tools"></span>
-    Build
-  </div>
-  <div class="tab-item" v-bind:class="{  active: (activeTab=='accounts') }"  v-on:click="clickTab('accounts')">
-    <span class="icon icon-sound"></span>
-    Play
-  </div>
-  <div class="tab-item" v-bind:class="{  active: (activeTab=='transfer') }"  v-on:click="clickTab('transfer')">
-    <span class="icon icon-shuffle"></span>
-    Tinker
-  </div>
-
-</div>
-
+    
 
     <div class="overview build-background h12" >
 
@@ -108,7 +93,67 @@
 
         </div>
         <div class="col s9 zeropad h12"    >
-          <div class="background-sativa h4 border-bottom-black" id="mothership" >
+          <div class="background-sativa h4 border-bottom-black row " style="margin:0;padding:0"  >
+            <div  id="metronome" class="col s4 h12" style=" position:relative;  " v-if="enabled" v-cloak>
+            <div class="metronome white-text h12" >
+
+              <div style="float:left">
+                  <div class="chart-container" style="position: relative; height:20vh; width:20vw; padding:10px">
+                    <canvas id="metronome-chart"  >
+                      chart
+                    </canvas>
+                  </div>
+
+                  <div class="metronome-control-panel text-center">
+                    <div class="btn btn-control grey hoverable"><i class="icon icon-play"></i></div>
+                    <div class="btn btn-control grey hoverable"><i class="icon icon-stop"></i></div>
+                    <div class="btn btn-control grey hoverable"><i class="icon icon-pause"></i></div>
+                    <div class="bpm-input-container text-center" style="display:inline">   <input class="text-center" type="text" class="white-text" size="4" maxlength="4" style="width: 50px;"  v-model="beatsPerMinute" v-on:change="setMetronomeBPM" v-cloak></input>  </div>
+
+                  </div>
+              </div>
+
+              <div class="master-volume-container h12  " style="  width: 50px; " >
+                  <input type="range" class="vranger rotate270" min="0" max="200" v-model="masterVolume" style="width:15vh;"></input>
+              </div>
+
+              </div>
+            </div>
+
+
+            <div class="col s8 cell-editor" id="cell-editor" v-if="enabled" v-cloak>
+              <div class="card  grey darken-3 h12" style="position:relative">
+                <div class="card-content white-text row h12">
+
+
+                    <cell-editorr
+
+                    ></cell-editorr>
+
+
+                  <div class="col s4">
+
+                    <div class="title-container ">
+                      <input type="text" class="white-text" v-if="editingCell" v-model="editingCell.name" v-on:change="setCellName"  ></input>
+                    </div>
+
+                  </div>
+                  <div class="col s1 h12">
+                  </div>
+                  <div class="col s4 h12">
+                    <div class="cell-attribute-editor h4">
+                      cell attr
+                    </div>
+                    <div class="cell-action-editor h4">
+                      cell action
+                    </div>
+                  </div>
+
+
+                  <div class="absolute-top-right btn btn-control transparent hoverable icon icon-cancel clickable" v-on:click="closeEditor"></div>
+                </div>
+              </div>
+            </div>
 
           </div>
           <div class="background-steel h8 relative" id="theboss" >
@@ -124,11 +169,7 @@
               <div class="waves-effect waves-light btn gray-text hoverable clickable" v-on:click="clickButton('saveConfig')" v-if="padConfig" v-cloak>Save Pad Config</div>
 
               <div class="boss-container text-left">
-                <!--
-                <div class="pad-config-cell background-darksteel drop-target" data-cell-id="1" >
-                  ---
-                </div>
-              -->
+
 
                 <launch-pad
                   :cells="padTree.cells"

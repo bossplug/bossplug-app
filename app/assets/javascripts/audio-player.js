@@ -40,7 +40,7 @@ export default class AudioPlayer {
 
     var current_hostname = window.location.hostname;
 
-    const socketServer = 'http://'+current_hostname+':3000';
+    const socketServer = 'http://'+current_hostname+':3000/audio';
     var socketsPath ;
 
 

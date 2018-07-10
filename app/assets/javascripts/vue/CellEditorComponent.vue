@@ -2,7 +2,7 @@
 <div class="cell-editor"   >
 
 <span>
-  hello world
+   POOOOOOOOOOP
 </span>
 
 
@@ -16,7 +16,7 @@
     data() {
       return {  }
     },
-    name: 'cell-editor',
+    name: 'cell-editorr',
     computed: {
 
     },

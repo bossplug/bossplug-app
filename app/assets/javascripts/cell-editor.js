@@ -38,6 +38,7 @@ export default class CellEditor {
             this.enabled = false;
           }
         },
+         
          components:
         {
           CellEditorComponent

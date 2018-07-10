@@ -26,14 +26,12 @@ export default class CellEditor {
         data: {
         //  enabled: false,
           editingCell: null,
-          addingNewAttribute: false,
-          testt:1
+          addingNewAttribute: false 
         },
         methods: {
           toggleAddNewAttribute: function(enabled)
           {
             this.addingNewAttribute = enabled;
-            console.log('meep',this.addingNewAttribute)
           },
           setCellName: function(element)
           {

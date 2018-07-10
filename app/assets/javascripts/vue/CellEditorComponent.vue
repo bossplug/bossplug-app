@@ -75,7 +75,7 @@
 
           if(this.cell.attributes[key] && this.cell.attributes[key].enabled)
           {
-            console.log('push ersult ', key)
+            console.log('push ersult ', key)  //crashing here ?
             result.push({key: key, value: this.cell.attributes[key]})
           }
         }
@@ -106,7 +106,7 @@
       },
       showAddAttribute(element)
       {
-
+        console.log('uhhh')
         this.$root.toggleAddNewAttribute(true)
       },
       enableAttribute(element)

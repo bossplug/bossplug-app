@@ -47,19 +47,8 @@ export default class MetronomeComponent {
 
          },
          clickedButton: async function(buttonName){
-           console.log('btnn',buttonName)
-           switch(buttonName)
-           {
-             case 'play': this.active=true; console.log(this); break;
-             case 'pause': this.active=false; break;
-             case 'stop':
-                    this.active=false;
-                    beatMilliseconds = 0;
-                    beatCount = 0;
-                    await self.musicMan.triggerSFXEvent('cancelAllPlayback');
-                    await self.musicMan.triggerSFXEvent('cancelAllLoops');
-                    break;
-           }
+
+           self.handleMetronomeEvent(buttonName)
          }
         }
      })
@@ -80,6 +69,26 @@ export default class MetronomeComponent {
 
   }
 
+
+  async handleMetronomeEvent(name)
+  {
+    var self = this;
+
+    console.log('handle m',name)
+    switch(name)
+    {
+      case 'play': metronome.active=true;   break;
+      case 'pause': metronome.active=false; break;
+      case 'stop':
+             metronome.active=false;
+             beatMilliseconds = 0;
+             beatCount = 0;
+             await self.musicMan.handleSFXEvent('cancelAllPlayback');
+             await self.musicMan.handleSFXEvent('cancelAllLoops');
+             break;
+    }
+  }
+
   loop(timestamp )
   {
     var progress = timestamp - lastRender;
@@ -87,6 +96,8 @@ export default class MetronomeComponent {
     if(metronome.active)
     {
       this.update(progress);
+    }else{
+      if(beatMilliseconds ==0) metronomeChart.setChartValue( 0, 0, 0 ); //if stopped
     }
 
 
@@ -108,6 +119,7 @@ export default class MetronomeComponent {
 
     var beatPercent = (beatMilliseconds/this.getMillisecondsPerBeat())
     var barBeatCount = beatCount % 4;
+
     metronomeChart.setChartValue( beatPercent, beatMilliseconds, barBeatCount )
 
   }
@@ -115,7 +127,7 @@ export default class MetronomeComponent {
   beat(undershoot)
   {
     beatCount++;
-    beatMilliseconds = undershoot; //reset to 0 
+    beatMilliseconds = undershoot; //reset to 0
 
     this.musicMan.beat(undershoot)
 

@@ -9,11 +9,17 @@ var sfxEventQueue = [];
 export default class MusicMan {
   constructor(audioPlayer){
     this.audioPlayer=audioPlayer;
+
   }
 
-  init(metronomeComponent)
+  init( )
   {
 
+  }
+
+  setMetronomeComponent(metronomeComponent)
+  {
+    this.metronomeComponent = metronomeComponent;
   }
 
 
@@ -22,6 +28,16 @@ export default class MusicMan {
 
     var immediatePlay = true;
     var queue = false;
+
+    for(var key in  sfx.attributes)
+    {
+      var attr = sfx.attributes[key]
+      if(attr.enabled)
+      {
+        this.handleSFXEvent(attr.name)
+      }
+    }
+
 
     /*if(sfx.attributes.fadeIn ) //temp
     {
@@ -52,8 +68,13 @@ export default class MusicMan {
   }
 
 
-  async triggerSFXEvent(eventName)
+  async handleSFXEvent(eventName)
   {
+    if(this.metronomeComponent)
+    {
+      this.metronomeComponent.handleMetronomeEvent(eventName)
+    }
+
     switch(eventName)
     {
       case 'cancelAllPlayback': this.audioPlayer.stopActivePlayback(); break;
@@ -91,7 +112,7 @@ export default class MusicMan {
           if(sfx.attributes.pulse && sfx.attributes.pulse.value
             && parseInt(properties.beatsWaited) < parseInt(sfx.attributes.pulse.value))
           {
-            properties.beatsWaited = parseInt(properties.beatsWaited) + 1; 
+            properties.beatsWaited = parseInt(properties.beatsWaited) + 1;
             continue;
           }
 

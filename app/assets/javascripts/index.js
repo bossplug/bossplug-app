@@ -13,6 +13,8 @@ var settings = new Settings();
 import AudioPlayer from './audio-player';
 var audioPlayer = new AudioPlayer();
 
+ 
+
 import MusicMan from './music-man';
 var musicMan = new MusicMan(audioPlayer);
 

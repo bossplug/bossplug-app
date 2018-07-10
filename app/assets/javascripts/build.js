@@ -187,6 +187,7 @@ export default class Build {
 
       metronomeComponent = new MetronomeComponent(this.audioPlayer,this.musicMan);
       await metronomeComponent.init();
+      this.musicMan.setMetronomeComponent(metronomeComponent)
 
       cellEditor = new CellEditor(self.socketClient,bossComponent,alertBox);
       await cellEditor.init();

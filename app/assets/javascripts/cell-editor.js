@@ -25,7 +25,8 @@ export default class CellEditor {
         el: '#cell-editor',
         data: {
         //  enabled: false,
-          editingCell: null,
+          editingCell: null, 
+
           test: {name:'test'}
         },
         methods: {

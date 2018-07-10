@@ -1,24 +1,23 @@
 
 const {app, BrowserWindow} = require('electron')
-const PluginManager = require('../lib/plugin-manager')
+const PadConfigManager = require('../lib/pad-config-manager')
 
 var assert = require('assert');
-describe('Peer Interface', function() {
+describe('Pad Config', function() {
 
 
-  describe('PluginManager', function() {
-    it('should copy files', async function() {
+    it('populateCellWithAttributes', async function() {
 
-        PluginManager.copyPlugins();
+        var cell = {
+          cellId: 1
+        }
 
-        PluginManager.loadPlugins();
+        cell = PadConfigManager.populateCellWithAttributes(cell);
+
+        console.log('cell',cell)
 
 
     });
-  });
-
-
-
 
 
 

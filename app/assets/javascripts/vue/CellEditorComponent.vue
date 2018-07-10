@@ -17,11 +17,13 @@
   <div class="col s1 h12">
   </div>
   <div class="col s4 h12">
-    <div class="cell-attribute-editor h4">
-      cell attr
+    <div class="cell-attribute-editor h4">  
+      <div class="cell-attribute" v-for="(attr,key) in getAttributes">
+         {{attr.key}}  -- {{attr.value}}
+      </div>
     </div>
-    <div class="cell-action-editor h4">
-      cell action
+    <div class="cell-action-editor h4" v-for="(attr,key) in getActions">
+      {{attr.key}}  -- {{attr.value}}
     </div>
   </div>
 
@@ -41,9 +43,25 @@
     },
     name: 'cell-editor',
     computed: {
+      getAttributes(){
+        var result = [];
 
+        for (var key in this.cell.attributes ) {
+          result.push({key: key, value: this.cell.attributes[key]})
+        }
+
+         return result;
+      },
+      getAttributes(){
+        var result = [];
+
+        for (var key in this.cell.actions ) {
+          result.push({key: key, value: this.cell.actions[key]})
+        }
+         return result;
+      }
     },
-    methods: { 
+    methods: {
     }
   }
 </script>

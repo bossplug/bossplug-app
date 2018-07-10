@@ -15,7 +15,7 @@
   </div>
   <div class="col s1 h12">
   </div>
-  <div class="col s4 h12">
+  <div class="col s6 h12">
 
 
     <div class="cell-attribute-editor h8" v-if="!addingAttribute">
@@ -33,12 +33,11 @@
 
       </div>
     </div>
-    <div class="cell-attribute-select h8"  v-if="addingAttribute">
+    <div class="cell-attribute-select h8 vertical-scroll"  v-if="addingAttribute">
 
-      meeeppp
+
         <div class="cell-attribute"
         v-for="(attr,key) in getAvailableAttributes"
-        :class="{'enabled': attr.value}"
         v-bind:data-attr="attr.key"
         v-bind:data-value="attr.value"
         @click="clickedAttribute"
@@ -61,7 +60,7 @@
 
 <script>
   export default {
-    props: [ 'cell','adding-attribute'  ], //need snake case here 
+    props: [ 'cell','adding-attribute'  ], //need snake case here
     data() {
       return {  }
     },
@@ -79,11 +78,14 @@
 
          return result;
       },
-      getAvailableActions(){
+      getAvailableAttributes(){
         var result = [];
 
         for (var key in this.cell.attributes ) {
+          if(!this.cell.attributes[key].enabled)
+          {
           result.push({key: key, value: this.cell.attributes[key]})
+          }
         }
 
          return result;

@@ -55,6 +55,12 @@
 
  }
 
+
+ .vertical-scroll
+ {
+   overflow-y:auto;
+ }
+
 .audio-list
 {
   padding:5px;
@@ -251,7 +257,7 @@
 
 .cell-attribute
 {
-  display: inline-block;
+  display:  block;
   padding: 2px;
   margin:2px;
   border: 1px solid gray;

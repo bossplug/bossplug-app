@@ -11,8 +11,8 @@ Bossplug serves as an editor for .boss configuration files.   You can also play 
 
 
 # Developer TODO
-1. Add channel number and delay ms  to config for pad
- 
+1. Add channel number,delay ms  to config for pad , number of beats to loop/pulse 
+
 
 
 

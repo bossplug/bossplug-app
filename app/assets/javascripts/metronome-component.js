@@ -36,6 +36,7 @@ export default class MetronomeComponent {
          beatsPerMinute: 120,
          active: false
        },
+
        methods: {
          setMetronomeBPM: function(event){
           var val = parseInt(event.target.value);

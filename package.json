@@ -42,6 +42,7 @@
     "launchpad-mini": "git+https://git@github.com/Granjow/launchpad-mini.git",
     "mkdir-recursive": "^0.4.0",
     "sha3": "^1.2.0",
+    "siriwavejs": "^2.0.2",
     "socket.io": "^2.1.1",
     "speaker": "^0.4.1",
     "utf-8-validate": "^5.0.1",

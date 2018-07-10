@@ -3,6 +3,7 @@ import Vue from 'vue';
 const LocalStorageHelper= require('./local-storage-helper').default
 
 
+
 import {Howl, Howler} from 'howler';
 
   //goes by hash
@@ -14,6 +15,9 @@ var allHowls = {}; //clear this out on a full stop
 
 var audioIdCounter = 0;
 
+  var analyzer;
+
+
 export default class AudioPlayer {
   constructor( ){
 
@@ -21,6 +25,15 @@ export default class AudioPlayer {
 
   init()
   {
+
+
+/*
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var analyser = Howler.ctx.createAnalyser();
+    //analyser.connect(ctx.destination);
+    analyser.fftSize = 2048;
+
+*/
 
   }
 

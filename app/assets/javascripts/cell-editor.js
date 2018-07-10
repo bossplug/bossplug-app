@@ -21,12 +21,21 @@ export default class CellEditor {
     var self = this;
 
 
+
+
      cellEditor = new Vue({
         el: '#cell-editor',
         data: {
         //  enabled: false,
           editingCell: null,
           addingNewAttribute: false
+        },
+        created:function(){
+
+             console.log('siri wave')
+
+
+
         },
         methods: {
           toggleAddNewAttribute: function(enabled)

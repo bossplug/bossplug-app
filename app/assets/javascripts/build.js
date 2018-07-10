@@ -14,6 +14,9 @@ const MetronomeComponent = require('./metronome-component').default
 var metronomeComponent;
 
 
+const SiriWave= require('siriwavejs')
+var siriWave;
+
 const CellEditor = require('./cell-editor').default
 var cellEditor;
 
@@ -184,12 +187,23 @@ export default class Build {
       })
 
 
-
       metronomeComponent = new MetronomeComponent(this.audioPlayer,this.musicMan);
       await metronomeComponent.init();
       this.musicMan.setMetronomeComponent(metronomeComponent)
 
       cellEditor = new CellEditor(self.socketClient,bossComponent,alertBox);
+
+      //not reliable ..
+    /*  var siriWave = new SiriWave({
+        container: document.getElementById('wave-renderer'),
+        width:300,
+        height:100,
+        speed: 0.2,
+     //   color: '#fff',
+     //   frequency: 2,
+         autostart: true
+      });*/
+
       await cellEditor.init();
 
       bossComponent.$on('edit-cell', cell => {

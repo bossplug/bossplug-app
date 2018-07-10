@@ -36,6 +36,7 @@ export default class CellEditor {
           },
           closeEditor: function(element)
           {
+            console.log('close editor')
             this.editingCell = null;
           }
         } ,

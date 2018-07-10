@@ -8,9 +8,9 @@
   <div class="col s4">
 
 
-    <div class="title-container "> 
+    <div class="title-container ">
 
-      <input type="text" class="white-text" v-if="cell" v-model="cell.name" v-on:change="setCellName"  ></input>
+      <input type="text" class="white-text" v-if="cell" v-model="cell.name" v-on:change="this.$root.setCellName"  ></input>
     </div>
 
   </div>
@@ -28,7 +28,7 @@
 
 </div>
 
-<div class="absolute-top-right btn btn-control transparent hoverable icon icon-cancel clickable" v-on:click="closeEditor"></div>
+<div class="absolute-top-right btn btn-control transparent hoverable icon icon-cancel clickable" v-on:click="this.$root.closeEditor"></div>
 </div>
 </template>
 
@@ -43,11 +43,7 @@
     computed: {
 
     },
-    methods: {
-
-      clicked(element) {
-
-      }
+    methods: { 
     }
   }
 </script>

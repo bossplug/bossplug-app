@@ -24,8 +24,9 @@ export default class CellEditor {
      cellEditor = new Vue({
         el: '#cell-editor',
         data: {
-          enabled: false,
-          editingCell: null
+        //  enabled: false,
+          editingCell: null,
+          test: {name:'test'}
         },
         methods: {
           setCellName: function(element)
@@ -35,14 +36,13 @@ export default class CellEditor {
           },
           closeEditor: function(element)
           {
-            this.enabled = false;
+            this.editingCell = null;
           }
-        },
-         
-         components:
-        {
-          CellEditorComponent
-        }
+        } ,
+        components:
+       {
+         CellEditorComponent
+       }
       })
 
 
@@ -57,10 +57,12 @@ export default class CellEditor {
     {
       var cell = await this.socketClient.emit('getCellData',cellId)
 
-      Vue.set(cellEditor, 'enabled', true )
+      console.log('meeepo',cell)
       Vue.set(cellEditor, 'editingCell', cell )
+      //Vue.set(cellEditor, 'enabled', true )
+
     }else{
-      Vue.set(cellEditor, 'enabled', false )
+      Vue.set(cellEditor, 'editingCell', null )
     }
   }
 

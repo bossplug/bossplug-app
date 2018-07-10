@@ -77,37 +77,18 @@
             </div>
 
 
-            <div class="col s8 cell-editor" id="cell-editor" v-if="enabled" v-cloak>
+            <div class="col s8 h11" id="cell-editor" v-if="editingCell" v-cloak>
               <div class="card  grey darken-3 h12" style="position:relative">
-                <div class="card-content white-text row h12">
+
 
                     <!-- This element name has to match the file name ! -->
                     <cell-editor-component
-
+                      :cell="editingCell"
+                      :test="test"
                     ></cell-editor-component>
 
 
-                  <div class="col s4">
 
-                    <div class="title-container ">
-                      <input type="text" class="white-text" v-if="editingCell" v-model="editingCell.name" v-on:change="setCellName"  ></input>
-                    </div>
-
-                  </div>
-                  <div class="col s1 h12">
-                  </div>
-                  <div class="col s4 h12">
-                    <div class="cell-attribute-editor h4">
-                      cell attr
-                    </div>
-                    <div class="cell-action-editor h4">
-                      cell action
-                    </div>
-                  </div>
-
-
-                  <div class="absolute-top-right btn btn-control transparent hoverable icon icon-cancel clickable" v-on:click="closeEditor"></div>
-                </div>
               </div>
             </div>
 

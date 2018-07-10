@@ -24,9 +24,10 @@ import TreeMenu from './vue/TreeMenu.vue'
 var bossComponent;
 var fileTree;
 
-
-
+const AlertBox = require('./alert-box').default
 var alertBox;
+
+
 var dragBox;
  //https://vuejsdevelopers.com/2017/10/23/vue-js-tree-menu-recursive-components/
 //https://dzone.com/articles/build-a-collapsible-tree-menu-with-vuejs-recursive-1
@@ -44,6 +45,8 @@ export default class Build {
     self.socketClient=socketClient;
     this.musicMan=musicMan;
 
+    alertBox = new AlertBox();
+    alertBox.init();
 
     var tree =  {
       label: 'Audio List',
@@ -127,7 +130,7 @@ export default class Build {
                     self.connected = response.success
                     if(!response.success)
                     {
-                      self.setAlertMessage('red',response.message)
+                      alertBox.setAlertMessage('red',response.message)
                     }
                     break;
                 case 'preloadAudio':
@@ -137,7 +140,7 @@ export default class Build {
                     {
                       self.updatePadConfig(response.padConfig,response.padTree)
                     }else{
-                      self.setAlertMessage('red',response.message)
+                      alertBox.setAlertMessage('red',response.message)
                     }
                     break;
                 case 'loadConfig':
@@ -145,10 +148,10 @@ export default class Build {
 
                     if(response.success)
                     {
-                      self.setAlertMessage('green',response.message)
+                      alertBox.setAlertMessage('green',response.message)
                       self.updatePadConfig(response.padConfig,response.padTree)
                     }else{
-                      self.setAlertMessage('red',response.message)
+                      alertBox.setAlertMessage('red',response.message)
                     }
 
                     break;
@@ -157,9 +160,9 @@ export default class Build {
 
                     if(response.success)
                     {
-                      self.setAlertMessage('green',response.message)
+                      alertBox.setAlertMessage('green',response.message)
                     }else{
-                      self.setAlertMessage('red',response.message)
+                      alertBox.setAlertMessage('red',response.message)
                     }
 
                     break;
@@ -185,7 +188,7 @@ export default class Build {
       metronomeComponent = new MetronomeComponent(this.audioPlayer,this.musicMan);
       await metronomeComponent.init();
 
-      cellEditor = new CellEditor(self.socketClient);
+      cellEditor = new CellEditor(self.socketClient,bossComponent,alertBox);
       await cellEditor.init();
 
       bossComponent.$on('edit-cell', cell => {
@@ -194,21 +197,15 @@ export default class Build {
           cellEditor.enableCellEditor(cell,true)
 
       });
+      bossComponent.$on('refresh', cell => {
+          console.log('refreshing')
+          self.getPadConfig()
+
+      });
 
 
 
 
-
-      alertBox = new Vue({
-         el: '#alert-box',
-         data: {
-           alertMessage: null,
-           alertClass: null
-         },
-         methods: {
-
-          }
-       })
 
       dragBox = new Vue({
           el: '#drag-box',
@@ -258,6 +255,7 @@ export default class Build {
 
   async cancelFileDragDrop(event,item)
   {
+      $(window).off();
       console.log('cancel drag drop ')
       this.setDragMessage('red', null)
        ///$(window).off();
@@ -270,10 +268,10 @@ export default class Build {
      var response = await this.socketClient.emit('getPadConfig');
      if(response.success)
      {
-       this.setAlertMessage('blue',response.message)
+       alertBox.setAlertMessage('blue',response.message)
        this.updatePadConfig(response.padConfig,response.padTree)
      }else{
-       this.setAlertMessage('red',response.message)
+       alertBox.setAlertMessage('red',response.message)
      }
   }
 
@@ -282,11 +280,11 @@ export default class Build {
      var response = await this.socketClient.emit('assignOptionToPadConfig',{optionName:optionName,value:value});
      if(response.success)
      {
-       this.setAlertMessage('blue',response.message)
+       alertBox.setAlertMessage('blue',response.message)
        var config = response.padConfig
        this.updatePadConfig(response.padConfig,response.padTree)
      }else{
-       this.setAlertMessage('red',response.message)
+       alertBox.setAlertMessage('red',response.message)
      }
   }
 
@@ -295,10 +293,10 @@ export default class Build {
      var response = await this.socketClient.emit('assignSoundToPadConfig',{sfx:item,cellId:cellId});
      if(response.success)
      {
-       this.setAlertMessage('blue',response.message)
+       alertBox.setAlertMessage('blue',response.message)
        this.updatePadConfig(response.padConfig,response.padTree)
      }else{
-        this.setAlertMessage('red',response.message)
+        alertBox.setAlertMessage('red',response.message)
      }
   }
 
@@ -343,21 +341,7 @@ export default class Build {
   }
 
 
-  async setAlertMessage(color,msg)
-  {
-      Vue.set(alertBox, 'alertClass', color )
-      Vue.set(alertBox, 'alertMessage', msg )
 
-      await this.sleep(1000);
-
-      Vue.set(alertBox, 'alertMessage', null )
-  }
-
-  sleep(ms){
-    return new Promise(resolve=>{
-        setTimeout(resolve,ms)
-    })
-}
 
 
 };

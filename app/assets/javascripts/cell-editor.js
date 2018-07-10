@@ -10,11 +10,13 @@ import CellEditorComponent from './vue/CellEditorComponent.vue'
 
 
 export default class CellEditor {
-  constructor(socketClient){
+  constructor(socketClient,bossComponent,alertBox){
       this.socketClient=socketClient;
+      this.bossComponent=bossComponent;
+      this.alertBox=alertBox;
   }
 
-  async init(socketClient)
+  async init( )
   {
     var self = this;
 
@@ -30,6 +32,10 @@ export default class CellEditor {
           {
             var val = element.target.value;
             self.assignOptionToCellConfig(this.editingCell,'name',val)
+          },
+          closeEditor: function(element)
+          {
+            this.enabled = false;
           }
         },
          components:
@@ -63,13 +69,16 @@ export default class CellEditor {
      var response = await this.socketClient.emit('assignOptionToCellConfig',{cellId: cell.cellId, optionName:optionName,value:value});
      if(response.success)
      {
-       this.setAlertMessage('blue',response.message)
+       this.alertBox.setAlertMessage('blue',response.message)
 
        var cell = await this.socketClient.emit('getCellData',cell.cellId)
        Vue.set(cellEditor, 'editingCell', cell )
 
+
+       this.bossComponent.$emit('refresh')
+
      }else{
-       this.setAlertMessage('red',response.message)
+       this.alertBox.setAlertMessage('red',response.message)
      }
   }
 

@@ -19,17 +19,17 @@
 
 
     <div class="cell-attribute-editor h10" v-if="!addingAttribute">
-      <div class="btn " v-on:click="showAddAttribute">Add Attribute</div>
+      <div class="btn btn-small black-text " v-on:click="showAddAttribute">Add Attribute</div>
 
       <div class="h12 vertical-scroll">
-          <div class="cell-attribute"
+          <div class="cell-attribute background-darksteel"
           v-for="(attr,key) in getActiveAttributes"
           :class="{'enabled': attr.value}"
           v-bind:data-name="attr.value.name"
           v-bind:data-value="attr.value.value"
 
           >
-          <span   @click="removeAttribute">x</span>
+          <span class="clickable btn btn-xs grey icon icon-cancel"  @click="removeAttribute" v-bind:data-name="attr.value.name"   > </span>
 
              {{attr.value.label}}
 
@@ -77,7 +77,7 @@
 
           if(this.cell.attributes[key] && this.cell.attributes[key].enabled)
           {
-            console.log('push ersult ', key)  //crashing here ?
+
             result.push({key: key, value: this.cell.attributes[key]})
           }
         }
@@ -90,7 +90,7 @@
         for (var key in this.cell.attributes ) {
           if(this.cell.attributes[key] && !this.cell.attributes[key].enabled)
           {
-            console.log('push result ', key,this.cell.attributes[key])
+
           result.push({key: key, value: this.cell.attributes[key]})
           }
         }
@@ -106,6 +106,14 @@
 
         this.$root.setCellAttribute(this.cell.cellId,name,value)
       },
+
+      removeAttribute(element) {
+        var target = element.target;
+        var name = target.getAttribute('data-name')
+
+        this.$root.setCellAttribute(this.cell.cellId,name,null,false)
+      },
+
       showAddAttribute(element)
       {
         console.log('uhhh')
@@ -119,7 +127,7 @@
         var value = target.getAttribute('data-value')  //toggle
           console.log('enable!!',name,value,this.cell.cellId)
         this.$root.setCellAttribute(this.cell.cellId,name,null,true)
-        //this.$root.toggleAddNewAttribute(false)  //causes issues 
+        //this.$root.toggleAddNewAttribute(false)  //causes issues
       }
 
     }

@@ -87,6 +87,13 @@
 
 //Helpers
 
+.btn.btn-xs
+{
+      height: 22.4px;
+      line-height: 22.4px;
+      font-size: 10px;
+}
+
 .h12
 {
     height:100%;
@@ -267,12 +274,7 @@
   margin:2px;
   border: 1px solid gray;
 }
-
-.cell-attribute.enabled
-{
-  color:black;
-  background-color:white;
-}
+ 
 
 .cell-attribute:hover
 {

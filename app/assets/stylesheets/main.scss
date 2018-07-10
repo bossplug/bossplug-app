@@ -21,7 +21,7 @@
 
 [v-cloak] {display: none}
 
-.hidden {display:none}
+.hidden {display:none !important}
 
 .titlebar
 {
@@ -274,12 +274,21 @@
   margin:2px;
   border: 1px solid gray;
 }
- 
+
 
 .cell-attribute:hover
 {
   border: 1px solid white;
   cursor:pointer;
+}
+
+input.attribute-value-input
+{
+  display: inline-block !important;
+  width: 25% !important;
+  margin-top:5px !important;
+  margin-left: 5% !important;
+  height: 1em !important;
 }
 
 ///Colors

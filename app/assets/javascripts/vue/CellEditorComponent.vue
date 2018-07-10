@@ -31,7 +31,11 @@
           >
           <span class="clickable btn btn-xs grey icon icon-cancel"  @click="removeAttribute" v-bind:data-name="attr.value.name"   > </span>
 
-             {{attr.value.label}}
+            <span> {{attr.value.label}} </span>
+
+            <input type="text" class="" :class="{'hidden':attr.value.type == 'valueless','attribute-value-input':attr.value.type != 'valueless'}"
+            v-bind:data-name="attr.value.name"
+            v-model="attr.value.value" v-on:change="setAttribute"> {{attr.value.units}} </input>
 
           </div>
         </div>
@@ -128,6 +132,15 @@
           console.log('enable!!',name,value,this.cell.cellId)
         this.$root.setCellAttribute(this.cell.cellId,name,null,true)
         //this.$root.toggleAddNewAttribute(false)  //causes issues
+      },
+
+      setAttribute(element)
+      {
+        var target = element.target;
+        var name = target.getAttribute('data-name')
+        var value = target.value
+          console.log('set!!',name,value,this.cell.cellId)
+        this.$root.setCellAttribute(this.cell.cellId,name,value,true)
       }
 
     }

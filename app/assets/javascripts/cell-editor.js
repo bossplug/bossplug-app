@@ -47,7 +47,7 @@ export default class CellEditor {
           closeEditor: function(element)
           {
             console.log('close editor')
-            this.editingCell = null;
+            self.enableCellEditor(false) ;
           }
         } ,
         components:
@@ -64,7 +64,7 @@ export default class CellEditor {
   {
     if(cellData)
     {
-      
+
 
       var cellId = cellData.cellId;
 
@@ -79,7 +79,7 @@ export default class CellEditor {
 
     }
       Vue.set(cellEditor, 'editingCell', null )
-
+      Vue.set(cellEditor, 'addingNewAttribute', null )
   }
 
 

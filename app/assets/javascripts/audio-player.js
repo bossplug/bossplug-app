@@ -8,6 +8,12 @@ import {Howl, Howler} from 'howler';
   //goes by hash
 var preloadedSoundMap = {};
 
+//var channelHowls = {};
+var activeHowls = {};  //clear this out on a full stop
+var allHowls = {}; //clear this out on a full stop
+
+var audioIdCounter = 0;
+
 export default class AudioPlayer {
   constructor( ){
 
@@ -25,7 +31,7 @@ export default class AudioPlayer {
 
   //https://medium.com/@SrvZ/build-a-audio-player-in-electron-e1b133776c6
 
-    async playSound(socketClient,sfx)
+   playSound(sfx)
   {
 
     if(!sfx.preloaded)
@@ -35,6 +41,9 @@ export default class AudioPlayer {
       return;
     }
 
+     var howlId = audioIdCounter++;
+
+     var channelVolume = 1.0;
 
     console.log('howl',sfx)
 
@@ -44,34 +53,56 @@ export default class AudioPlayer {
     var socketsPath ;
 
 
-    var socketsPath =  socketServer+'/'+sfx.hash+'.wav'
+    var socketsPath =  socketServer+'/'+sfx.sfxHash+'.wav'
       // Setup the new Howl.
-      const audio = new Howl({
+      var audio = new Howl({
           src: socketsPath,
           html5: true,
           preload: false,
-        }).play();
+          loop:  sfx.attributes.loop,
+          volume: channelVolume,
+          onend: function() {
+            activeHowls[howlId] = null;
+          }
+        })
 
-  /*
-  const audio = new Howl({
-src: 'https://howlerjs.com/assets/howler.js/examples/player/audio/rave_digger.webm',
-html5: true,
-preload: false,
-}).play();
-
-  */
-
+      allHowls[howlId] = {sfx: sfx, howl: audio};
+      activeHowls[howlId] = {sfx: sfx, howl: audio};
 
 
-  /*  var stream = new Howl({
-        src: [sfx.path],
-        ext: ['wav'],
-        autoplay: true,
-        html5: true
-    });*/
+      audio.play()
+
+      return {success:true, sfx:sfx}
+
 
 
   }
+
+
+
+  stopActivePlayback(channel)
+  {
+    //if channel is null then all channels
+
+    for(var howlId in allHowls)
+    {
+      var resource = allHowls[howlId];
+
+      console.log('active howls ', resource )
+
+      if(resource && resource.howl)
+      {
+        resource.howl.stop()
+        allHowls[howlId] = null;
+      }
+
+    }
+
+    //if no channel..
+     activeHowls = {};
+     allHowls = {};
+  }
+
 
   /*
 

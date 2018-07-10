@@ -17,7 +17,7 @@ import MusicMan from './music-man';
 var musicMan = new MusicMan(audioPlayer);
 
 import SocketClient from './socketclient';
-var socketClient = new SocketClient(audioPlayer);
+var socketClient = new SocketClient(musicMan);
 
 import Build from './build';
 var build = new Build(audioPlayer);

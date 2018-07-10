@@ -3,8 +3,8 @@
 var io = require('socket.io-client');
 
 export default class SocketClient {
-  constructor(audioPlayer){
-    this.audioPlayer = audioPlayer;
+  constructor(musicMan){
+    this.musicMan = musicMan;
   }
 
   async init()
@@ -25,9 +25,9 @@ export default class SocketClient {
 
     });
 
-    this.socket.on('playLocalSound', async function (data,fn) {
-            console.log('playLocalSound', data)
-            var success = await self.audioPlayer.playSound(self,data);
+    this.socket.on('queueSFXEvent', async function (data,fn) {
+            console.log('queueSFXEvent', data)
+            var success = await self.musicMan.queueSFXEvent(data);
             fn(JSON.stringify(data));  //immediate response
       });
 

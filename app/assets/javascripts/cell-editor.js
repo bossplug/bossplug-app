@@ -40,10 +40,10 @@ export default class CellEditor {
             var val = element.target.value;
             self.assignOptionToCellConfig(this.editingCell,'name',val)
           },
-          setCellAttribute: function(cellId,attribute,val)
+          setCellAttribute: function(cellId,attribute,val,enabled)
           {
-            console.log('toggle cell attr',cellId,attribute,val)
-            self.assignAttributeToCellConfig(cellId,attribute,val)
+            console.log('toggle cell attr',cellId,attribute,val,enabled)
+            self.assignAttributeToCellConfig(cellId,attribute,val,enabled)
           },
           //add cell action - remove cell action
           closeEditor: function(element)
@@ -95,9 +95,9 @@ export default class CellEditor {
   }
 
 
-  async assignAttributeToCellConfig(cellId,attributeName,value)
+  async assignAttributeToCellConfig(cellId,attributeName,value,enabled)
   {
-     var response = await this.socketClient.emit('assignAttributeToCellConfig',{cellId: cellId, attributeName:attributeName,value:value});
+     var response = await this.socketClient.emit('assignAttributeToCellConfig',{cellId: cellId, attributeName:attributeName,value:value,enabled:enabled});
      if(response.success)
      {
        this.alertBox.setAlertMessage('blue',response.message)

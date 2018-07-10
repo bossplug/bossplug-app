@@ -24,12 +24,13 @@
       <div class="cell-attribute"
       v-for="(attr,key) in getActiveAttributes"
       :class="{'enabled': attr.value}"
-      v-bind:data-attr="attr.key"
-      v-bind:data-value="attr.value"
-      @click="clickedAttribute"
-      >
+      v-bind:data-name="attr.value.name"
+      v-bind:data-value="attr.value.value"
 
-         {{attr.key}}
+      >
+      <span   @click="removeAttribute">x</span>
+
+         {{attr.value.label}}
 
       </div>
     </div>
@@ -38,12 +39,12 @@
 
         <div class="cell-attribute"
         v-for="(attr,key) in getAvailableAttributes"
-        v-bind:data-attr="attr.key"
-        v-bind:data-value="attr.value"
-        @click="clickedAttribute"
+        v-bind:data-name="attr.value.name"
+        v-bind:data-value="attr.value.value"
+        @click="enableAttribute"
         >
 
-           {{attr.key}}
+         {{attr.value.label}}
 
         </div>
 
@@ -69,9 +70,12 @@
       getActiveAttributes(){
         var result = [];
 
+        console.log('got attrs',this.cell.attributes)
         for (var key in this.cell.attributes ) {
-          if(this.cell.attributes[key].enabled)
+
+          if(this.cell.attributes[key] && this.cell.attributes[key].enabled)
           {
+            console.log('push ersult ', key)
             result.push({key: key, value: this.cell.attributes[key]})
           }
         }
@@ -82,8 +86,9 @@
         var result = [];
 
         for (var key in this.cell.attributes ) {
-          if(!this.cell.attributes[key].enabled)
+          if(this.cell.attributes[key] && !this.cell.attributes[key].enabled)
           {
+            console.log('push result ', key,this.cell.attributes[key])
           result.push({key: key, value: this.cell.attributes[key]})
           }
         }
@@ -94,15 +99,25 @@
     methods: {
       clickedAttribute(element) {
         var target = element.target;
-        var attribute = target.getAttribute('data-attr')
+        var name = target.getAttribute('data-name')
         var value = !target.getAttribute('data-value')  //toggle
 
-        this.$root.setCellAttribute(this.cell.cellId,attribute,value)
+        this.$root.setCellAttribute(this.cell.cellId,name,value)
       },
       showAddAttribute(element)
       {
 
         this.$root.toggleAddNewAttribute(true)
+      },
+      enableAttribute(element)
+      {
+
+        var target = element.target;
+        var name = target.getAttribute('data-name')
+        var value = target.getAttribute('data-value')  //toggle
+          console.log('enable!!',name,value,this.cell.cellId)
+        this.$root.setCellAttribute(this.cell.cellId,name,null,true)
+        this.$root.toggleAddNewAttribute(false)
       }
 
     }

@@ -26,10 +26,15 @@ export default class CellEditor {
         data: {
         //  enabled: false,
           editingCell: null,
-
-          test: {name:'test'}
+          addingNewAttribute: false,
+          testt:1
         },
         methods: {
+          toggleAddNewAttribute: function(enabled)
+          {
+            this.addingNewAttribute = enabled;
+            console.log('meep',this.addingNewAttribute)
+          },
           setCellName: function(element)
           {
             var val = element.target.value;

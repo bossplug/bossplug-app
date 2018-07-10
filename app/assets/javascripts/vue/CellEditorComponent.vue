@@ -2,7 +2,6 @@
 
 <div class="card-content white-text row h12">
 
-
 <div class="cell-editor" v-if="cell"   >
 
   <div class="col s4">
@@ -17,9 +16,13 @@
   <div class="col s1 h12">
   </div>
   <div class="col s4 h12">
-    <div class="cell-attribute-editor h4">
+
+
+    <div class="cell-attribute-editor h8" v-if="!addingAttribute">
+      <div class="btn " v-on:click="showAddAttribute">Add Attribute</div>
+
       <div class="cell-attribute"
-      v-for="(attr,key) in getAttributes"
+      v-for="(attr,key) in getActiveAttributes"
       :class="{'enabled': attr.value}"
       v-bind:data-attr="attr.key"
       v-bind:data-value="attr.value"
@@ -30,8 +33,21 @@
 
       </div>
     </div>
-    <div class="cell-action-editor h4 hidden" v-for="(attr,key) in getActions">
-      {{attr.key}}  -- {{attr.value}}
+    <div class="cell-attribute-select h8"  v-if="addingAttribute">
+
+      meeeppp
+        <div class="cell-attribute"
+        v-for="(attr,key) in getAvailableAttributes"
+        :class="{'enabled': attr.value}"
+        v-bind:data-attr="attr.key"
+        v-bind:data-value="attr.value"
+        @click="clickedAttribute"
+        >
+
+           {{attr.key}}
+
+        </div>
+
     </div>
   </div>
 
@@ -45,27 +61,31 @@
 
 <script>
   export default {
-    props: [ 'cell','test' ],
+    props: [ 'cell','adding-attribute'  ], //need snake case here 
     data() {
       return {  }
     },
     name: 'cell-editor',
     computed: {
-      getAttributes(){
+      getActiveAttributes(){
+        var result = [];
+
+        for (var key in this.cell.attributes ) {
+          if(this.cell.attributes[key].enabled)
+          {
+            result.push({key: key, value: this.cell.attributes[key]})
+          }
+        }
+
+         return result;
+      },
+      getAvailableActions(){
         var result = [];
 
         for (var key in this.cell.attributes ) {
           result.push({key: key, value: this.cell.attributes[key]})
         }
 
-         return result;
-      },
-      getActions(){
-        var result = [];
-
-        for (var key in this.cell.actions ) {
-          result.push({key: key, value: this.cell.actions[key]})
-        }
          return result;
       }
     },
@@ -76,6 +96,11 @@
         var value = !target.getAttribute('data-value')  //toggle
 
         this.$root.setCellAttribute(this.cell.cellId,attribute,value)
+      },
+      showAddAttribute(element)
+      {
+
+        this.$root.toggleAddNewAttribute(true)
       }
 
     }

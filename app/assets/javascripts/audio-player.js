@@ -15,8 +15,11 @@ var allHowls = {}; //clear this out on a full stop
 
 var audioIdCounter = 0;
 
-  var analyzer;
 
+
+
+  var analyzer;
+  var waveRenderer
 
 export default class AudioPlayer {
   constructor( ){
@@ -35,6 +38,14 @@ export default class AudioPlayer {
 
 */
 
+  }
+
+  setWaveRenderer(renderer)
+  {
+      //var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      //var analyser = ctx.createAnalyser();
+
+      waveRenderer = renderer;
   }
 
   async preloadSounds()
@@ -58,7 +69,6 @@ export default class AudioPlayer {
 
      var channelVolume = 1.0;
 
-    console.log('howl',sfx)
 
     var current_hostname = window.location.hostname;
 
@@ -81,6 +91,8 @@ export default class AudioPlayer {
 
 
       var play = audio.play()
+
+      waveRenderer.start();
 
       allHowls[howlId] = {sfx: sfx, howl: audio, play: play};
       activeHowls[howlId] = {sfx: sfx, howl: audio , play: play };

@@ -14,7 +14,6 @@
 
 
 
-
     <div class="overview build-background h12" >
 
 
@@ -87,8 +86,8 @@
 
 
 
-              <div id="cell-editor"  >
-                <div id='wave-renderer' class='wave-renderer h11' style='display: block !important' v-if="!editingCell"  ></div>
+              <div id="cell-editor"  class=" h12" >
+                <div id='wave-renderer' class='wave-renderer h11' :class="{'hidden':editingCell}"     ></div>
 
 
               <div class="card  grey darken-3 h12" style="position:relative" v-if="editingCell" v-cloak>

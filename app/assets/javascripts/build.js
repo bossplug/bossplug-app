@@ -40,6 +40,7 @@ var dragBox;
 export default class Build {
   constructor(audioPlayer){
     this.audioPlayer=audioPlayer;
+    audioPlayer.setWaveRenderer(siriWave)
 
   }
 
@@ -191,18 +192,21 @@ export default class Build {
       await metronomeComponent.init();
       this.musicMan.setMetronomeComponent(metronomeComponent)
 
-      cellEditor = new CellEditor(self.socketClient,bossComponent,alertBox);
 
-      //not reliable ..
-    /*  var siriWave = new SiriWave({
-        container: document.getElementById('wave-renderer'),
-        width:300,
-        height:100,
-        speed: 0.2,
-     //   color: '#fff',
-     //   frequency: 2,
-         autostart: true
-      });*/
+     $(document).ready(function() {
+          siriWave = new SiriWave({
+            container: document.getElementById('wave-renderer'),
+            width:400,
+            height:140,
+            speed: 0.2,
+         //   color: '#fff',
+         //   frequency: 2,
+             autostart: false
+          });
+      });
+
+
+      cellEditor = new CellEditor(self.socketClient,bossComponent,alertBox);
 
       await cellEditor.init();
 

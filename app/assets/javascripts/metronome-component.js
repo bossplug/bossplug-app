@@ -115,7 +115,7 @@ export default class MetronomeComponent {
   beat(undershoot)
   {
     beatCount++;
-    beatMilliseconds = 0;
+    beatMilliseconds = undershoot; //reset to 0 
 
     this.musicMan.beat(undershoot)
 

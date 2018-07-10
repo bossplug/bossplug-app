@@ -67,28 +67,41 @@ export default class MusicMan {
 
   addToQueue(sfx)
   {
-     sfxEventQueue.push(sfx)
+     sfxEventQueue.push({sfx:sfx,properties:{}})
   }
 
   //the metronome calls this method
   beat(undershoot)
   {
     //music man learned of a new music beat :)
-    console.log('queue', sfxEventQueue)
+  //  console.log('queue', sfxEventQueue)
 
     //flush sfx
     for(var i in sfxEventQueue)
     {
-      var sfx = sfxEventQueue[i];
-
+      var sfx = sfxEventQueue[i].sfx;
+      var properties = sfxEventQueue[i].properties;
 
       if(sfx.attributes.waitForBeat || sfx.attributes.pulse)
       {
-         this.audioPlayer.playSound(sfx)
+
+
+        if( isNaN(parseInt(properties.beatsWaited)) ) properties.beatsWaited = 0;
+
+          if(sfx.attributes.pulse && sfx.attributes.pulse.value
+            && parseInt(properties.beatsWaited) < parseInt(sfx.attributes.pulse.value))
+          {
+            properties.beatsWaited = parseInt(properties.beatsWaited) + 1; 
+            continue;
+          }
+
+        this.audioPlayer.playSound(sfx)
         if(sfx.attributes.waitForBeat)
         {
           sfxEventQueue.splice(i, 1); //remove it from the array
         }
+
+
       }
 
 
@@ -102,8 +115,8 @@ export default class MusicMan {
 
     for(var i in sfxEventQueue)
     {
-      var sfx = sfxEventQueue[i];
-       
+      var sfx = sfxEventQueue[i].sfx;
+
       if(sfx.attributes.waitForBeat || sfx.attributes.pulse)
       {
         if(sfx.sfxHash == hash)

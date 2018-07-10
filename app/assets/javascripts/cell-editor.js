@@ -36,7 +36,11 @@ export default class CellEditor {
           setCellName: function(element)
           {
             var val = element.target.value;
-            self.assignOptionToCellConfig(this.editingCell,'name',val)
+            if(val && val.length >= 1)
+            {
+              self.assignOptionToCellConfig(this.editingCell,'name',val)
+            }
+
           },
           setCellAttribute: function(cellId,attribute,val,enabled)
           {

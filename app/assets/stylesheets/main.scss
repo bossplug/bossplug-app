@@ -273,6 +273,7 @@
   padding: 2px;
   margin:2px;
   border: 1px solid gray;
+  font-size: 0.8em;
 }
 
 
@@ -284,8 +285,9 @@
 
 input.attribute-value-input
 {
+    font-size: 1.2em !important;
   display: inline-block !important;
-  width: 25% !important;
+  width: 20% !important;
   margin-top:5px !important;
   margin-left: 5% !important;
   height: 1em !important;

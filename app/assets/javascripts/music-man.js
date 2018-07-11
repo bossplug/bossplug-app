@@ -83,7 +83,7 @@ export default class MusicMan {
       var attr = sfx.attributes[key]
       if(attr.enabled)
       {
-        this.handleSFXEvent(sfx, attr.name,delayUntilBeat)
+       await  this.handleSFXEvent(sfx, attr.name,delayUntilBeat)
       }
     }
 
@@ -92,7 +92,7 @@ export default class MusicMan {
 
   async handleSFXEvent(sfx, eventName,delayUntilBeat)
   {
-      //preserve the sfx by hash
+
     if(delayUntilBeat)
     {
       eventsDelayedUntilBeat.push({sfx:sfx, eventName:eventName});
@@ -103,31 +103,32 @@ export default class MusicMan {
 
     if(this.metronomeComponent)
     {
-      this.metronomeComponent.handleMetronomeEvent(sfx,eventName)
+      await this.metronomeComponent.handleMetronomeEvent(sfx,eventName)
     }
 
 
     switch(eventName)
     {
+      case 'cancelChannel': this.audioPlayer.stopActivePlayback(sfxHash,sfx.attributes.cancelChannel.value); break;
       case 'cancelAll': this.audioPlayer.stopActivePlayback(sfxHash); break;
-      case 'cancelLoops': this.cancelQueuedLoops(sfxHash);  break;
+      case 'cancelLoops': this.cancelQueuedLoops( );  break;
     }
   }
 
-  cancelQueuedLoops(preservedHash)
+  cancelQueuedLoops()
   {
       for(var i in sfxEventQueue)
       {
         var sfxEvent = sfxEventQueue[i];
-        var sfxEventHash = (sfxEvent.sfx) ? sfxEvent.sfx.sfxHash : null;
+        var sfxEventActivated = (sfxEvent.properties) ? sfxEvent.properties.activated : null;
 
-        //remove all nonpreserved loops
-        if(preservedHash == null || preservedHash != sfxEventHash )
+
+        if( sfxEventActivated )
         {
-          sfxEventQueue.splice(i,1);
-            console.log('splicing', sfxEventHash)
+          sfxEventQueue = sfxEventQueue.splice(i,1);
+            console.log('splicing', sfxEvent.sfx.sfxName)
         }else{
-          console.log('Preserving',preservedHash)
+          console.log('Preserving', sfxEvent.sfx.sfxName)
         }
       }
 
@@ -141,19 +142,19 @@ export default class MusicMan {
   }
 
   //the metronome calls this method
-  beat(undershoot)
+  async beat(undershoot)
   {
     //music man learned of a new music beat :)
   //  console.log('queue', sfxEventQueue)
   console.log('event queue ', sfxEventQueue.length)
 
 
-    //we do NOT want to cancel this current queued sfx tho ...
+    //kill activated beats
     for(var i in eventsDelayedUntilBeat)
     {
       console.log('pop delayed event ', )
       var event = eventsDelayedUntilBeat.pop();
-      this.handleSFXEvent(event.sfx, event.eventName)
+      await this.handleSFXEvent(event.sfx, event.eventName)
     }
 
 
@@ -191,7 +192,10 @@ export default class MusicMan {
 
 
 
-          console.log('play sound')
+
+          //mark as activated, can be killed from a 'cancel loops' now
+        sfxEventQueue[i].properties.activated = true;
+
         this.audioPlayer.playSound(sfx)
         if(sfx.attributes.waitForBeat.enabled)
         {

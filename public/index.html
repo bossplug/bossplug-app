@@ -14,6 +14,9 @@
 
     
 
+
+
+
     <div class="overview build-background h12" >
 
 
@@ -93,6 +96,8 @@
 
         </div>
         <div class="col s9 zeropad h12"    >
+
+
           <div class="background-sativa h4 border-bottom-black row " style="margin:0;padding:0"  >
             <div  id="metronome" class="col s4 h12" style=" position:relative;  " v-if="enabled" v-cloak>
             <div class="metronome white-text h12" >
@@ -105,9 +110,9 @@
                   </div>
 
                   <div class="metronome-control-panel text-center">
-                    <div class="btn btn-control grey hoverable"><i class="icon icon-play"></i></div>
-                    <div class="btn btn-control grey hoverable"><i class="icon icon-stop"></i></div>
-                    <div class="btn btn-control grey hoverable"><i class="icon icon-pause"></i></div>
+                    <div class="btn btn-control grey hoverable" v-on:click="clickedButton('play')"><i class="icon icon-play clickable"></i></div>
+                    <div class="btn btn-control grey hoverable" v-on:click="clickedButton('pause')"><i class="icon icon-pause clickable"></i></div>
+                    <div class="btn btn-control grey hoverable" v-on:click="clickedButton('stop')"><i class="icon icon-stop clickable"></i></div>
                     <div class="bpm-input-container text-center" style="display:inline">   <input class="text-center" type="text" class="white-text" size="4" maxlength="4" style="width: 50px;"  v-model="beatsPerMinute" v-on:change="setMetronomeBPM" v-cloak></input>  </div>
 
                   </div>
@@ -121,38 +126,29 @@
             </div>
 
 
-            <div class="col s8 cell-editor" id="cell-editor" v-if="enabled" v-cloak>
-              <div class="card  grey darken-3 h12" style="position:relative">
-                <div class="card-content white-text row h12">
+            <div class="col s8 h11" >
 
 
-                    <cell-editorr
 
-                    ></cell-editorr>
-
-
-                  <div class="col s4">
-
-                    <div class="title-container ">
-                      <input type="text" class="white-text" v-if="editingCell" v-model="editingCell.name" v-on:change="setCellName"  ></input>
-                    </div>
-
-                  </div>
-                  <div class="col s1 h12">
-                  </div>
-                  <div class="col s4 h12">
-                    <div class="cell-attribute-editor h4">
-                      cell attr
-                    </div>
-                    <div class="cell-action-editor h4">
-                      cell action
-                    </div>
-                  </div>
+              <div id="cell-editor"  class=" h12" >
+                <div id='wave-renderer' class='wave-renderer h11' :class="{'hidden':editingCell}"     ></div>
 
 
-                  <div class="absolute-top-right btn btn-control transparent hoverable icon icon-cancel clickable" v-on:click="closeEditor"></div>
-                </div>
+              <div class="card  grey darken-3 h12" style="position:relative" v-if="editingCell" v-cloak>
+
+
+                    <!-- This element name has to match the file name ! -->
+                    <!-- Attributes must use snake case ! -->
+                    <cell-editor-component
+                      :cell="editingCell"
+                      :adding-attribute="addingNewAttribute"
+
+                    ></cell-editor-component>
+
+
+
               </div>
+            </div>
             </div>
 
           </div>
@@ -200,7 +196,7 @@
 
 
 
-        <div class="alert-box absolute-bottom" v-if="alertMessage" v-bind:class="[alertClass]" id="alert-box" >
+        <div class="alert-box absolute-bottom" v-if="alertMessage" v-bind:class="[alertClass]" id="alert-box" v-cloak>
   {{alertMessage}}
 </div>
 

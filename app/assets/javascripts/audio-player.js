@@ -131,7 +131,7 @@ export default class AudioPlayer {
   }
 
 
-
+  //TODO fix channel cancelling 
   stopActivePlayback(preservedHash,channel)
   {
     //if channel is null then all channels

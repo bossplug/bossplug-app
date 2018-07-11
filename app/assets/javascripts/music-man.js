@@ -40,10 +40,9 @@ export default class MusicMan {
     if(sfx.attributes.waitForBeat.enabled || sfx.attributes.pulse.enabled)
     {
       immediatePlay = false;
-      if(!this.sfxWithHashIsQueued(sfx.sfxHash))
-      {
+
         queue = true;
-      }
+
 
     }
 
@@ -63,7 +62,11 @@ export default class MusicMan {
       //We don't want this to keep occuring !!
       this.handleAllSFXEvents(sfx,true)
 
-      this.addToQueue(sfx)
+      if(!this.sfxWithHashIsQueued(sfx.sfxHash))
+      {
+        this.addToQueue(sfx)
+      }
+
     }
 
 
@@ -117,9 +120,14 @@ export default class MusicMan {
       {
         var sfxEvent = sfxEventQueue[i];
         var sfxEventHash = (sfxEvent.sfx) ? sfxEvent.sfx.sfxHash : null;
+
+        //remove all nonpreserved loops
         if(preservedHash == null || preservedHash != sfxEventHash )
         {
           sfxEventQueue.splice(i,1);
+            console.log('splicing', sfxEventHash)
+        }else{
+          console.log('Preserving',preservedHash)
         }
       }
 

@@ -75,17 +75,29 @@ export default class MetronomeComponent {
   {
     var self = this;
 
+    console.log('handle sfx ', sfx )
+
     switch(name)
     {
-      case 'play': metronome.active=true;   break;
-      case 'pause': metronome.active=false; break;
+      case 'play':
+          beatMilliseconds = 0.9 *  this.getMillisecondsPerBeat();
+          beatCount = 3;
+          metronome.active=true;
+          break;
+      case 'pause':
+          metronome.active=false;
+          break;
       case 'stop':
-             metronome.active=false;
-             beatMilliseconds = 0;
-             beatCount = 0;
-             await self.musicMan.handleSFXEvent(sfx,'cancelLoops');
-             await self.musicMan.handleSFXEvent(sfx,'cancelAll');
-             break;
+           metronome.active=false;
+           beatMilliseconds = 0;
+           beatCount = 0;
+           await self.musicMan.handleSFXEvent(sfx,'cancelLoops');
+           await self.musicMan.handleSFXEvent(sfx,'cancelAll');
+           break;
+      case 'setBPM':
+           var bpm = sfx.attributes.setBPM.value;
+           metronome.beatsPerMinute=bpm;
+           break;
     }
   }
 
@@ -126,6 +138,8 @@ export default class MetronomeComponent {
 
   beat(undershoot)
   {
+
+
     beatCount++;
     beatMilliseconds = undershoot; //reset to 0
 

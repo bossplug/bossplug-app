@@ -32,7 +32,7 @@ export default class MetronomeComponent {
        el: '#metronome',
        data: {
          enabled: true,
-         masterVolume:100,
+         masterVolume:50,
          beatsPerMinute: 120,
          active: false
        },
@@ -50,6 +50,11 @@ export default class MetronomeComponent {
          clickedButton: async function(buttonName){
 
            self.handleMetronomeEvent(null,buttonName)
+         },
+         setMasterVolume: function(element)
+         {
+           var value = element.target.value;
+           self.audioPlayer.setMasterVolume(value)
          }
         }
      })

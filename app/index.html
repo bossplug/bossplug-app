@@ -25,13 +25,13 @@
 
           <div class="audio-list background-darksteel white-text h12 border-right-black">
             <div class="titlebar text-center">
-
+              <div class="btn btn-xs white black-text" v-on:click="refreshFiletree">Refresh Folders</div>
             </div>
-            <div class="thin-list">
+            <div class="thin-list" >
 
 
 
-                <div class="audioFileContainer" >
+                <div class="audioFileContainer"  v-if="!loading" >
                   <tree-menu
                     v-on:drag-audio-file="dragAudioFile"
                     :label="tree.label"
@@ -42,7 +42,7 @@
 
                 </div>
 
-                <div v-if='loading'>
+                <div class="" style="width:100%;text-align:center" v-if='loading'>
                   <%= require('html-loader!./assets/html/preloader.html') %>
                 </div>
 
@@ -52,7 +52,7 @@
 
         </div>
         <div class="col s9 zeropad h12"    >
- 
+
 
           <div class="background-sativa h4 border-bottom-black row " style="margin:0;padding:0"  >
             <div  id="metronome" class="col s4 h12" style=" position:relative;  " v-if="enabled" v-cloak>
@@ -75,7 +75,7 @@
               </div>
 
               <div class="master-volume-container h12  " style="  width: 50px; " >
-                  <input type="range" class="vranger rotate270" min="0" max="200" v-model="masterVolume" style="width:15vh;"></input>
+                  <input type="range" class="vranger rotate270" min="0" max="100" v-model="masterVolume" v-on:change="setMasterVolume" style="width:15vh;"></input>
               </div>
 
               </div>

@@ -15,7 +15,7 @@ var allHowls = {}; //clear this out on a full stop
 
 var audioIdCounter = 0;
 
-
+var masterVolume = 50;
 
 
   var analyzer;
@@ -38,6 +38,13 @@ export default class AudioPlayer {
 
 */
 
+  }
+
+  setMasterVolume(vol)
+  {
+    masterVolume = (vol / 100.0);
+
+    Howler.volume(masterVolume);
   }
 
   setWaveRenderer(renderer)
@@ -75,14 +82,7 @@ export default class AudioPlayer {
      }
 
 
-     var effectVolume = 1.0;
-
-     if(sfx.attributes.volume.enabled)
-     {
-       effectVolume = (sfx.attributes.volume.value / 100.0)
-     }
-
-     console.log(effectVolume)
+     var effectVolume = this.getVolumeForSFX(sfx);
 
 
 
@@ -131,7 +131,7 @@ export default class AudioPlayer {
   }
 
 
-  //TODO fix channel cancelling 
+  //TODO fix channel cancelling
   stopActivePlayback(preservedHash,channel)
   {
     //if channel is null then all channels
@@ -154,6 +154,25 @@ export default class AudioPlayer {
     //if no channel..
      activeHowls = {};
      allHowls = {};
+  }
+
+
+
+  getVolumeForSFX(sfx)
+  {
+
+    var effectVolume = 1.0;
+
+    if(sfx.attributes.volume.enabled)
+    {
+      effectVolume = (sfx.attributes.volume.value / 100.0)
+    }
+
+  //  effectVolume = effectVolume * (masterVolume/100.0);
+
+    if(effectVolume > 1.0) effectVolume = 1.0;
+
+      return effectVolume;
   }
 
 

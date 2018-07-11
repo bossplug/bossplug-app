@@ -1,7 +1,8 @@
 <template>
 <div class="tree-menu"   >
   <div class="label-wrapper" @click="toggleChildren"  >
-    <div :style="indent" :class="labelClasses" v-on:mousedown="emitDragEvent" v-on:dblclick="emitActionEvent" v-bind:data-node-id="getNodeId"  >
+    <div :style="indent" :class="labelClasses" v-on:mousedown="emitDragEvent" v-on:dblclick="emitActionEvent"
+      v-bind:data-node-id="getNodeId" v-bind:data-path="getPath"  >
       <i v-if="nodes" class="icon" :class="iconClasses"></i>
       {{ label }}
     </div>
@@ -45,6 +46,9 @@
       },
       getNodeId() {
         return this.nodeId;
+      },
+      getPath() {
+        return this.path;
       }
     },
     methods: {

@@ -125,7 +125,9 @@ export default class MusicMan {
 
         if( sfxEventActivated )
         {
-          sfxEventQueue = sfxEventQueue.splice(i,1);
+        //  sfxEventQueue = sfxEventQueue.splice(i,1);
+          sfxEventQueue.splice(i,1);  //only remove this one event
+
             console.log('splicing', sfxEvent.sfx.sfxName)
         }else{
           console.log('Preserving', sfxEvent.sfx.sfxName)

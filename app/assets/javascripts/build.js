@@ -72,7 +72,7 @@ export default class Build {
           console.log('found folders', existingAudioFolders )
           if(existingAudioFolders)
           {
-           var tree = await AudioTreeHelper.buildAudioFolders(existingAudioFolders, self.socketClient)
+           var tree = await AudioTreeHelper.buildAllAudioFolders(existingAudioFolders, self.socketClient)
            this.tree = tree;
           }
 
@@ -80,7 +80,15 @@ export default class Build {
         },
         methods: {
           dragAudioFile: function(label) {
-            console.log('test',label)
+            //console.log('test',label)
+          },
+          refreshFiletree: async function()
+          {
+            this.loading=true;
+            var existingAudioFolders = await LocalStorageHelper.get("audioFolders");
+            var tree = await AudioTreeHelper.buildAllAudioFolders(existingAudioFolders, self.socketClient)
+            this.tree = tree;
+            this.loading=false;
           }
         },
          components:
@@ -335,8 +343,8 @@ export default class Build {
           break;
 
       case 'removeaudiofolder':
-          var nodeId = target.getAttribute('data-node-id')
-          var tree =  await AudioTreeHelper.removeAudioFolder(nodeId, self.socketClient)
+          var path = target.getAttribute('data-path')
+          var tree =  await AudioTreeHelper.removeAudioFolder(path, self.socketClient)
           Vue.set(fileTree, 'tree', tree )
           break;
       default:

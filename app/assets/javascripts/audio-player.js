@@ -67,7 +67,26 @@ export default class AudioPlayer {
 
      var howlId = audioIdCounter++;
 
-     var channelVolume = 1.0;
+     var effectSpeed = 1.0;
+
+     if(sfx.attributes.speed.enabled)
+     {
+       effectSpeed = (sfx.attributes.speed.value / 100.0)
+     }
+
+
+     var effectVolume = 1.0;
+
+     if(sfx.attributes.volume.enabled)
+     {
+       effectVolume = (sfx.attributes.volume.value / 100.0)
+     }
+
+     console.log(effectVolume)
+
+
+
+
 
 
     var current_hostname = window.location.hostname;
@@ -82,7 +101,8 @@ export default class AudioPlayer {
           src: socketsPath,
           html5: true,
           preload: false,
-          volume: channelVolume,
+          volume: effectVolume,
+          rate: effectSpeed,
           onend: function() {
             activeHowls[howlId] = null;
           }
@@ -122,7 +142,7 @@ export default class AudioPlayer {
 
       console.log('active howls ', resource )
 
-      if(resource && resource.howl 
+      if(resource && resource.howl
       && (preservedHash==null || preservedHash != resource.sfx.sfxHash))
       {
         resource.howl.stop()

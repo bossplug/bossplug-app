@@ -1,6 +1,6 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
-
+var path = require('path')
 const BossPlug = require('./lib/bossplug')
 
 
@@ -10,7 +10,13 @@ let mainWindow
 
 async function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, height: 720})
+
+  console.log( __dirname + '/app/assets/img/logo64.ico' )
+  mainWindow = new BrowserWindow({
+    width: 1200,
+     height: 720,
+     icon: path.join(__dirname , 'app/assets/img/logo64.png' ) 
+   })
 
 
   await BossPlug.init();

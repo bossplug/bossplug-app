@@ -113,15 +113,13 @@ export default class CellEditor {
 
   async assignAttributeToCellConfig(cellId,attributeName,value,enabled)
   {
+    
+
      var response = await this.socketClient.emit('assignAttributeToCellConfig',{cellId: cellId, attributeName:attributeName,value:value,enabled:enabled});
      if(response.success)
      {
        this.alertBox.setAlertMessage('blue',response.message)
        var cell = await this.socketClient.emit('getCellData',cellId)
-
-       console.log('h cell is',cell)
-       console.log(cellEditor)
-
 
        if(enabled)
        {

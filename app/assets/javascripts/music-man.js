@@ -5,6 +5,7 @@ const LocalStorageHelper= require('./local-storage-helper').default
 
 
 var sfxEventQueue = [];
+var eventsDelayedUntilBeat = [];
 
 export default class MusicMan {
   constructor(audioPlayer){
@@ -26,32 +27,17 @@ export default class MusicMan {
   async queueSFXEvent(sfx)
   {
 
+
+
     var immediatePlay = true;
     var queue = false;
 
-    for(var key in  sfx.attributes)
-    {
-      var attr = sfx.attributes[key]
-      if(attr.enabled)
-      {
-        this.handleSFXEvent(attr.name)
-      }
+    if(sfx == null){
+      console.error('cannot handle sfx',sfx);
+      return;
     }
 
-
-    /*if(sfx.attributes.fadeIn ) //temp
-    {
-       this.audioPlayer.stopActivePlayback()
-    }
-    if(sfx.attributes.fadeOut ) //temp
-    {
-      sfxEventQueue = []; //empty
-
-    }*/
-
-
-
-    if(sfx.attributes.waitForBeat || sfx.attributes.pulse)
+    if(sfx.attributes.waitForBeat.enabled || sfx.attributes.pulse.enabled)
     {
       immediatePlay = false;
       if(!this.sfxWithHashIsQueued(sfx.sfxHash))
@@ -61,28 +47,83 @@ export default class MusicMan {
 
     }
 
-    if(immediatePlay)this.audioPlayer.playSound(sfx)
-    if(queue)this.addToQueue(sfx)
+
+    if(immediatePlay){
+
+      this.handleAllSFXEvents(sfx,false)
+
+      this.audioPlayer.playSound(sfx)
+    }
+
+
+
+
+    if(queue){
+
+      //We don't want this to keep occuring !!
+      this.handleAllSFXEvents(sfx,true)
+
+      this.addToQueue(sfx)
+    }
+
 
     return {success:true, sfx:sfx}
   }
 
 
-  async handleSFXEvent(eventName)
+  async handleAllSFXEvents(sfx,delayUntilBeat)
   {
+
+    //We don't want this to keep occuring !!
+    for(var key in  sfx.attributes)
+    {
+      var attr = sfx.attributes[key]
+      if(attr.enabled)
+      {
+        this.handleSFXEvent(sfx, attr.name,delayUntilBeat)
+      }
+    }
+
+
+  }
+
+  async handleSFXEvent(sfx, eventName,delayUntilBeat)
+  {
+      //preserve the sfx by hash
+    if(delayUntilBeat)
+    {
+      eventsDelayedUntilBeat.push({sfx:sfx, eventName:eventName});
+      return;
+    }
+
+    var sfxHash = sfx ? sfx.sfxHash : null;
+
     if(this.metronomeComponent)
     {
-      this.metronomeComponent.handleMetronomeEvent(eventName)
+      this.metronomeComponent.handleMetronomeEvent(sfx,eventName)
     }
+
 
     switch(eventName)
     {
-      case 'cancelAllPlayback': this.audioPlayer.stopActivePlayback(); break;
-      case 'cancelAllLoops': sfxEventQueue = []; break;
+      case 'cancelAll': this.audioPlayer.stopActivePlayback(sfxHash); break;
+      case 'cancelLoops': this.cancelQueuedLoops(sfxHash);  break;
     }
   }
 
+  cancelQueuedLoops(preservedHash)
+  {
+      for(var i in sfxEventQueue)
+      {
+        var sfxEvent = sfxEventQueue[i];
+        var sfxEventHash = (sfxEvent.sfx) ? sfxEvent.sfx.sfxHash : null;
+        if(preservedHash == null || preservedHash != sfxEventHash )
+        {
+          sfxEventQueue.splice(i,1);
+        }
+      }
 
+  }
 
   // array.splice(i, 1);  remove specific element  at key i
 
@@ -96,28 +137,55 @@ export default class MusicMan {
   {
     //music man learned of a new music beat :)
   //  console.log('queue', sfxEventQueue)
+  console.log('event queue ', sfxEventQueue.length)
+
+
+    //we do NOT want to cancel this current queued sfx tho ...
+    for(var i in eventsDelayedUntilBeat)
+    {
+      console.log('pop delayed event ', )
+      var event = eventsDelayedUntilBeat.pop();
+      this.handleSFXEvent(event.sfx, event.eventName)
+    }
+
+
 
     //flush sfx
+    eachEvent:
     for(var i in sfxEventQueue)
     {
       var sfx = sfxEventQueue[i].sfx;
       var properties = sfxEventQueue[i].properties;
 
-      if(sfx.attributes.waitForBeat || sfx.attributes.pulse)
+      if(sfx.attributes.waitForBeat.enabled || sfx.attributes.pulse.enabled)
       {
 
 
-        if( isNaN(parseInt(properties.beatsWaited)) ) properties.beatsWaited = 0;
-
-          if(sfx.attributes.pulse && sfx.attributes.pulse.value
-            && parseInt(properties.beatsWaited) < parseInt(sfx.attributes.pulse.value))
+          if( isNaN(parseInt(properties.beatsWaited))
+          || parseInt(properties.beatsWaited) >= parseInt(sfx.attributes.pulse.value))
           {
-            properties.beatsWaited = parseInt(properties.beatsWaited) + 1;
-            continue;
+            properties.beatsWaited = 0;
           }
 
+          console.log(properties.beatsWaited)
+
+          if(sfx.attributes.pulse && sfx.attributes.pulse.value
+            && (parseInt(properties.beatsWaited) < parseInt(sfx.attributes.pulse.value)) )
+          {
+              var beatsValue = properties.beatsWaited ;
+              properties.beatsWaited = parseInt(properties.beatsWaited) + 1;
+
+             if(parseInt(beatsValue)!=0) continue eachEvent;
+
+          }
+
+
+
+
+
+          console.log('play sound')
         this.audioPlayer.playSound(sfx)
-        if(sfx.attributes.waitForBeat)
+        if(sfx.attributes.waitForBeat.enabled)
         {
           sfxEventQueue.splice(i, 1); //remove it from the array
         }

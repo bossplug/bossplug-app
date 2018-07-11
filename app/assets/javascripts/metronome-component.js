@@ -49,7 +49,7 @@ export default class MetronomeComponent {
          },
          clickedButton: async function(buttonName){
 
-           self.handleMetronomeEvent(buttonName)
+           self.handleMetronomeEvent(null,buttonName)
          }
         }
      })
@@ -71,11 +71,10 @@ export default class MetronomeComponent {
   }
 
 
-  async handleMetronomeEvent(name)
+  async handleMetronomeEvent(sfx,name)
   {
     var self = this;
 
-    console.log('handle m',name)
     switch(name)
     {
       case 'play': metronome.active=true;   break;
@@ -84,8 +83,8 @@ export default class MetronomeComponent {
              metronome.active=false;
              beatMilliseconds = 0;
              beatCount = 0;
-             await self.musicMan.handleSFXEvent('cancelAllPlayback');
-             await self.musicMan.handleSFXEvent('cancelAllLoops');
+             await self.musicMan.handleSFXEvent(sfx,'cancelLoops');
+             await self.musicMan.handleSFXEvent(sfx,'cancelAll');
              break;
     }
   }

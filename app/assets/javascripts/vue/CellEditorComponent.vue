@@ -136,6 +136,7 @@
 
       setAttribute(element)
       {
+       
         var target = element.target;
         var name = target.getAttribute('data-name')
         var value = target.value

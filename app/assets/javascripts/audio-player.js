@@ -82,7 +82,6 @@ export default class AudioPlayer {
           src: socketsPath,
           html5: true,
           preload: false,
-          loop:  sfx.attributes.loop,
           volume: channelVolume,
           onend: function() {
             activeHowls[howlId] = null;
@@ -92,16 +91,16 @@ export default class AudioPlayer {
 
       var play = audio.play()
 
-      waveRenderer.start();
+      if(waveRenderer)   waveRenderer.start();
 
       allHowls[howlId] = {sfx: sfx, howl: audio, play: play};
       activeHowls[howlId] = {sfx: sfx, howl: audio , play: play };
 
 
-      if(sfx.attributes.fadeIn)
+      if(sfx.attributes.fadeIn.enabled)
       {
         audio.fade(0, 1, 400, play);
-      }else if (sfx.attributes.fadeOut) {
+      }else if (sfx.attributes.fadeOut.enabled) {
         audio.fade(1, 0, 400, play);
       }
 
@@ -113,7 +112,7 @@ export default class AudioPlayer {
 
 
 
-  stopActivePlayback(channel)
+  stopActivePlayback(preservedHash,channel)
   {
     //if channel is null then all channels
 
@@ -123,7 +122,8 @@ export default class AudioPlayer {
 
       console.log('active howls ', resource )
 
-      if(resource && resource.howl)
+      if(resource && resource.howl 
+      && (preservedHash==null || preservedHash != resource.sfx.sfxHash))
       {
         resource.howl.stop()
         allHowls[howlId] = null;

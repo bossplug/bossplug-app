@@ -1,22 +1,29 @@
 # Bossplug (Desktop)
 
-Modular music studio for the Launchpad.   
+A Fun Open-Source Drum-Kitting Electron App.
 
-Bossplug serves as an editor for .boss configuration files.   You can also play using the pad in 'play' mode.
+### HOW TO USE 
 
+1. Install & run BossPlug 
+2. Right click on the 'Audio Browser' on the right hand side to add folders from your computer which have .WAV files 
+3. Drag the audio files onto the 64 cells in the center.  The top row of cells have hotkeys 1 to 9 for easy playing with a normal keyboard (USB devices not supported quite yet -- soon)
+4. Click on the sound cells to assign properties 
+5. Play the sound effects and create music ! 
+
+
+### Sound Attributes 
+1. Pulse - Loops this sound every X beats 
+2. setBPM - Obvious
+3. setVolume - Obvious 
+4. CancelAudio
+5. CancelLoops
 
 ![image](https://user-images.githubusercontent.com/38132633/42414901-0a62df98-820e-11e8-871c-1294c259fdbe.png)
 
+ 
 
 
-
-# Developer TODO
-1. Add channel number,delay ms  to config for pad , number of beats to loop/pulse 
-
-
-
-
-## To Use
+## To Install With NPM 
 
 
 Prereqs:
@@ -35,33 +42,11 @@ npm run webpack
 npm run app
 ```  
 
-
-### PLUGins
-A .zip file which contains html, css, and js conforming to the Bossplug API in order to add a module to the studio when installed.
-
-Default plugins:
- 1. The Mothership
-    Features play, pause, and record buttons in order to create, remix, and preview audio cases.  Shows the animated 'time disc' which can be used to beat match using the software.
- 2. The Archive
-    A simple list of audio cases
- 3. The Boss
-    Allows for assigning audio cases to keys on the Launchpad
-
-### Boss configuration
-  A boss configuration is a .json file which saves the key configuration set by the Boss.  At its simplest form, it assigns the SHA3 hashes of audio cases to the keys of the launchpad.
+  
 
 
-
-### Audio Cases
-An audio file (or midi ?) which has metadata including the milliseconds for the 'hit time'.  Always referred to by its SHA3 hash.
-
-
-| aplay -f cd
-
-
-## ioHook
-Make sure it is configured correctly !!! Node 8.9 and Electron 2 : https://wilixlead.github.io/iohook/installation.html
-
+ 
+ 
 ## License
 
 [CC0 1.0 (Public Domain)](LICENSE.md)

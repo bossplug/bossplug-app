@@ -15,6 +15,7 @@ export default class AudioTreeHelper {
 
       var existingAudioFolders = await LocalStorageHelper.get("audioFolders");
 
+      if(existingAudioFolders == null) existingAudioFolders = [];
       console.log('existiiiing folders', existingAudioFolders)
 
       var selectedFolders = [];
@@ -114,6 +115,20 @@ export default class AudioTreeHelper {
         }
 
        subnode.nodes.push(filenode)
+      }
+
+
+      if(tree == null)
+      {
+        tree = {
+          label: 'Audio List',
+          nodes: []
+        }
+      }
+
+      if(tree.nodes == null)
+      {
+        tree.nodes = [];
       }
 
        tree.nodes.push( subnode )
@@ -233,13 +248,18 @@ export default class AudioTreeHelper {
   {
     var elementKey = 0;
 
-    for(var subnode of tree.nodes)
+    if(tree)
     {
-      for(var filenode of subnode.nodes )
+      for(var subnode of tree.nodes)
       {
-          if(filenode.nodeId > elementKey) elementKey = filenode.nodeId;
+        for(var filenode of subnode.nodes )
+        {
+            if(filenode.nodeId > elementKey) elementKey = filenode.nodeId;
+        }
       }
     }
+
+
 
     return elementKey;
   }

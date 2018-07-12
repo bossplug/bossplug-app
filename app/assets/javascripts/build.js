@@ -140,8 +140,11 @@ export default class Build {
                 case 'connect':
                     var response = await self.socketClient.emit('connectToLaunchpad')
                     self.connected = response.success
-                    if(!response.success)
+                    if(response.success)
                     {
+                      this.connected = true;
+                    }else{
+                      this.connected = false;
                       alertBox.setAlertMessage('red',response.message)
                     }
                     break;

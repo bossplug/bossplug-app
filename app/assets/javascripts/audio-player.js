@@ -84,9 +84,7 @@ export default class AudioPlayer {
 
      var effectVolume = this.getVolumeForSFX(sfx);
 
-
-
-
+     var delayMilliseconds =  sfx.attributes.delay.enabled ? sfx.attributes.delay.value : 0;
 
 
     var current_hostname = window.location.hostname;
@@ -97,32 +95,43 @@ export default class AudioPlayer {
 
     var socketsPath =  socketServer+'/'+sfx.sfxHash+'.wav'
       // Setup the new Howl.
-      var audio = new Howl({
-          src: socketsPath,
-          html5: true,
-          preload: false,
-          volume: effectVolume,
-          rate: effectSpeed,
-          onend: function() {
-            activeHowls[howlId] = null;
-          }
-        })
 
 
-      var play = audio.play()
+       setTimeout(function(){
 
-      if(waveRenderer)   waveRenderer.start();
+         var audio = new Howl({
+             src: socketsPath,
+             html5: true,
+             preload: false,
+             volume: effectVolume,
+             rate: effectSpeed,
+             onend: function() {
+               activeHowls[howlId] = null;
+             }
+           })
 
-      allHowls[howlId] = {sfx: sfx, howl: audio, play: play};
-      activeHowls[howlId] = {sfx: sfx, howl: audio , play: play };
+         var play = audio.play()
+
+         allHowls[howlId] = {sfx: sfx, howl: audio, play: play};
+         activeHowls[howlId] = {sfx: sfx, howl: audio , play: play };
+
+         if(waveRenderer)   waveRenderer.start();
 
 
-      if(sfx.attributes.fadeIn.enabled)
-      {
-        audio.fade(0, 1, 400, play);
-      }else if (sfx.attributes.fadeOut.enabled) {
-        audio.fade(1, 0, 400, play);
-      }
+         if(sfx.attributes.fadeIn.enabled)
+         {
+           audio.fade(0, 1, 400, play);
+         }else if (sfx.attributes.fadeOut.enabled) {
+           audio.fade(1, 0, 400, play);
+         }
+         
+      },delayMilliseconds)
+
+
+
+
+
+
 
       return {success:true, sfx:sfx}
 

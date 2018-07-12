@@ -28,13 +28,13 @@
 
           <div class="audio-list background-darksteel white-text h12 border-right-black">
             <div class="titlebar text-center">
-
+              <div class="btn btn-xs white black-text" v-on:click="refreshFiletree">Refresh Folders</div>
             </div>
-            <div class="thin-list">
+            <div class="thin-list" >
 
 
 
-                <div class="audioFileContainer" >
+                <div class="audioFileContainer"  v-if="!loading" >
                   <tree-menu
                     v-on:drag-audio-file="dragAudioFile"
                     :label="tree.label"
@@ -45,7 +45,7 @@
 
                 </div>
 
-                <div v-if='loading'>
+                <div class="" style="width:100%;text-align:center" v-if='loading'>
                   <div class="preloader-wrapper big active" >
      <div class="spinner-layer spinner-blue">
        <div class="circle-clipper left">
@@ -119,7 +119,7 @@
               </div>
 
               <div class="master-volume-container h12  " style="  width: 50px; " >
-                  <input type="range" class="vranger rotate270" min="0" max="200" v-model="masterVolume" style="width:15vh;"></input>
+                  <input type="range" class="vranger rotate270" min="0" max="100" v-model="masterVolume" v-on:change="setMasterVolume" style="width:15vh;"></input>
               </div>
 
               </div>

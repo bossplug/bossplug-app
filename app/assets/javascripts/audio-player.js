@@ -145,7 +145,7 @@ export default class AudioPlayer {
   {
     //if channel is null then all channels
 
-
+    eachHowl:
     for(var howlId in allHowls)
     {
       var resource = allHowls[howlId];
@@ -153,6 +153,13 @@ export default class AudioPlayer {
 
       if(resource && resource.howl)
       {
+
+        console.log(channel, parseInt(resource.sfx.attributes.channel.value))
+        if(channel!=null && parseInt(channel) != parseInt(resource.sfx.attributes.channel.value))
+        {
+          continue eachHowl;
+        }
+
 
         if(stopSelfOnly)
         {
@@ -178,9 +185,13 @@ export default class AudioPlayer {
 
     }
 
-    //if no channel..
-     activeHowls = {};
-     allHowls = {};
+    //is this necessary ?
+    if(channel == null)
+    {
+      activeHowls = {};
+      allHowls = {};
+    }
+
   }
 
 

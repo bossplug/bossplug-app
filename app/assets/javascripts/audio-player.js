@@ -124,7 +124,7 @@ export default class AudioPlayer {
          }else if (sfx.attributes.fadeOut.enabled) {
            audio.fade(1, 0, 400, play);
          }
-         
+
       },delayMilliseconds)
 
 
@@ -141,22 +141,40 @@ export default class AudioPlayer {
 
 
   //TODO fix channel cancelling
-  stopActivePlayback(preservedHash,channel)
+  stopActivePlayback(soundHash,channel,stopSelfOnly)
   {
     //if channel is null then all channels
+
 
     for(var howlId in allHowls)
     {
       var resource = allHowls[howlId];
 
-      console.log('active howls ', resource )
 
-      if(resource && resource.howl
-      && (preservedHash==null || preservedHash != resource.sfx.sfxHash))
+      if(resource && resource.howl)
       {
-        resource.howl.stop()
-        allHowls[howlId] = null;
+
+        if(stopSelfOnly)
+        {
+
+          if( soundHash == resource.sfx.sfxHash )
+          {
+            resource.howl.stop()
+            allHowls[howlId] = null;
+          }
+        }else{
+          if(soundHash==null || soundHash != resource.sfx.sfxHash  )
+          {
+            resource.howl.stop()
+            allHowls[howlId] = null;
+          }
+        }
+
+
+
+
       }
+
 
     }
 

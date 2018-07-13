@@ -13,7 +13,7 @@ var settings = new Settings();
 import AudioPlayer from './audio-player';
 var audioPlayer = new AudioPlayer();
 
- 
+
 
 import MusicMan from './music-man';
 var musicMan = new MusicMan(audioPlayer);
@@ -33,7 +33,7 @@ function init()
   nav.init();
 
   audioPlayer.init();
-  musicMan.init();
+  musicMan.init(socketClient);
   socketClient.init();
   keyListener.init(socketClient);
 

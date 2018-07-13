@@ -13,9 +13,9 @@ export default class MusicMan {
 
   }
 
-  init( )
+  init( socketClient )
   {
-
+    this.socketClient=socketClient;
   }
 
   setMetronomeComponent(metronomeComponent)
@@ -106,11 +106,12 @@ export default class MusicMan {
       await this.metronomeComponent.handleMetronomeEvent(sfx,eventName)
     }
 
-
+    
     switch(eventName)
     {
       case 'cancelChannel': this.audioPlayer.stopActivePlayback(sfxHash,sfx.attributes.cancelChannel.value); break;
-      case 'cancelAll': this.audioPlayer.stopActivePlayback(sfxHash); break;
+      case 'cancelAll': this.audioPlayer.stopActivePlayback(sfxHash,null,false); break;
+      case 'cancelSelf': this.audioPlayer.stopActivePlayback(sfxHash, null,true); break;
       case 'cancelLoops': this.cancelQueuedLoops( );  break;
     }
   }
@@ -141,6 +142,9 @@ export default class MusicMan {
   addToQueue(sfx)
   {
      sfxEventQueue.push({sfx:sfx,properties:{}})
+
+     //tell deviceManager about this queued sfx
+     //this.announceDeviceEvent({sfx: sfx, eventName: 'sfxQueued'} )
   }
 
   //the metronome calls this method
@@ -178,7 +182,7 @@ export default class MusicMan {
             properties.beatsWaited = 0;
           }
 
-          console.log(properties.beatsWaited)
+
 
           if(sfx.attributes.pulse && sfx.attributes.pulse.value
             && (parseInt(properties.beatsWaited) < parseInt(sfx.attributes.pulse.value)) )
@@ -189,10 +193,6 @@ export default class MusicMan {
              if(parseInt(beatsValue)!=0) continue eachEvent;
 
           }
-
-
-
-
 
 
           //mark as activated, can be killed from a 'cancel loops' now

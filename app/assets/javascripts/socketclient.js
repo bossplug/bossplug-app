@@ -27,7 +27,7 @@ export default class SocketClient {
 
     this.socket.on('queueSFXEvent', async function (data,fn) {
             console.log('queueSFXEvent', data)
-            var success = await self.musicMan.queueSFXEvent(data);
+            var success = await self.musicMan.queueSFXEvent(data.sfx,data.activate);
             fn(JSON.stringify(data));  //immediate response
       });
 

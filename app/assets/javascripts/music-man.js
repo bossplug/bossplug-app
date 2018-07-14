@@ -24,9 +24,9 @@ export default class MusicMan {
   }
 
 
-  async queueSFXEvent(sfx)
+  async queueSFXEvent(sfx,activate)
   {
-
+    if(!sfx) return;
 
 
     var immediatePlay = true;
@@ -51,13 +51,22 @@ export default class MusicMan {
 
       this.handleAllSFXEvents(sfx,false)
 
-      this.audioPlayer.playSound(sfx)
+
+      if( activate == false && sfx.attributes.momentary.enabled  )
+      {
+          this.audioPlayer.stopActivePlayback(sfx.sfxHash, null,true);
+      }else if(activate == true ){
+          this.audioPlayer.playSound(sfx)
+      }
+
+
+
     }
 
 
 
 
-    if(queue){
+    if(queue && activate){
 
       //We don't want this to keep occuring !!
       this.handleAllSFXEvents(sfx,true)

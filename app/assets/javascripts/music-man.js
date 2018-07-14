@@ -26,7 +26,6 @@ export default class MusicMan {
 
   async queueSFXEvent(sfx,activate)
   {
-    if(!sfx) return;
 
 
     var immediatePlay = true;
@@ -36,6 +35,8 @@ export default class MusicMan {
       console.error('cannot handle sfx',sfx);
       return;
     }
+
+    console.log('queue',sfx,activate )
 
     if(sfx.attributes.waitForBeat.enabled || sfx.attributes.pulse.enabled)
     {
@@ -66,15 +67,27 @@ export default class MusicMan {
 
 
 
-    if(queue && activate){
+    if(queue ){
 
       //We don't want this to keep occuring !!
       this.handleAllSFXEvents(sfx,true)
 
-      if(!this.sfxWithHashIsQueued(sfx.sfxHash))
+
+      if( activate == false && sfx.attributes.momentary.enabled  )
       {
-        this.addToQueue(sfx)
+          this.cancelSpecificLoop(sfx.sfxHash)
+          this.audioPlayer.stopActivePlayback(sfx.sfxHash, null,true);
+          
+      }else if(activate == true ){
+          if(!this.sfxWithHashIsQueued(sfx.sfxHash))
+          {
+            this.addToQueue(sfx)
+          }
       }
+
+
+
+
 
     }
 
@@ -128,6 +141,25 @@ export default class MusicMan {
     }
   }
 
+  cancelSpecificLoop(sfxHash)
+  {
+
+    for(var i in sfxEventQueue)
+    {
+
+        var sfxEvent = sfxEventQueue[i];
+        if(sfxEvent.sfx.sfxHash == sfxHash)
+        {
+          sfxEventQueue.splice(i,1);  //only remove this one event
+          console.log('splicing', sfxEvent.sfx.sfxName)
+        }
+
+
+    }
+
+  }
+
+
   cancelQueuedLoops(sfx)
   {
     var cancelChannel;
@@ -155,9 +187,6 @@ export default class MusicMan {
             console.log('splicing', sfxEvent.sfx.sfxName)
         }
         }
-
-
-
 
       }
 

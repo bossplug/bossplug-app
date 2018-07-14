@@ -14,9 +14,12 @@ import AudioPlayer from './audio-player';
 var audioPlayer = new AudioPlayer();
 
 
+import MidiPlayer from './midi-player';
+var midiPlayer = new MidiPlayer();
+
 
 import MusicMan from './music-man';
-var musicMan = new MusicMan(audioPlayer);
+var musicMan = new MusicMan(audioPlayer,midiPlayer);
 
 import SocketClient from './socketclient';
 var socketClient = new SocketClient(musicMan);
@@ -32,6 +35,7 @@ function init()
 {
   nav.init();
 
+  midiPlayer.init();
   audioPlayer.init();
   musicMan.init(socketClient);
   socketClient.init();

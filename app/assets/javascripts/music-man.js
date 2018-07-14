@@ -106,33 +106,50 @@ export default class MusicMan {
       await this.metronomeComponent.handleMetronomeEvent(sfx,eventName)
     }
 
-    
+
     switch(eventName)
     {
-      case 'cancelChannel': this.audioPlayer.stopActivePlayback(sfxHash,sfx.attributes.cancelChannel.value); break;
+      case 'cancelChannel':
+          this.audioPlayer.stopActivePlayback(sfxHash,sfx.attributes.cancelChannel.value);
+          this.cancelQueuedLoops(sfx);
+           break;
       case 'cancelAll': this.audioPlayer.stopActivePlayback(sfxHash,null,false); break;
       case 'cancelSelf': this.audioPlayer.stopActivePlayback(sfxHash, null,true); break;
-      case 'cancelLoops': this.cancelQueuedLoops( );  break;
+      case 'cancelLoops': this.cancelQueuedLoops(sfx);  break;
     }
   }
 
-  cancelQueuedLoops()
+  cancelQueuedLoops(sfx)
   {
+    var cancelChannel;
+    var channel;
+
+    if(sfx )
+    {
+      cancelChannel = sfx.attributes.cancelChannel.enabled;
+      channel = sfx.attributes.cancelChannel.value;
+    }
+
+
       for(var i in sfxEventQueue)
       {
         var sfxEvent = sfxEventQueue[i];
         var sfxEventActivated = (sfxEvent.properties) ? sfxEvent.properties.activated : null;
 
+       if(cancelChannel == false || ( channel == sfxEvent.sfx.attributes.channel.value ) )
+       {
+
 
         if( sfxEventActivated )
         {
-        //  sfxEventQueue = sfxEventQueue.splice(i,1);
           sfxEventQueue.splice(i,1);  //only remove this one event
-
             console.log('splicing', sfxEvent.sfx.sfxName)
-        }else{
-          console.log('Preserving', sfxEvent.sfx.sfxName)
         }
+        }
+
+
+
+
       }
 
   }

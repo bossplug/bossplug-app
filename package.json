@@ -40,6 +40,8 @@
     "jquery": "^3.3.1",
     "js-sha3": "^0.7.0",
     "launchpad-mini": "git+https://git@github.com/Granjow/launchpad-mini.git",
+ 
+    "midiconvert": "^0.4.7",
     "mkdir-recursive": "^0.4.0",
     "sha3": "^1.2.0",
     "siriwavejs": "^2.0.2",

@@ -181,6 +181,18 @@ export default class Build {
                     }
 
                     break;
+
+                case 'exportSFX':
+                    var response = await self.socketClient.emit('exportSFX')
+
+                    if(response.success)
+                    {
+                      alertBox.setAlertMessage('green',response.message)
+                    }else{
+                      alertBox.setAlertMessage('red',response.message)
+                    }
+
+                    break;
                 default:
                     break;
             }

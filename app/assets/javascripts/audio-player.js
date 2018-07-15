@@ -188,8 +188,8 @@ export default class AudioPlayer {
     //is this necessary ?
     if(channel == null)
     {
-      activeHowls = {};
-      allHowls = {};
+  //    activeHowls = {};
+  //    allHowls = {};
     }
 
   }

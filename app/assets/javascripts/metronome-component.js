@@ -96,8 +96,8 @@ export default class MetronomeComponent {
            metronome.active=false;
            beatMilliseconds = 0;
            beatCount = 0;
-           await self.musicMan.handleSFXEvent(sfx,'cancelLoops');
-           await self.musicMan.handleSFXEvent(sfx,'cancelAll');
+             self.musicMan.handleSFXEvent(sfx,'cancelLoops');
+             self.musicMan.handleSFXEvent(sfx,'cancelAll');
            break;
       case 'setBPM':
            var bpm = sfx.attributes.setBPM.value;

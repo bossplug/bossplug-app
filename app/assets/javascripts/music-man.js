@@ -82,7 +82,7 @@ export default class MusicMan {
       {
           this.cancelSpecificLoop(sfx.sfxHash)
 
-          if(sfx.attributes.sticky.enabled)
+          if(sfx.attributes.sticky && sfx.attributes.sticky.enabled)
           {
               //delay until beat
              //this.handleSFXEvent(sfx, 'cancelSelf', true  )

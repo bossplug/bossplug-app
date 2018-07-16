@@ -50,13 +50,18 @@ export default class MusicMan {
 
     if(immediatePlay){
 
-      this.handleAllSFXEvents(sfx,false)
+
 
 
       if( activate == false && sfx.attributes.momentary.enabled  )
       {
+
           this.audioPlayer.stopActivePlayback(sfx.sfxHash, null,true);
+
       }else if(activate == true ){
+
+          this.handleAllSFXEvents(sfx,false)
+
           this.audioPlayer.playSound(sfx)
       }
 
@@ -76,8 +81,18 @@ export default class MusicMan {
       if( activate == false && sfx.attributes.momentary.enabled  )
       {
           this.cancelSpecificLoop(sfx.sfxHash)
-          this.audioPlayer.stopActivePlayback(sfx.sfxHash, null,true);
-          
+
+          if(sfx.attributes.sticky.enabled)
+          {
+              //delay until beat
+             //this.handleSFXEvent(sfx, 'cancelSelf', true  )
+             console.log('push cancelSelf')
+             eventsDelayedUntilBeat.push({sfx:sfx, eventName:'cancelSelf'});
+          }else{
+            this.audioPlayer.stopActivePlayback(sfx.sfxHash, null,true);
+          }
+
+
       }else if(activate == true ){
           if(!this.sfxWithHashIsQueued(sfx.sfxHash))
           {
@@ -124,8 +139,8 @@ export default class MusicMan {
     var sfxHash = sfx ? sfx.sfxHash : null;
 
     if(this.metronomeComponent)
-    {
-      await this.metronomeComponent.handleMetronomeEvent(sfx,eventName)
+    { //dont await this
+        this.metronomeComponent.handleMetronomeEvent(sfx,eventName)
     }
 
 
@@ -206,15 +221,25 @@ export default class MusicMan {
   async beat(undershoot)
   {
     //music man learned of a new music beat :)
-  //  console.log('queue', sfxEventQueue)
+
   console.log('event queue ', sfxEventQueue.length)
+  if(sfxEventQueue.length > 0)
+  {
+    console.log(sfxEventQueue[0])
+  }
+
+
+    console.log('events delayed   ', eventsDelayedUntilBeat.length)
 
 
     //kill activated beats
-    for(var i in eventsDelayedUntilBeat)
+    for(var i in eventsDelayedUntilBeat )
     {
-      console.log('pop delayed event ', )
+
       var event = eventsDelayedUntilBeat.pop();
+
+      console.log('pop delayed event ', event.sfx.sfxName , event.eventName)
+
       await this.handleSFXEvent(event.sfx, event.eventName)
     }
 
